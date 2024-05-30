@@ -437,23 +437,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Windows 11\\.nuget\\packages\\": {},
+    "C:\\Users\\asus\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\PRN231\\MovieBooker\\be\\MovieBooker-backend\\MovieBooker-backend\\MovieBooker-backend.csproj",
+      "projectUniqueName": "D:\\MovieBooker\\MovieBooker\\MovieBooker-backend\\MovieBooker-backend\\MovieBooker-backend.csproj",
       "projectName": "MovieBooker-backend",
-      "projectPath": "D:\\PRN231\\MovieBooker\\be\\MovieBooker-backend\\MovieBooker-backend\\MovieBooker-backend.csproj",
-      "packagesPath": "C:\\Users\\Windows 11\\.nuget\\packages\\",
-      "outputPath": "D:\\PRN231\\MovieBooker\\be\\MovieBooker-backend\\MovieBooker-backend\\obj\\",
+      "projectPath": "D:\\MovieBooker\\MovieBooker\\MovieBooker-backend\\MovieBooker-backend\\MovieBooker-backend.csproj",
+      "packagesPath": "C:\\Users\\asus\\.nuget\\packages\\",
+      "outputPath": "D:\\MovieBooker\\MovieBooker\\MovieBooker-backend\\MovieBooker-backend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Windows 11\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -475,11 +475,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -510,7 +505,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -67,6 +67,11 @@
               "target": "Package",
               "version": "[6.0.2, )"
             },
+            "Microsoft.NET.Build.Containers": {
+              "target": "Package",
+              "version": "[0.3.2, )",
+              "autoReferenced": true
+            },
             "StackExchange.Redis": {
               "target": "Package",
               "version": "[2.7.33, )"

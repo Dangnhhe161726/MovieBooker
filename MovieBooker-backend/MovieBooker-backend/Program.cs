@@ -52,6 +52,9 @@ namespace MovieBooker_backend
                 .AddEntityFrameworkStores<bookMovieContext>()
                 .AddDefaultTokenProviders();
 
+            builder.Services.AddCors();
+
+
             builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect("localhost:6379")); //redis
 
 
@@ -91,6 +94,13 @@ namespace MovieBooker_backend
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
+
 
             app.UseStaticFiles();
 

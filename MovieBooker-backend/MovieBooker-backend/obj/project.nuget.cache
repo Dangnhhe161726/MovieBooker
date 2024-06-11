@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "zv19RwWDGamvjRhii8hP5k6wBqdN/6gt48jmGiQUazMfELhol8JZwUaJYgmRzsWiL6vvqw/P+mlIs2M28lW2rw==",
+  "dgSpecHash": "xZ52B6itKPPGooOBaEde+anfd3cUcyr1LmkfiMbZEDHbq4wWy90J2ZPhzzlLw7PRheNlz4VnoCr1vco9A93Igg==",
   "success": true,
   "projectFilePath": "D:\\MovieBooker\\MovieBooker\\MovieBooker-backend\\MovieBooker-backend\\MovieBooker-backend.csproj",
   "expectedPackageFiles": [
@@ -37,6 +37,7 @@
     "C:\\Users\\asus\\.nuget\\packages\\microsoft.identitymodel.protocols\\6.10.0\\microsoft.identitymodel.protocols.6.10.0.nupkg.sha512",
     "C:\\Users\\asus\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\6.10.0\\microsoft.identitymodel.protocols.openidconnect.6.10.0.nupkg.sha512",
     "C:\\Users\\asus\\.nuget\\packages\\microsoft.identitymodel.tokens\\6.10.0\\microsoft.identitymodel.tokens.6.10.0.nupkg.sha512",
+    "C:\\Users\\asus\\.nuget\\packages\\microsoft.net.build.containers\\0.3.2\\microsoft.net.build.containers.0.3.2.nupkg.sha512",
     "C:\\Users\\asus\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\asus\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\asus\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",

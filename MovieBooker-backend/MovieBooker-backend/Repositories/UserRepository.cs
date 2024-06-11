@@ -45,14 +45,14 @@ namespace MovieBooker_backend.Repositories
             var token = new JwtSecurityToken(
                 issuer: configuration["JWT:ValidIssuer"],
                 audience: configuration["JWT:ValidAudience"],
-                expires: DateTime.Now.AddMinutes(20),
+                expires: DateTime.Now.AddMinutes(2),
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authenKey, SecurityAlgorithms.HmacSha512Signature)
             );
             var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
 
             var db1 = _redis.GetDatabase();
-            await db1.StringSetAsync("savetoken", accessToken, TimeSpan.FromMinutes(20));
+            await db1.StringSetAsync("savetoken", accessToken, TimeSpan.FromMinutes(2));
 
             var refreshToken = Guid.NewGuid().ToString();
             var db = _redis.GetDatabase();
@@ -99,14 +99,14 @@ namespace MovieBooker_backend.Repositories
             var token = new JwtSecurityToken(
                 issuer: configuration["JWT:ValidIssuer"],
                 audience: configuration["JWT:ValidAudience"],
-                expires: DateTime.Now.AddMinutes(20),
+                expires: DateTime.Now.AddMinutes(2),
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authenKey, SecurityAlgorithms.HmacSha512Signature)
             );
             var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
 
             var db1 = _redis.GetDatabase();
-            await db1.StringSetAsync("savetoken", accessToken, TimeSpan.FromMinutes(20));
+            await db1.StringSetAsync("savetoken", accessToken, TimeSpan.FromMinutes(2));
 
             var refreshToken = Guid.NewGuid().ToString();
             var db = _redis.GetDatabase();

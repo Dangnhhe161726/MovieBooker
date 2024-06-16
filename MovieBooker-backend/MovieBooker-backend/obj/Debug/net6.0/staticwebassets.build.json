@@ -1,0 +1,19 @@
+{
+  "Version": 1,
+  "Hash": "C/O5hUs2hm9MHiRam+Mu1wGF74SFBnCU+J6nxWXVe/k=",
+  "Source": "MovieBooker-backend",
+  "BasePath": "_content/MovieBooker-backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "MovieBooker-backend\\wwwroot",
+      "Source": "MovieBooker-backend",
+      "ContentRoot": "D:\\MovieBooker\\MovieBooker\\MovieBooker-backend\\MovieBooker-backend\\wwwroot\\",
+      "BasePath": "_content/MovieBooker-backend",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": []
+}

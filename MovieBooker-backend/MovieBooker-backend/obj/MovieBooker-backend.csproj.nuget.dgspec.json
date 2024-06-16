@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\PRN231\\MovieBooker\\be\\MovieBooker-backend\\MovieBooker-backend\\MovieBooker-backend.csproj": {}
+    "D:\\MovieBooker\\MovieBooker\\MovieBooker-backend\\MovieBooker-backend\\MovieBooker-backend.csproj": {}
   },
   "projects": {
-    "D:\\PRN231\\MovieBooker\\be\\MovieBooker-backend\\MovieBooker-backend\\MovieBooker-backend.csproj": {
+    "D:\\MovieBooker\\MovieBooker\\MovieBooker-backend\\MovieBooker-backend\\MovieBooker-backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\PRN231\\MovieBooker\\be\\MovieBooker-backend\\MovieBooker-backend\\MovieBooker-backend.csproj",
+        "projectUniqueName": "D:\\MovieBooker\\MovieBooker\\MovieBooker-backend\\MovieBooker-backend\\MovieBooker-backend.csproj",
         "projectName": "MovieBooker-backend",
-        "projectPath": "D:\\PRN231\\MovieBooker\\be\\MovieBooker-backend\\MovieBooker-backend\\MovieBooker-backend.csproj",
-        "packagesPath": "C:\\Users\\Windows 11\\.nuget\\packages\\",
-        "outputPath": "D:\\PRN231\\MovieBooker\\be\\MovieBooker-backend\\MovieBooker-backend\\obj\\",
+        "projectPath": "D:\\MovieBooker\\MovieBooker\\MovieBooker-backend\\MovieBooker-backend\\MovieBooker-backend.csproj",
+        "packagesPath": "C:\\Users\\asus\\.nuget\\packages\\",
+        "outputPath": "D:\\MovieBooker\\MovieBooker\\MovieBooker-backend\\MovieBooker-backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Windows 11\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -39,20 +39,50 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.Google": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
+            "Microsoft.NET.Build.Containers": {
+              "target": "Package",
+              "version": "[0.3.2, )",
+              "autoReferenced": true
+            },
+            "StackExchange.Redis": {
+              "target": "Package",
+              "version": "[2.7.33, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.5.0, )"
+              "version": "[6.2.3, )"
             }
           },
           "imports": [
@@ -74,7 +104,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

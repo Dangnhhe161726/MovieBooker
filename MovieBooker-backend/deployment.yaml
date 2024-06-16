@@ -2,7 +2,7 @@ version: '3.7'
 services:
   mssql-container:
     container_name: mssql-container
-    image: mcr.microsoft.com/mssql/server:2017-latest  
+    image: mcr.microsoft.com/mssql/server:2019-latest  
     restart: always
     environment:
       ACCEPT_EULA: "Y"

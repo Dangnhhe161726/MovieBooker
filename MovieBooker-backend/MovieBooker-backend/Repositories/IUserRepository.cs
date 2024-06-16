@@ -13,6 +13,8 @@ namespace MovieBooker_backend.Repositories
 
         public IEnumerable<User> GetAllUser();
         public User GetUserById(int userId);
+        public User GetUserByEmail(string email);
+        public void AddUser(User user);
 
 
     }

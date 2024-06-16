@@ -32,6 +32,13 @@ namespace MovieBooker_backend.Repositories
             _context = context;
             _redis = redis;
         }
+
+        public void AddUser(User user)
+        {
+            _context.Add(user);
+            _context.SaveChanges();
+        }
+
         public async Task<TokenResponse> GenerateTokensAsync(User user)
         {
             var authClaims = new List<Claim>
@@ -69,6 +76,14 @@ namespace MovieBooker_backend.Repositories
         {
             var listUser = _context.Users.ToList();
             return listUser;
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            var user = _context.Users
+            .Include(u => u.Role)
+            .FirstOrDefault(u => u.Email == email);
+            return user;
         }
 
         public User GetUserById(int userId)

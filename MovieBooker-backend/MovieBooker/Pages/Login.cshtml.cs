@@ -4,17 +4,24 @@ using MovieBooker.Models;
 using System.Net.Http;
 using Newtonsoft.Json;
 using StackExchange.Redis;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+
 namespace MovieBooker.Pages
 {
     public class LoginModel : PageModel
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConnectionMultiplexer _redisConnection;
+        private readonly HttpClient _httpClient;
 
-        public LoginModel(IHttpClientFactory httpClientFactory, IConnectionMultiplexer redisConnection)
+        public LoginModel(IHttpClientFactory httpClientFactory, IConnectionMultiplexer redisConnection, HttpClient httpClient)
         {
             _httpClientFactory = httpClientFactory;
             _redisConnection = redisConnection;
+            _httpClient = httpClient;
         }
 
         [BindProperty]
@@ -77,5 +84,17 @@ namespace MovieBooker.Pages
 
             return RedirectToPage("/Login");
         }
+
+        public IActionResult OnGetExternalLogin(string provider)
+        {
+            var redirectUrl = Url.Page("/ExternalLoginCallback");
+            var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
+            return new ChallengeResult(provider, properties);
+        }
+
+
+
+
+
     }
 }

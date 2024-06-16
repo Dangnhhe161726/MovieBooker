@@ -1,4 +1,6 @@
-using JWT.DTO;
+﻿using JWT.DTO;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,8 +13,8 @@ using System.Text;
 
 namespace MovieBooker_backend
 {
-	public class Program
-	{
+    public class Program
+    {
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -81,7 +83,11 @@ namespace MovieBooker_backend
                     ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
                 };
+
+
             });
+
+
 
             builder.Services.AddAuthorization();
 

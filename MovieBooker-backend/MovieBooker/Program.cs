@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Identity;
 using MovieBooker.Middleware;
 using StackExchange.Redis;
 
@@ -14,6 +17,7 @@ namespace MovieBooker
             builder.Services.AddHttpClient();
             builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect("localhost:6379"));
             builder.Services.AddCors();
+            builder.Services.AddSession();
 
             var app = builder.Build();
 
@@ -38,8 +42,10 @@ namespace MovieBooker
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSession();
+            app.UseHttpsRedirection();
             app.UseMiddleware<TokenRefreshMiddleware>();
 
             app.MapRazorPages();

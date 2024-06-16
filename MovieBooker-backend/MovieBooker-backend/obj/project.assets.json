@@ -15,6 +15,22 @@
           }
         }
       },
+      "Microsoft.AspNetCore.Authentication.Google/6.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.Authentication.Google.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.Authentication.Google.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.2": {
         "type": "package",
         "dependencies": {
@@ -556,6 +572,13 @@
           }
         }
       },
+      "Microsoft.NET.Build.Containers/0.3.2": {
+        "type": "package",
+        "build": {
+          "build/Microsoft.NET.Build.Containers.props": {},
+          "build/Microsoft.NET.Build.Containers.targets": {}
+        }
+      },
       "Microsoft.NETCore.Platforms/3.1.0": {
         "type": "package",
         "compile": {
@@ -1031,6 +1054,21 @@
         "lib/netstandard2.0/Humanizer.dll",
         "lib/netstandard2.0/Humanizer.xml",
         "logo.png"
+      ]
+    },
+    "Microsoft.AspNetCore.Authentication.Google/6.0.1": {
+      "sha512": "8eCnlAXsczzoVcoom0QwPGD2X8A/cCjROFmP4jkGqm9FUjU6A15MdMrLF+aWzfloptiAZlmPIQCilLfodZM01A==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.authentication.google/6.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net6.0/Microsoft.AspNetCore.Authentication.Google.dll",
+        "lib/net6.0/Microsoft.AspNetCore.Authentication.Google.xml",
+        "microsoft.aspnetcore.authentication.google.6.0.1.nupkg.sha512",
+        "microsoft.aspnetcore.authentication.google.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.2": {
@@ -1799,6 +1837,36 @@
         "microsoft.identitymodel.tokens.nuspec"
       ]
     },
+    "Microsoft.NET.Build.Containers/0.3.2": {
+      "sha512": "WkQ2M9PEUYDZM92Yfm6BBkHBTBQtET8Y30l5MOxU/IkiuAAnaGar/sMiNR5s4W+aMB3+S6lzndq9aMxUXw8hCA==",
+      "type": "package",
+      "path": "microsoft.net.build.containers/0.3.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "build/Microsoft.NET.Build.Containers.props",
+        "build/Microsoft.NET.Build.Containers.targets",
+        "containerize/Microsoft.NET.Build.Containers.dll",
+        "containerize/Newtonsoft.Json.dll",
+        "containerize/NuGet.Common.dll",
+        "containerize/NuGet.Configuration.dll",
+        "containerize/NuGet.Frameworks.dll",
+        "containerize/NuGet.Packaging.dll",
+        "containerize/NuGet.Versioning.dll",
+        "containerize/System.CommandLine.dll",
+        "containerize/Valleysoft.DockerCredsProvider.dll",
+        "containerize/containerize.dll",
+        "containerize/containerize.runtimeconfig.json",
+        "microsoft.net.build.containers.0.3.2.nupkg.sha512",
+        "microsoft.net.build.containers.nuspec",
+        "tasks/net472/Microsoft.NET.Build.Containers.deps.json",
+        "tasks/net472/Microsoft.NET.Build.Containers.dll",
+        "tasks/net7.0/Microsoft.NET.Build.Containers.deps.json",
+        "tasks/net7.0/Microsoft.NET.Build.Containers.dll",
+        "tasks/net7.0/Valleysoft.DockerCredsProvider.dll"
+      ]
+    },
     "Microsoft.NETCore.Platforms/3.1.0": {
       "sha512": "z7aeg8oHln2CuNulfhiLYxCVMPEwBl3rzicjvIX+4sUuCwvXw5oXQEtbiU2c0z4qYL5L3Kmx0mMA/+t/SbY67w==",
       "type": "package",
@@ -2549,11 +2617,13 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "Microsoft.AspNetCore.Authentication.Google >= 6.0.1",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.2",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 6.0.2",
       "Microsoft.EntityFrameworkCore >= 6.0.2",
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.2",
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.2",
+      "Microsoft.NET.Build.Containers >= 0.3.2",
       "StackExchange.Redis >= 2.7.33",
       "Swashbuckle.AspNetCore >= 6.2.3"
     ]
@@ -2603,6 +2673,10 @@
       "net6.0": {
         "targetAlias": "net6.0",
         "dependencies": {
+          "Microsoft.AspNetCore.Authentication.Google": {
+            "target": "Package",
+            "version": "[6.0.1, )"
+          },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",
             "version": "[6.0.2, )"
@@ -2624,6 +2698,11 @@
             "suppressParent": "All",
             "target": "Package",
             "version": "[6.0.2, )"
+          },
+          "Microsoft.NET.Build.Containers": {
+            "target": "Package",
+            "version": "[0.3.2, )",
+            "autoReferenced": true
           },
           "StackExchange.Redis": {
             "target": "Package",

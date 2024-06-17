@@ -396,3 +396,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+MovieBooker-backend/MovieBooker-backend/obj/Debug/net6.0/MovieBooker-backend.assets.cache
+*.cache
+*.v2

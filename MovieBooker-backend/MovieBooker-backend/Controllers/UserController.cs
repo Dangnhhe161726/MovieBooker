@@ -27,7 +27,7 @@ namespace MovieBooker_backend.Controllers
 
         [AllowAnonymous]
         [HttpPost("SignUp")]
-        public async Task<IActionResult> SignUp([FromBody] SignUpModel model)
+        public async Task<IActionResult> SignUp(SignUpModel model)
         {
             var result = await _userRepository.SignUpInternalAsync(model);
             if (result > 0)
@@ -73,46 +73,6 @@ namespace MovieBooker_backend.Controllers
             if (user == null)
             {
                 return Unauthorized();
-            }
-
-            var tokens = await _userRepository.GenerateTokensAsync(user);
-
-            return Ok(tokens);
-        }
-
-        //[HttpGet("ExternalLogin")]
-        //public IActionResult ExternalLogin(string returnUrl = null)
-        //{
-        //    var redirectUrl = Url.Action("ExternalLoginCallback", "User", new { ReturnUrl = returnUrl });
-        //    var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
-        //    return new ChallengeResult("Google", properties);
-        //}
-
-        [HttpGet("ExternalLoginCallback")]
-        public async Task<IActionResult> ExternalLoginCallbackAsync()
-        {
-            var authenticateResult = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
-
-            if (!authenticateResult.Succeeded)
-            {
-                return BadRequest();
-            }
-
-            var userEmail = authenticateResult.Principal.FindFirst(ClaimTypes.Email)?.Value;
-            var userName = authenticateResult.Principal.FindFirst(ClaimTypes.Name)?.Value;
-            var phone = authenticateResult.Principal.FindFirst(ClaimTypes.MobilePhone)?.Value;
-
-            User user = _userRepository.GetUserByEmail(userEmail);
-            if (user == null)
-            {
-                user = new User
-                {
-                    Email = userEmail,
-                    UserName = userName,
-                    RoleId = 3,
-                    PhoneNumber = phone,
-                };
-                _userRepository.AddUser(user);
             }
 
             var tokens = await _userRepository.GenerateTokensAsync(user);

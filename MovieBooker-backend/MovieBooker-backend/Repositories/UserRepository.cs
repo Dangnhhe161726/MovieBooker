@@ -136,12 +136,21 @@ namespace MovieBooker_backend.Repositories
 
         public async Task<int> SignUpInternalAsync(SignUpModel model)
         {
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+            if (existingUser != null)
+            {
+                return -1;
+            }
+
             var user = new User
             {
                 UserName = model.UserName,
                 Email = model.Email,
                 Password = model.Password,
                 PhoneNumber = model.PhoneNumber,
+                Address = model.Address,
+                Gender = model.Gender,
+                Dob = model.Dob,
                 RoleId = model.Role,
             };
 

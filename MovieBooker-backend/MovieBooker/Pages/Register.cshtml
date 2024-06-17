@@ -13,49 +13,43 @@
             <div class="signup-form">
                 <h2 class="form-title">Sign up</h2>
                 <form method="POST" class="register-form" id="register-form">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
                     <div class="form-group">
                         <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                        <input type="text" name="name" id="name" placeholder="Your Name" />
+                        <input type="text" asp-for="User.UserName" id="name" placeholder="Your Name" required />
                     </div>
                     <div class="form-group">
                         <label for="email"><i class="zmdi zmdi-email"></i></label>
-                        <input type="email" name="email" id="email" placeholder="Your Email" />
+                        <input type="email" asp-for="User.Email" id="email" placeholder="Your Email" required />
                     </div>
-                    <div class="form-group" style="display: flex; align-items: center;">
-                        <label for="email"><i class="zmdi zmdi-male"></i></label>
-                        <input type="radio" name="gender" id="gender"/>
-                        <label for="email"><i class="zmdi zmdi-female"></i></label>
-                        <input type="radio" name="gender" id="gender" />
+                    <div class="form-group">
+                        <label for="Dob"><i class="zmdi zmdi-calendar-note"></i></label>
+                        <input type="date" asp-for="User.Dob" id="dob" placeholder="Date Of Birth" required />
                     </div>
-         @*           <div style="display: flex; align-items: center;">
-                        <label for="male" style="display: flex; align-items: center; margin-right: 10px;">
-                            <i class="zmdi zmdi-male" style="margin-right: 5px;"></i>
-                            <input type="radio" name="gender" id="male" style="margin-left: 5px;" />
-                        </label>
-                        <label for="female" style="display: flex; align-items: center;">
-                            <i class="zmdi zmdi-female" style="margin-right: 5px;"></i>
-                            <input type="radio" name="gender" id="female" style="margin-left: 5px;" />
-                        </label>
-                    </div>*@
+                    <div class="form-group">
+                        <label style="color: #999" for="email"><i style="margin-right: 16px; color:black" class="zmdi zmdi-male"></i>Male</label>
+                        <input asp-for="User.Gender" style="margin: 0px -7rem;" type="radio" value="true" id="gender" required />
+                    </div>
+                    <div class="form-group">
+                        <label style="color: #999" for="email"><i style="margin-right: 17px; color:black" class="zmdi zmdi-female"></i>Female</label>
+                        <input asp-for="User.Gender" style="margin: 0px -7rem;" type="radio" value="false" id="gender" required />
+                    </div>
                     <div class="form-group">
                         <label for="phone"><i class="zmdi zmdi-phone"></i></label>
-                        <input type="tel" name="phone" id="Phone" placeholder="+84xxx xxx xxx" />
+                        <input asp-for="User.PhoneNumber" type="tel" id="Phone" placeholder="+84xxx xxx xxx" required />
                     </div>
                     <div class="form-group">
                         <label for="address"><i class="zmdi zmdi-my-location"></i></label>
-                        <input type="tel" name="phone" id="Phone" placeholder="Address" />
+                        <input asp-for="User.Address" type="text" id="address" placeholder="Address" required />
                     </div>
                     <div class="form-group">
                         <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                        <input type="password" name="pass" id="pass" placeholder="Password" />
+                        <input asp-for="User.Password" type="password" id="pass" placeholder="Password" required />
                     </div>
                     <div class="form-group">
                         <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                        <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password" />
-                    </div>
-                    <div class="form-group">
-                        <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
-                        <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                        <input asp-for="User.ConfirmPassword" type="password" id="re_pass" placeholder="Repeat your password" required />
                     </div>
                     <div class="form-group form-button">
                         <input type="submit" name="signup" id="signup" class="form-submit" value="Register" />
@@ -64,10 +58,13 @@
             </div>
             <div class="signup-image">
                 <figure><img src="images/signup-image.jpg" alt="sing up image"></figure>
-                <a href="#" class="signup-image-link">I am already member</a>
             </div>
         </div>
     </div>
 </section>
 <script src="vendor/jquery/jquery.min.js"></script>
-
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

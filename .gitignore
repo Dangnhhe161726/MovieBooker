@@ -399,3 +399,12 @@ FodyWeavers.xsd
 MovieBooker-backend/MovieBooker-backend/obj/Debug/net6.0/MovieBooker-backend.assets.cache
 *.cache
 *.v2
+*.v2
+MovieBooker-backend/.vs/MovieBooker-backend/v17/.suo
+MovieBooker-backend/MovieBooker-backend/appsettings.json
+MovieBooker-backend/MovieBooker-backend/bin/Debug/net6.0/MovieBooker-backend.dll
+MovieBooker-backend/MovieBooker-backend/bin/Debug/net6.0/MovieBooker-backend.pdb
+MovieBooker-backend/MovieBooker-backend/obj/Debug/net6.0/MovieBooker-backend.assets.cache
+MovieBooker-backend/MovieBooker-backend/obj/Debug/net6.0/MovieBooker-backend.csproj.FileListAbsolute.txt
+MovieBooker-backend/MovieBooker-backend/obj/Debug/net6.0/MovieBooker-backend.dll
+MovieBooker-backend/MovieBooker-backend/obj/Debug/net6.0/MovieBooker-backend.pdb

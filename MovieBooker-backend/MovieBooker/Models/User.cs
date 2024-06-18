@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
 namespace MovieBooker.Models
 {
@@ -7,12 +9,17 @@ namespace MovieBooker.Models
     {
         public User()
         {
-            
+            From = "cgvcinema88@gmail.com";
+            PasswordSendMail = "wiusmsuuotuekiyo";
         }
+        public string From { get; set; }
+        public string PasswordSendMail { get; set; }
 
         public int UserId { get; set; }
         public string? UserName { get; set; }
         public string? Email { get; set; }
+
+        [StringLength(100, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters long.")]
         public string? Password { get; set; }
         public string? ConfirmPassword { get; set; }
         public string? PhoneNumber { get; set; }

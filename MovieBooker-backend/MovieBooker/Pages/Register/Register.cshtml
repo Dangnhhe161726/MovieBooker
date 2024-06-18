@@ -1,6 +1,7 @@
 ﻿@page
 @model MovieBooker.Pages.RegisterModel
 @{
+    var today = DateTime.Now.ToString("yyyy-MM-dd");
 }
 
 <link rel="stylesheet" href="~/fonts/material-icon/css/material-design-iconic-font.min.css" asp-append-version="true" />
@@ -25,7 +26,7 @@
                     </div>
                     <div class="form-group">
                         <label for="Dob"><i class="zmdi zmdi-calendar-note"></i></label>
-                        <input type="date" asp-for="User.Dob" id="dob" placeholder="Date Of Birth" required />
+                        <input type="date" asp-for="User.Dob" id="dob" placeholder="Date Of Birth" required max="@today" />
                     </div>
                     <div class="form-group">
                         <label style="color: #999" for="email"><i style="margin-right: 16px; color:black" class="zmdi zmdi-male"></i>Male</label>
@@ -57,7 +58,7 @@
                 </form>
             </div>
             <div class="signup-image">
-                <figure><img src="images/signup-image.jpg" alt="sing up image"></figure>
+                <figure><img src="~/images/signup-image.jpg" alt="sing up image"></figure>
             </div>
         </div>
     </div>

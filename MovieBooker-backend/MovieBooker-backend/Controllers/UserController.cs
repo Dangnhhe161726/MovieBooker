@@ -80,6 +80,19 @@ namespace MovieBooker_backend.Controllers
             return Ok(tokens);
         }
 
+        [HttpGet("CheckSignUpEmail/{email}")]
+        public IActionResult CheckSignUpEmail(string email)
+        {
+            var user = _userRepository.GetUserByEmail(email);
+            if (user != null)
+            {
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
 
         [HttpGet("GetAllUser")]
         [Authorize(Roles = "Customer")]

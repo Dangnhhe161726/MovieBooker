@@ -1,5 +1,4 @@
-﻿using MovieBooker_backend;
-using MovieBooker_backend.DTO;
+﻿using MovieBooker_backend.DTO;
 using Microsoft.AspNetCore.Mvc;
 using MovieBooker_backend.Models;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace MovieBooker_backend.Repositories
+namespace MovieBooker_backend.Repositories.UserRepository
 {
     public class UserRepository : IUserRepository
     {

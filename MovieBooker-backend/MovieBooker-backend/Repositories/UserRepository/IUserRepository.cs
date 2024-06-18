@@ -1,9 +1,8 @@
 ﻿using MovieBooker_backend.DTO;
-using MovieBooker_backend;
 using MovieBooker_backend.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MovieBooker_backend.Repositories
+namespace MovieBooker_backend.Repositories.UserRepository
 {
     public interface IUserRepository
     {

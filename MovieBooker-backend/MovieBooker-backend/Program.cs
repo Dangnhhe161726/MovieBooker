@@ -4,12 +4,16 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MovieBooker_backend.Models;
-using MovieBooker_backend.Repositories;
+using MovieBooker_backend.Repositories.UserRepository;
+using MovieBooker_backend.Repositories.CloudinaryRepository;
 using StackExchange.Redis;
 using System.Text;
+using CloudinaryDotNet;
+using Microsoft.Extensions.Options;
 
 namespace MovieBooker_backend
 {
@@ -22,6 +26,16 @@ namespace MovieBooker_backend
             // Add services to the container.
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
+            builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+            builder.Services.AddSingleton(sp =>
+             {
+                 var cloudinarySettings = sp.GetRequiredService<IOptions<CloudinarySettings>>().Value;
+                 return new Cloudinary(new Account(
+                     cloudinarySettings.CloudName,
+                     cloudinarySettings.ApiKey,
+                     cloudinarySettings.ApiSecret));
+             });
+            builder.Services.AddTransient<ICloudinaryRepository, CloudinaryRepository>();
             builder.Services.AddSwaggerGen(option =>
             {
                 option.SwaggerDoc("v1", new OpenApiInfo { Title = "Movie API", Version = "v1" });

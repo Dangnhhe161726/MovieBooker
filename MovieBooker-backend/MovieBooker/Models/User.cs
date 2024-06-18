@@ -19,7 +19,6 @@ namespace MovieBooker.Models
         public string? UserName { get; set; }
         public string? Email { get; set; }
 
-        [StringLength(100, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters long.")]
         public string? Password { get; set; }
         public string? ConfirmPassword { get; set; }
         public string? PhoneNumber { get; set; }

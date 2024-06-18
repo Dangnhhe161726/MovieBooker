@@ -94,13 +94,6 @@ namespace MovieBooker_backend.Repositories.UserRepository
             return user;
         }
 
-        public UserDTO GetUserDTOByEmail(string email)
-        {
-            var user = _context.Users
-               .Include(u => u.Role)
-               .FirstOrDefault(u => u.Email == email);
-            return user;
-        }
 
         public async Task<TokenResponse> SignInInternalAsync(SignInModel model)
         {

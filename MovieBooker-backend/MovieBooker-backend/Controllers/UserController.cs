@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieBooker_backend.DTO;
 using MovieBooker_backend.Models;
-using MovieBooker_backend.Repositories;
+using MovieBooker_backend.Repositories.UserRepository;
 using StackExchange.Redis;
 using System.Security.Claims;
 

@@ -14,8 +14,6 @@ namespace MovieBooker_backend.Repositories.UserRepository
         public User GetUserById(int userId);
         public User GetUserByEmail(string email);
         public void AddUser(User user);
-        public UserDTO GetUserDTOByEmail(string email);
-
 
     }
 }

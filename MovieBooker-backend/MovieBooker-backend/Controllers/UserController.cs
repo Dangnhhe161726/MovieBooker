@@ -94,6 +94,20 @@ namespace MovieBooker_backend.Controllers
             }
         }
 
+        [HttpPost("logingoogle")]
+        public IActionResult LoginGoogle(string email)
+        {
+            var user = _userRepository.GetUserByEmail(email);
+            if (user == null)
+            {
+                user = new User { Email = email, UserName = "Member", RoleId = 3 }; 
+                _userRepository.AddUser(user);
+            }         
+            var tokens = _userRepository.GenerateTokensAsync(user);
+            return Ok(tokens);
+        }
+
+
         [HttpGet("GetAllUser")]
         [Authorize(Roles = "Customer")]
         public IActionResult getAll()

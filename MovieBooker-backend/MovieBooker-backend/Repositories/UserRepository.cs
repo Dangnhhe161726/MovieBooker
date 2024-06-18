@@ -33,6 +33,7 @@ namespace MovieBooker_backend.Repositories
             _redis = redis;
         }
 
+
         public void AddUser(User user)
         {
             _context.Add(user);
@@ -91,6 +92,14 @@ namespace MovieBooker_backend.Repositories
             var user = _context.Users
             .Include(u => u.Role)
             .FirstOrDefault(u => u.UserId == userId);
+            return user;
+        }
+
+        public UserDTO GetUserDTOByEmail(string email)
+        {
+            var user = _context.Users
+               .Include(u => u.Role)
+               .FirstOrDefault(u => u.Email == email);
             return user;
         }
 

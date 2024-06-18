@@ -1,0 +1,71 @@
+﻿@page
+@model MovieBooker.Pages.RegisterModel
+@{
+    var today = DateTime.Now.ToString("yyyy-MM-dd");
+}
+
+<link rel="stylesheet" href="~/fonts/material-icon/css/material-design-iconic-font.min.css" asp-append-version="true" />
+<!-- Main css -->
+<link rel="stylesheet" href="~/css/StyleLoginRegister.css" asp-append-version="true" />
+
+<section class="signup">
+    <div class="container">
+        <div class="signup-content">
+            <div class="signup-form">
+                <h2 class="form-title">Sign up</h2>
+                <form method="POST" class="register-form" id="register-form">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                        <input type="text" asp-for="User.UserName" id="name" placeholder="Your Name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email"><i class="zmdi zmdi-email"></i></label>
+                        <input type="email" asp-for="User.Email" id="email" placeholder="Your Email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="Dob"><i class="zmdi zmdi-calendar-note"></i></label>
+                        <input type="date" asp-for="User.Dob" id="dob" placeholder="Date Of Birth" required max="@today" />
+                    </div>
+                    <div class="form-group">
+                        <label style="color: #999" for="email"><i style="margin-right: 16px; color:black" class="zmdi zmdi-male"></i>Male</label>
+                        <input asp-for="User.Gender" style="margin: 0px -7rem;" type="radio" value="true" id="gender" required />
+                    </div>
+                    <div class="form-group">
+                        <label style="color: #999" for="email"><i style="margin-right: 17px; color:black" class="zmdi zmdi-female"></i>Female</label>
+                        <input asp-for="User.Gender" style="margin: 0px -7rem;" type="radio" value="false" id="gender" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="phone"><i class="zmdi zmdi-phone"></i></label>
+                        <input asp-for="User.PhoneNumber" type="tel" id="Phone" placeholder="+84xxx xxx xxx" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="address"><i class="zmdi zmdi-my-location"></i></label>
+                        <input asp-for="User.Address" type="text" id="address" placeholder="Address" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                        <input asp-for="User.Password" type="password" id="pass" placeholder="Password" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
+                        <input asp-for="User.ConfirmPassword" type="password" id="re_pass" placeholder="Repeat your password" required />
+                    </div>
+                    <div class="form-group form-button">
+                        <input type="submit" name="signup" id="signup" class="form-submit" value="Register" />
+                    </div>
+                </form>
+            </div>
+            <div class="signup-image">
+                <figure><img src="~/images/signup-image.jpg" alt="sing up image"></figure>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="vendor/jquery/jquery.min.js"></script>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -32,6 +32,7 @@ namespace MovieBooker_backend.Repositories.UserRepository
             _redis = redis;
         }
 
+
         public void AddUser(User user)
         {
             _context.Add(user);
@@ -93,6 +94,7 @@ namespace MovieBooker_backend.Repositories.UserRepository
             return user;
         }
 
+
         public async Task<TokenResponse> SignInInternalAsync(SignInModel model)
         {
             var user = await _context.Users.Include(u => u.Role)
@@ -135,12 +137,21 @@ namespace MovieBooker_backend.Repositories.UserRepository
 
         public async Task<int> SignUpInternalAsync(SignUpModel model)
         {
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+            if (existingUser != null)
+            {
+                return -1;
+            }
+
             var user = new User
             {
                 UserName = model.UserName,
                 Email = model.Email,
                 Password = model.Password,
                 PhoneNumber = model.PhoneNumber,
+                Address = model.Address,
+                Gender = model.Gender,
+                Dob = model.Dob,
                 RoleId = model.Role,
             };
 

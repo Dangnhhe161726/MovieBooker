@@ -19,6 +19,23 @@ namespace MovieBooker
             builder.Services.AddCors();
             builder.Services.AddSession();
 
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+            })
+               .AddCookie()
+               .AddGoogle(options =>
+             {
+                options.ClientId = "your-client-id";
+                options.ClientSecret = "your-client-secret";
+                options.CallbackPath = "/signin-google";
+            } );
+
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

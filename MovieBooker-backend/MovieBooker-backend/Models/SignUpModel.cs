@@ -12,8 +12,13 @@ namespace MovieBooker_backend
         public string Password { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
-
         [Required]
+        public string Address { get; set; }
+        [Required]
+        public bool Gender { get; set; }
+        [Required]
+        public DateTime Dob { get; set; }
+
         public int Role = 3;
     }
 }

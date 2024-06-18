@@ -48,9 +48,6 @@ namespace MovieBooker.Pages
                 email.To.Add(MailboxAddress.Parse(User.Email));
                 email.Subject = "Vui lòng xác thực email của bạn";
                 int number = GenerateRandom5DigitNumber();
-
-
-                //string emailBody = "Your single-use code is: " + number.ToString();
                 string emailBody = $@"
     <html>
     <head>
@@ -130,116 +127,6 @@ namespace MovieBooker.Pages
             }
             return Page();
         }
-
-
-
-        //    public async Task<IActionResult> OnPostAsync()
-        //    {
-        //        if (User.Password != User.ConfirmPassword)
-        //        {
-        //            ModelState.AddModelError(string.Empty, "Confirm Password incorrect.");
-        //            return Page();
-        //        }
-        //        var httpClient = _httpClientFactory.CreateClient();
-        //        var SignUpData = new { User.UserName, User.Email, User.Password, User.PhoneNumber, User.Address, User.Gender, User.Dob };
-        //        TempData["SignUpData"] = JsonConvert.SerializeObject(SignUpData);
-        //        var response = await httpClient.GetAsync($"https://localhost:5000/api/User/CheckSignUpEmail/{User.Email}");
-        //        if (response.StatusCode == HttpStatusCode.NotFound)
-        //        {
-        //            var email = new MimeMessage();
-        //            email.From.Add(MailboxAddress.Parse(User.From));
-        //            email.To.Add(MailboxAddress.Parse(User.Email));
-        //            email.Subject = "Vui lòng thanh toán hóa đơn tại Stars Karaoke";
-        //            int number = GenerateRandom5DigitNumber();
-
-
-        //            //string emailBody = "Your single-use code is: " + number.ToString();
-        //            string emailBody = $@"
-        //<html>
-        //<head>
-        //    <style>
-        //        body {{
-        //            font-family: Arial, sans-serif;
-        //            background-color: #f5f5f5;
-        //            padding: 20px;
-        //        }}
-        //        .container {{
-        //            max-width: 600px;
-        //            margin: 0 auto;
-        //            background-color: #ffffff;
-        //            padding: 30px;
-        //            border-radius: 10px;
-        //            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        //        }}
-        //        h2 {{
-        //            color: #da0f32;
-        //            text-align: center;
-        //            margin-bottom: 20px;
-        //        }}
-        //        .payment-details {{
-        //            background-color: #f0f0f0;
-        //            padding: 15px;
-        //            border-radius: 5px;
-        //            margin-bottom: 20px;
-        //        }}
-        //        ul {{
-        //            list-style-type: none;
-        //            padding: 0;
-        //            margin: 0;
-        //        }}
-        //        li {{
-        //            margin-bottom: 10px;
-        //        }}
-        //        .footer {{
-        //            text-align: center;
-        //            margin-top: 20px;
-        //            color: #666666;
-        //        }}
-        //    </style>
-        //</head>
-        //<body>
-        //    <div class='container'>
-        //        <h2>Thanh toán tiền quán karaoke</h2>
-        //        <p>Xin chào Nguyễn Văn Sơn,</p>
-        //        <p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi. Dưới đây là chi tiết thanh toán của bạn:</p>
-        //        <div class='payment-details'>
-        //            <h3>10 000 000 VNĐ</h3>
-        //            <p>Vui lòng thanh toán số tiền này để hoàn tất quá trình thanh toán.</p>
-        //        </div>
-        //        <p>Vui lòng sử dụng thông tin thanh toán dưới đây:</p>
-        //        <ul>
-        //            <li><strong>Ngân hàng:</strong>BIDV</li>
-        //            <li><strong>Số thẻ ngân hàng:</strong>1234 5678 9012 3456</li>
-        //            <li><strong>Chủ thẻ:</strong>Nguyễn Hồng Đăng</li>
-        //            <li><strong>Số tiền:</strong>10 000 000</li>
-        //        </ul>
-        //        <p>Xin cảm ơn bạn đã lựa chọn dịch vụ của chúng tôi!</p>
-        //        <p class='footer'>Quán karaoke Stars Karaoke - Địa chỉ: 123 Thạch Hòa, Thạch Thất, Hà Nội - Điện thoại: 0123 456 789</p>
-        //    </div>
-        //</body>
-        //</html>";
-
-
-        //            email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = emailBody };
-        //            var db1 = _redisConnection.GetDatabase();
-        //            await db1.StringSetAsync("VerifyEmail", number, TimeSpan.FromMinutes(5));
-        //            using var smtp = new SmtpClient();
-        //            smtp.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-        //            smtp.Authenticate(User.From, User.PasswordSendMail);
-        //            smtp.Send(email);
-        //            smtp.Disconnect(true);
-        //            return RedirectToPage("/Register/VerifyRegister");
-        //        }
-        //        else if (response.IsSuccessStatusCode)
-        //        {
-        //            ModelState.AddModelError(string.Empty, "Email already exists");
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError(string.Empty, "Register Failed!!!");
-        //        }
-        //        return Page();
-        //    }
         private int GenerateRandom5DigitNumber()
         {
             Random rand = new Random();

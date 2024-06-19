@@ -26,5 +26,6 @@ namespace MovieBooker.Models
         public bool? Gender { get; set; }
         public DateTime? Dob { get; set; }
         public int? RoleId { get; set; }
+        public string? RoleName { get; set; }
     }
 }

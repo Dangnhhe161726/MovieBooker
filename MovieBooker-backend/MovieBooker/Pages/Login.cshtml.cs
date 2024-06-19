@@ -92,6 +92,15 @@ namespace MovieBooker.Pages
             return RedirectToPage("/Login");
         }
 
+        public IActionResult OnGetLoginGoogle()
+        {
+            var authenticationProperties = new AuthenticationProperties
+            {
+                RedirectUri = Url.Page("/AuthCallback")
+            };
+            return Challenge(authenticationProperties, GoogleDefaults.AuthenticationScheme);
+        }
+
 
 
 

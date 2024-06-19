@@ -46,7 +46,6 @@ namespace MovieBooker_backend.Controllers
             {
                 return Unauthorized();
             }
-
             return Ok(tokens);
         }
 
@@ -80,32 +79,43 @@ namespace MovieBooker_backend.Controllers
             return Ok(tokens);
         }
 
+        [HttpPost("GenerateTokens")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GenerateTokens(User user)
+        {
+            var tokens = await _userRepository.GenerateTokensAsync(user);
+            if (tokens == null)
+            {
+                return Unauthorized();
+            }
+            return Ok(tokens);
+        }
+
         [HttpGet("CheckSignUpEmail/{email}")]
         public IActionResult CheckSignUpEmail(string email)
         {
             var user = _userRepository.GetUserByEmail(email);
             if (user != null)
             {
-                return Ok();
+                return Ok(user);
             }
             else
             {
                 return NotFound();
             }
         }
-
-        [HttpPost("logingoogle")]
-        public IActionResult LoginGoogle(string email)
+        [AllowAnonymous]
+        [HttpPost("LoginGoogle")]
+        public async Task<IActionResult> LoginGoogle( User user)
         {
-            var user = _userRepository.GetUserByEmail(email);
-            if (user == null)
+            var tokens = await _userRepository.LoginGoogle(user);
+            if (tokens == null)
             {
-                user = new User { Email = email, UserName = "Member", RoleId = 3 }; 
-                _userRepository.AddUser(user);
-            }         
-            var tokens = _userRepository.GenerateTokensAsync(user);
+                return Unauthorized();
+            }
             return Ok(tokens);
         }
+
 
 
         [HttpGet("GetAllUser")]

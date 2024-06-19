@@ -15,5 +15,7 @@ namespace MovieBooker_backend.Repositories.UserRepository
         public User GetUserByEmail(string email);
         public void AddUser(User user);
 
+        public Task<TokenResponse> LoginGoogle(User model);
+
     }
 }

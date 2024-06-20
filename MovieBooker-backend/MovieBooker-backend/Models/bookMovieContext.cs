@@ -18,6 +18,7 @@ namespace MovieBooker_backend.Models
 
         public virtual DbSet<Movie> Movies { get; set; } = null!;
         public virtual DbSet<MovieCategory> MovieCategories { get; set; } = null!;
+        public virtual DbSet<MovieImage> MovieImages { get; set; } = null!;
         public virtual DbSet<Payment> Payments { get; set; } = null!;
         public virtual DbSet<Revervation> Revervations { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
@@ -76,6 +77,25 @@ namespace MovieBooker_backend.Models
                 entity.Property(e => e.CategoryId).HasColumnName("categoryId");
 
                 entity.Property(e => e.CategoryName).HasColumnName("categoryName");
+            });
+
+            modelBuilder.Entity<MovieImage>(entity =>
+            {
+                entity.ToTable("MovieImage");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.LinkImage).HasColumnName("linkImage");
+
+                entity.Property(e => e.MovieId)
+                    .HasMaxLength(10)
+                    .HasColumnName("movieId")
+                    .IsFixedLength();
+
+                entity.HasOne(d => d.Movie)
+                    .WithMany(p => p.MovieImages)
+                    .HasForeignKey(d => d.MovieId)
+                    .HasConstraintName("FK_MovieImage_Movies");
             });
 
             modelBuilder.Entity<Payment>(entity =>
@@ -203,6 +223,11 @@ namespace MovieBooker_backend.Models
 
                 entity.Property(e => e.RoomId).HasColumnName("roomId");
 
+                entity.Property(e => e.Row)
+                    .HasMaxLength(10)
+                    .HasColumnName("row")
+                    .IsFixedLength();
+
                 entity.Property(e => e.SeatNumber)
                     .HasMaxLength(10)
                     .HasColumnName("seatNumber")
@@ -256,6 +281,8 @@ namespace MovieBooker_backend.Models
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
                 entity.Property(e => e.Address).HasColumnName("address");
+
+                entity.Property(e => e.Avatar).HasColumnName("avatar");
 
                 entity.Property(e => e.Dob)
                     .HasColumnType("datetime")

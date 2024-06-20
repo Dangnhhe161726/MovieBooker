@@ -7,6 +7,7 @@ namespace MovieBooker_backend.Models
     {
         public Movie()
         {
+            MovieImages = new HashSet<MovieImage>();
             Schedules = new HashSet<Schedule>();
         }
 
@@ -16,8 +17,10 @@ namespace MovieBooker_backend.Models
         public double? Price { get; set; }
         public DateTime? ReleaseDate { get; set; }
         public int? CategoryId { get; set; }
+        public bool? Status { get; set; }
 
         public virtual MovieCategory? Category { get; set; }
+        public virtual ICollection<MovieImage> MovieImages { get; set; }
         public virtual ICollection<Schedule> Schedules { get; set; }
     }
 }

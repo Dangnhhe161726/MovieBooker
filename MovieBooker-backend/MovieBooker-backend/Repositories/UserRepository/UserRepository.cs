@@ -32,6 +32,7 @@ namespace MovieBooker_backend.Repositories.UserRepository
             _redis = redis;
         }
 
+
         public void AddUser(User user)
         {
             _context.Add(user);
@@ -71,6 +72,43 @@ namespace MovieBooker_backend.Repositories.UserRepository
             };
         }
 
+        public async Task<TokenResponse> LoginGoogle(User user)
+        {
+            _context.Users.Add(user);
+            _context.SaveChanges();
+            var users = GetUserByEmail(user.Email);
+            var authClaims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Email, users.Email),
+                new Claim(ClaimTypes.Role, users.Role.RoleName),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+
+            var authenKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]));
+            var token = new JwtSecurityToken(
+                issuer: configuration["JWT:ValidIssuer"],
+                audience: configuration["JWT:ValidAudience"],
+                expires: DateTime.Now.AddMinutes(2),
+                claims: authClaims,
+                signingCredentials: new SigningCredentials(authenKey, SecurityAlgorithms.HmacSha512Signature)
+            );
+            var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
+
+            var db1 = _redis.GetDatabase();
+            await db1.StringSetAsync("savetoken", accessToken, TimeSpan.FromMinutes(2));
+
+            var refreshToken = Guid.NewGuid().ToString();
+            var db = _redis.GetDatabase();
+            await db.StringSetAsync($"RefreshToken:{refreshToken}", users.UserId, TimeSpan.FromDays(7));
+
+            return new TokenResponse
+            {
+                AccessToken = accessToken,
+                RefreshToken = refreshToken
+            };
+
+        }
+
         public IEnumerable<User> GetAllUser()
         {
             var listUser = _context.Users.ToList();
@@ -80,8 +118,17 @@ namespace MovieBooker_backend.Repositories.UserRepository
         public User GetUserByEmail(string email)
         {
             var user = _context.Users
-            .Include(u => u.Role)
-            .FirstOrDefault(u => u.Email == email);
+               .Include(u => u.Role)
+               .Where(u => u.Email == email)
+               .Select(u => new User
+               {
+                   UserId = u.UserId,
+                   UserName = u.UserName,
+                   Email = u.Email,
+                   Role = u.Role 
+               })
+               .FirstOrDefault();
+
             return user;
         }
 
@@ -92,6 +139,7 @@ namespace MovieBooker_backend.Repositories.UserRepository
             .FirstOrDefault(u => u.UserId == userId);
             return user;
         }
+
 
         public async Task<TokenResponse> SignInInternalAsync(SignInModel model)
         {
@@ -135,12 +183,21 @@ namespace MovieBooker_backend.Repositories.UserRepository
 
         public async Task<int> SignUpInternalAsync(SignUpModel model)
         {
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+            if (existingUser != null)
+            {
+                return -1;
+            }
+
             var user = new User
             {
                 UserName = model.UserName,
                 Email = model.Email,
                 Password = model.Password,
                 PhoneNumber = model.PhoneNumber,
+                Address = model.Address,
+                Gender = model.Gender,
+                Dob = model.Dob,
                 RoleId = model.Role,
             };
 

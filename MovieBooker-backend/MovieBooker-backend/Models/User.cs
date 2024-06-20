@@ -19,6 +19,8 @@ namespace MovieBooker_backend.Models
         public bool? Gender { get; set; }
         public DateTime? Dob { get; set; }
         public int? RoleId { get; set; }
+        public string? Avatar { get; set; }
+        public bool? Status { get; set; }
 
         public virtual Role? Role { get; set; }
         public virtual ICollection<Revervation> Revervations { get; set; }

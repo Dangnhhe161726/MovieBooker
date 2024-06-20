@@ -27,7 +27,7 @@ namespace MovieBooker_backend.Controllers
 
         [AllowAnonymous]
         [HttpPost("SignUp")]
-        public async Task<IActionResult> SignUp([FromBody] SignUpModel model)
+        public async Task<IActionResult> SignUp(SignUpModel model)
         {
             var result = await _userRepository.SignUpInternalAsync(model);
             if (result > 0)
@@ -46,7 +46,6 @@ namespace MovieBooker_backend.Controllers
             {
                 return Unauthorized();
             }
-
             return Ok(tokens);
         }
 
@@ -80,45 +79,43 @@ namespace MovieBooker_backend.Controllers
             return Ok(tokens);
         }
 
-        //[HttpGet("ExternalLogin")]
-        //public IActionResult ExternalLogin(string returnUrl = null)
-        //{
-        //    var redirectUrl = Url.Action("ExternalLoginCallback", "User", new { ReturnUrl = returnUrl });
-        //    var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
-        //    return new ChallengeResult("Google", properties);
-        //}
-
-        [HttpGet("ExternalLoginCallback")]
-        public async Task<IActionResult> ExternalLoginCallbackAsync()
+        [HttpPost("GenerateTokens")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GenerateTokens(User user)
         {
-            var authenticateResult = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
-
-            if (!authenticateResult.Succeeded)
-            {
-                return BadRequest();
-            }
-
-            var userEmail = authenticateResult.Principal.FindFirst(ClaimTypes.Email)?.Value;
-            var userName = authenticateResult.Principal.FindFirst(ClaimTypes.Name)?.Value;
-            var phone = authenticateResult.Principal.FindFirst(ClaimTypes.MobilePhone)?.Value;
-
-            User user = _userRepository.GetUserByEmail(userEmail);
-            if (user == null)
-            {
-                user = new User
-                {
-                    Email = userEmail,
-                    UserName = userName,
-                    RoleId = 3,
-                    PhoneNumber = phone,
-                };
-                _userRepository.AddUser(user);
-            }
-
             var tokens = await _userRepository.GenerateTokensAsync(user);
-
+            if (tokens == null)
+            {
+                return Unauthorized();
+            }
             return Ok(tokens);
         }
+
+        [HttpGet("CheckSignUpEmail/{email}")]
+        public IActionResult CheckSignUpEmail(string email)
+        {
+            var user = _userRepository.GetUserByEmail(email);
+            if (user != null)
+            {
+                return Ok(user);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+        [AllowAnonymous]
+        [HttpPost("LoginGoogle")]
+        public async Task<IActionResult> LoginGoogle( User user)
+        {
+            var tokens = await _userRepository.LoginGoogle(user);
+            if (tokens == null)
+            {
+                return Unauthorized();
+            }
+            return Ok(tokens);
+        }
+
 
 
         [HttpGet("GetAllUser")]

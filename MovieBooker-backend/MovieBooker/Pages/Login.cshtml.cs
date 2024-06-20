@@ -62,7 +62,14 @@ namespace MovieBooker.Pages
                 }
             }
 
-            ModelState.AddModelError(string.Empty, "Login failed.");
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                ModelState.AddModelError(string.Empty, "Email or password invalid.");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Login failed.");
+            }
             return Page();
         }
         public async Task<IActionResult> OnGetLogoutAsync()
@@ -85,12 +92,15 @@ namespace MovieBooker.Pages
             return RedirectToPage("/Login");
         }
 
-        public IActionResult OnGetExternalLogin(string provider)
+        public IActionResult OnGetLoginGoogle()
         {
-            var redirectUrl = Url.Page("/ExternalLoginCallback");
-            var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
-            return new ChallengeResult(provider, properties);
+            var authenticationProperties = new AuthenticationProperties
+            {
+                RedirectUri = Url.Page("/AuthCallback")
+            };
+            return Challenge(authenticationProperties, GoogleDefaults.AuthenticationScheme);
         }
+
 
 
 

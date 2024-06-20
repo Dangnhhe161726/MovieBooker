@@ -13,6 +13,8 @@ namespace MovieBooker_backend.Models
         public int SeatId { get; set; }
         public int? RoomId { get; set; }
         public string? SeatNumber { get; set; }
+        public string? Row { get; set; }
+        public bool? Status { get; set; }
 
         public virtual Room? Room { get; set; }
         public virtual ICollection<Revervation> Revervations { get; set; }

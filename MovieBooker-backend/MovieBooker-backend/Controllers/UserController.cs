@@ -44,6 +44,10 @@ namespace MovieBooker_backend.Controllers
             var tokens = await _userRepository.SignInInternalAsync(model);
             if (tokens == null)
             {
+                return NotFound();
+            }
+            if(tokens.AccessToken == "1" && tokens.RefreshToken == "1")
+            {
                 return Unauthorized();
             }
             return Ok(tokens);
@@ -97,7 +101,14 @@ namespace MovieBooker_backend.Controllers
             var user = _userRepository.GetUserByEmail(email);
             if (user != null)
             {
-                return Ok(user);
+                if (user.Status == false)
+                {
+                    return Unauthorized();
+                }
+                else
+                {
+                    return Ok(user);
+                }
             }
             else
             {
@@ -119,7 +130,7 @@ namespace MovieBooker_backend.Controllers
 
 
         [HttpGet("GetAllUser")]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Admin")]
         public IActionResult getAll()
         {
             var user = _userRepository.GetAllUser();

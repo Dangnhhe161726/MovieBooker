@@ -125,7 +125,14 @@ namespace MovieBooker_backend.Repositories.UserRepository
                    UserId = u.UserId,
                    UserName = u.UserName,
                    Email = u.Email,
-                   Role = u.Role 
+                   PhoneNumber = u.PhoneNumber,
+                   Address = u.Address,
+                   Gender = u.Gender,
+                   Dob = u.Dob,
+                   Role = u.Role, 
+                   Status = u.Status,
+                   Password = u.Password, 
+                   Avatar = u.Avatar
                })
                .FirstOrDefault();
 
@@ -135,8 +142,23 @@ namespace MovieBooker_backend.Repositories.UserRepository
         public User GetUserById(int userId)
         {
             var user = _context.Users
-            .Include(u => u.Role)
-            .FirstOrDefault(u => u.UserId == userId);
+          .Include(u => u.Role)
+          .Where(u => u.UserId == userId)
+          .Select(u => new User
+          {
+              UserId = u.UserId,
+              UserName = u.UserName,
+              Email = u.Email,
+              PhoneNumber = u.PhoneNumber,
+              Address = u.Address,
+              Gender = u.Gender,
+              Dob = u.Dob,
+              Role = u.Role,
+              Status = u.Status,
+              Password = u.Password,
+              Avatar = u.Avatar
+          })
+          .FirstOrDefault();
             return user;
         }
 
@@ -148,6 +170,14 @@ namespace MovieBooker_backend.Repositories.UserRepository
             if (user == null)
             {
                 return null;
+            }
+            if(user.Status == false)
+            {
+                return new TokenResponse
+                {
+                    AccessToken = "1",
+                    RefreshToken = "1"
+                };
             }
 
             var authClaims = new List<Claim>
@@ -199,6 +229,7 @@ namespace MovieBooker_backend.Repositories.UserRepository
                 Gender = model.Gender,
                 Dob = model.Dob,
                 RoleId = model.Role,
+                Status = model.Status
             };
 
             _context.Users.Add(user);

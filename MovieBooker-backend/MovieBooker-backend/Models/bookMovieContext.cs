@@ -43,14 +43,19 @@ namespace MovieBooker_backend.Models
         {
             modelBuilder.Entity<Movie>(entity =>
             {
-                entity.Property(e => e.MovieId)
-                    .HasMaxLength(10)
-                    .HasColumnName("movieId")
-                    .IsFixedLength();
+                entity.Property(e => e.MovieId).HasColumnName("movieId");
 
                 entity.Property(e => e.CategoryId).HasColumnName("categoryId");
 
                 entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Director)
+                    .HasMaxLength(50)
+                    .HasColumnName("director");
+
+                entity.Property(e => e.Durations)
+                    .HasMaxLength(50)
+                    .HasColumnName("durations");
 
                 entity.Property(e => e.MovieTitle)
                     .HasMaxLength(50)
@@ -61,6 +66,8 @@ namespace MovieBooker_backend.Models
                 entity.Property(e => e.ReleaseDate)
                     .HasColumnType("datetime")
                     .HasColumnName("releaseDate");
+
+                entity.Property(e => e.Trailer).HasColumnName("trailer");
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Movies)
@@ -87,10 +94,7 @@ namespace MovieBooker_backend.Models
 
                 entity.Property(e => e.LinkImage).HasColumnName("linkImage");
 
-                entity.Property(e => e.MovieId)
-                    .HasMaxLength(10)
-                    .HasColumnName("movieId")
-                    .IsFixedLength();
+                entity.Property(e => e.MovieId).HasColumnName("movieId");
 
                 entity.HasOne(d => d.Movie)
                     .WithMany(p => p.MovieImages)
@@ -118,6 +122,8 @@ namespace MovieBooker_backend.Models
 
                 entity.Property(e => e.ReservationId).HasColumnName("reservationId");
 
+                entity.Property(e => e.MovieId).HasColumnName("movieId");
+
                 entity.Property(e => e.ReservationDate)
                     .HasColumnType("datetime")
                     .HasColumnName("reservationDate");
@@ -129,6 +135,11 @@ namespace MovieBooker_backend.Models
                 entity.Property(e => e.TimeSlotId).HasColumnName("timeSlotId");
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.HasOne(d => d.Movie)
+                    .WithMany(p => p.Revervations)
+                    .HasForeignKey(d => d.MovieId)
+                    .HasConstraintName("FK_Revervations_Movies");
 
                 entity.HasOne(d => d.Seat)
                     .WithMany(p => p.Revervations)
@@ -180,22 +191,13 @@ namespace MovieBooker_backend.Models
             {
                 entity.HasKey(e => e.SchedulesId);
 
-                entity.Property(e => e.SchedulesId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("schedulesId");
+                entity.Property(e => e.SchedulesId).HasColumnName("schedulesId");
 
-                entity.Property(e => e.EndDate)
+                entity.Property(e => e.MovieId).HasColumnName("movieId");
+
+                entity.Property(e => e.ScheduleDate)
                     .HasColumnType("datetime")
-                    .HasColumnName("endDate");
-
-                entity.Property(e => e.MovieId)
-                    .HasMaxLength(10)
-                    .HasColumnName("movieId")
-                    .IsFixedLength();
-
-                entity.Property(e => e.StartDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("startDate");
+                    .HasColumnName("scheduleDate");
 
                 entity.Property(e => e.TheaterId).HasColumnName("theaterId");
 
@@ -268,11 +270,13 @@ namespace MovieBooker_backend.Models
                 entity.Property(e => e.TimeSlotId).HasColumnName("timeSlotId");
 
                 entity.Property(e => e.EndTime)
-                    .HasColumnType("datetime")
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
                     .HasColumnName("endTime");
 
                 entity.Property(e => e.StartTime)
-                    .HasColumnType("datetime")
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
                     .HasColumnName("startTime");
             });
 

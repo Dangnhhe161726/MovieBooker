@@ -128,7 +128,6 @@ namespace MovieBooker_backend.Controllers
         }
 
 
-
         [HttpGet("GetAllUser")]
         [Authorize(Roles = "Admin")]
         public IActionResult getAll()

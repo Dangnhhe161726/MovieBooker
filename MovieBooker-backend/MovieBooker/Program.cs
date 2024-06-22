@@ -1,8 +1,10 @@
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using MovieBooker.Middleware;
 using StackExchange.Redis;
+using MovieBooker.Models;
 
 namespace MovieBooker
 {
@@ -19,6 +21,7 @@ namespace MovieBooker
             builder.Services.AddCors();
             builder.Services.AddSession();
 
+            builder.Services.AddScoped<IAuthenService,AuthenService>();
 
             builder.Services.AddAuthentication(options =>
             {
@@ -29,10 +32,10 @@ namespace MovieBooker
                .AddCookie()
                .AddGoogle(options =>
              {
-                options.ClientId = "your-client-id";
-                options.ClientSecret = "your-client-secret";
+                options.ClientId = "";
+                options.ClientSecret = "";
                 options.CallbackPath = "/signin-google";
-            } );
+            });
 
 
 
@@ -62,7 +65,6 @@ namespace MovieBooker
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();
-            app.UseHttpsRedirection();
             app.UseMiddleware<TokenRefreshMiddleware>();
 
             app.MapRazorPages();

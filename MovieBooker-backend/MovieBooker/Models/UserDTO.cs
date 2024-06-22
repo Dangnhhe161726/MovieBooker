@@ -12,5 +12,7 @@
         public DateTime? Dob { get; set; }
         public int? RoleId { get; set; }
         public Role Role { get; set; }
+        public string? Avatar { get; set; }
+        public bool? Status { get; set; }
     }
 }

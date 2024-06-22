@@ -76,6 +76,7 @@ namespace MovieBooker_backend
 
             builder.Services.AddDbContext<bookMovieContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
             builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             builder.Services.AddAuthentication(options =>
@@ -97,9 +98,8 @@ namespace MovieBooker_backend
                     ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
                 };
-
-
             });
+
 
 
 

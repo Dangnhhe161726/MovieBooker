@@ -111,7 +111,20 @@ namespace MovieBooker_backend.Repositories.UserRepository
 
         public IEnumerable<User> GetAllUser()
         {
-            var listUser = _context.Users.ToList();
+            var listUser = _context.Users.Include(u => u.Role).Select(u => new User
+            {
+                UserId = u.UserId,
+                UserName = u.UserName,
+                Email = u.Email,
+                PhoneNumber = u.PhoneNumber,
+                Address = u.Address,
+                Gender = u.Gender,
+                Dob = u.Dob,
+                Role = u.Role,
+                Status = u.Status,
+                Password = u.Password,
+                Avatar = u.Avatar
+            }).ToList();
             return listUser;
         }
 

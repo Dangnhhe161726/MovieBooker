@@ -17,6 +17,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.OData;
 using Microsoft.OData.ModelBuilder;
 using MovieBooker_backend.DTO;
+using MovieBooker_backend.Repositories.ScheduleRepository;
+using MovieBooker_backend.Repositories.TimeSlotRepository;
 
 namespace MovieBooker_backend
 {
@@ -32,6 +34,7 @@ namespace MovieBooker_backend
 
             var modelBuilder = new ODataConventionModelBuilder();
             modelBuilder.EntitySet<UserDTO>("User");
+            modelBuilder.EntitySet<ScheduleDTO>("Schedule");
             builder.Services.AddControllers().AddOData(opt => opt
                 .Select()
                 .Expand()
@@ -95,6 +98,8 @@ namespace MovieBooker_backend
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
+            builder.Services.AddScoped<ITimeSlotRepository, TimeSlotRepository>();
 
             builder.Services.AddAuthentication(options =>
             {

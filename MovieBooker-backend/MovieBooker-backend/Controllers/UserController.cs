@@ -151,5 +151,11 @@ namespace MovieBooker_backend.Controllers
             _userRepository.ChangeStatusUser(id);
             return Ok();
         }
+
+        [HttpPut("ResetPassword/{email}/{password}")]
+        public IActionResult ResetPassword(string email, string password) { 
+            _userRepository.ResetPasswordUser(email, password);
+            return Ok();       
+        }
     }
 }

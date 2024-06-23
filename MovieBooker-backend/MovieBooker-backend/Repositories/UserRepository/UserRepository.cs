@@ -287,5 +287,16 @@ namespace MovieBooker_backend.Repositories.UserRepository
                 _context.SaveChanges();
             }
         }
+
+        public void ResetPasswordUser(string email, string password)
+        {
+            var existingUser = _context.Users.FirstOrDefault(u => u.Email == email); 
+            if (existingUser != null)
+            {
+                existingUser.Password = password;   
+                _context.Users.Update(existingUser); 
+                _context.SaveChanges();
+            }
+        }
     }
 }

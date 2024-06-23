@@ -15,6 +15,9 @@ namespace MovieBooker_backend.Repositories.UserRepository
         public User GetUserByEmail(string email);
         public void AddUser(User user);
         public void UpdateUser(int id, UserDTO user);
+
+        public void ResetPasswordUser(string password, string email);
+
         public void ChangeStatusUser(int id);
         public Task<TokenResponse> LoginGoogle(User model);
 

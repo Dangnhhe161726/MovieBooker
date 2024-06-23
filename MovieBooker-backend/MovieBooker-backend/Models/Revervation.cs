@@ -16,11 +16,10 @@ namespace MovieBooker_backend.Models
         public int? TimeSlotId { get; set; }
         public int? SeatId { get; set; }
         public DateTime? ReservationDate { get; set; }
-        public int? StatusId { get; set; }
+        public bool? Status { get; set; }
 
         public virtual Movie? Movie { get; set; }
         public virtual Seat? Seat { get; set; }
-        public virtual Status? Status { get; set; }
         public virtual TimeSlot? TimeSlot { get; set; }
         public virtual User? User { get; set; }
         public virtual ICollection<Payment> Payments { get; set; }

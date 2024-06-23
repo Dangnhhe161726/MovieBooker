@@ -19,13 +19,13 @@ namespace MovieBooker_backend.Models
         public virtual DbSet<Movie> Movies { get; set; } = null!;
         public virtual DbSet<MovieCategory> MovieCategories { get; set; } = null!;
         public virtual DbSet<MovieImage> MovieImages { get; set; } = null!;
+        public virtual DbSet<MovieStatus> MovieStatuses { get; set; } = null!;
         public virtual DbSet<Payment> Payments { get; set; } = null!;
         public virtual DbSet<Revervation> Revervations { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<Room> Rooms { get; set; } = null!;
         public virtual DbSet<Schedule> Schedules { get; set; } = null!;
         public virtual DbSet<Seat> Seats { get; set; } = null!;
-        public virtual DbSet<Status> Statuses { get; set; } = null!;
         public virtual DbSet<Theater> Theaters { get; set; } = null!;
         public virtual DbSet<TimeSlot> TimeSlots { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
@@ -57,6 +57,8 @@ namespace MovieBooker_backend.Models
                     .HasMaxLength(50)
                     .HasColumnName("durations");
 
+                entity.Property(e => e.Enable).HasColumnName("enable");
+
                 entity.Property(e => e.MovieTitle)
                     .HasMaxLength(50)
                     .HasColumnName("movieTitle");
@@ -67,12 +69,19 @@ namespace MovieBooker_backend.Models
                     .HasColumnType("datetime")
                     .HasColumnName("releaseDate");
 
+                entity.Property(e => e.StatusId).HasColumnName("statusId");
+
                 entity.Property(e => e.Trailer).HasColumnName("trailer");
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Movies)
                     .HasForeignKey(d => d.CategoryId)
                     .HasConstraintName("FK_Movies_MovieCategory");
+
+                entity.HasOne(d => d.Status)
+                    .WithMany(p => p.Movies)
+                    .HasForeignKey(d => d.StatusId)
+                    .HasConstraintName("FK_Movies_MovieStatus");
             });
 
             modelBuilder.Entity<MovieCategory>(entity =>
@@ -100,6 +109,19 @@ namespace MovieBooker_backend.Models
                     .WithMany(p => p.MovieImages)
                     .HasForeignKey(d => d.MovieId)
                     .HasConstraintName("FK_MovieImage_Movies");
+            });
+
+            modelBuilder.Entity<MovieStatus>(entity =>
+            {
+                entity.HasKey(e => e.StatusId);
+
+                entity.ToTable("MovieStatus");
+
+                entity.Property(e => e.StatusId).HasColumnName("statusId");
+
+                entity.Property(e => e.StatusName)
+                    .HasMaxLength(50)
+                    .HasColumnName("statusName");
             });
 
             modelBuilder.Entity<Payment>(entity =>
@@ -130,7 +152,7 @@ namespace MovieBooker_backend.Models
 
                 entity.Property(e => e.SeatId).HasColumnName("seatId");
 
-                entity.Property(e => e.StatusId).HasColumnName("statusId");
+                entity.Property(e => e.Status).HasColumnName("status");
 
                 entity.Property(e => e.TimeSlotId).HasColumnName("timeSlotId");
 
@@ -145,11 +167,6 @@ namespace MovieBooker_backend.Models
                     .WithMany(p => p.Revervations)
                     .HasForeignKey(d => d.SeatId)
                     .HasConstraintName("FK_Revervations_Seats");
-
-                entity.HasOne(d => d.Status)
-                    .WithMany(p => p.Revervations)
-                    .HasForeignKey(d => d.StatusId)
-                    .HasConstraintName("FK_Revervations_Status");
 
                 entity.HasOne(d => d.TimeSlot)
                     .WithMany(p => p.Revervations)
@@ -239,17 +256,6 @@ namespace MovieBooker_backend.Models
                     .WithMany(p => p.Seats)
                     .HasForeignKey(d => d.RoomId)
                     .HasConstraintName("FK_Seats_Rooms");
-            });
-
-            modelBuilder.Entity<Status>(entity =>
-            {
-                entity.ToTable("Status");
-
-                entity.Property(e => e.StatusId).HasColumnName("statusId");
-
-                entity.Property(e => e.StatusName)
-                    .HasMaxLength(50)
-                    .HasColumnName("statusName");
             });
 
             modelBuilder.Entity<Theater>(entity =>

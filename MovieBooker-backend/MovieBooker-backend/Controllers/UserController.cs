@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using Microsoft.EntityFrameworkCore;
 using MovieBooker_backend.DTO;
 using MovieBooker_backend.Models;
@@ -127,13 +128,28 @@ namespace MovieBooker_backend.Controllers
             return Ok(tokens);
         }
 
-
+        [EnableQuery]
         [HttpGet("GetAllUser")]
         [Authorize(Roles = "Admin")]
-        public IActionResult getAll()
+        public IActionResult Get()
         {
             var user = _userRepository.GetAllUser();
             return Ok(user);
+        }
+
+        [HttpPut("UpdateUser/{id}")]
+        public IActionResult UpdateUser(int id, UserDTO updatedUser)
+        {
+            _userRepository.UpdateUser(id, updatedUser);
+            return Ok();
+        }
+
+        [HttpPut("ChangeStatusUser/{id}")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult ChangeStatusUser(int id)
+        {
+            _userRepository.ChangeStatusUser(id);
+            return Ok();
         }
     }
 }

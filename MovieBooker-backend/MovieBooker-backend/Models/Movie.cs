@@ -21,9 +21,11 @@ namespace MovieBooker_backend.Models
         public string? Trailer { get; set; }
         public DateTime? ReleaseDate { get; set; }
         public int? CategoryId { get; set; }
-        public bool? Status { get; set; }
+        public bool? Enable { get; set; }
+        public int? StatusId { get; set; }
 
         public virtual MovieCategory? Category { get; set; }
+        public virtual MovieStatus? Status { get; set; }
         public virtual ICollection<MovieImage> MovieImages { get; set; }
         public virtual ICollection<Revervation> Revervations { get; set; }
         public virtual ICollection<Schedule> Schedules { get; set; }

@@ -14,6 +14,9 @@ using StackExchange.Redis;
 using System.Text;
 using CloudinaryDotNet;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.OData;
+using Microsoft.OData.ModelBuilder;
+using MovieBooker_backend.DTO;
 
 namespace MovieBooker_backend
 {
@@ -26,6 +29,20 @@ namespace MovieBooker_backend
             // Add services to the container.
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
+
+            var modelBuilder = new ODataConventionModelBuilder();
+            modelBuilder.EntitySet<UserDTO>("User");
+            builder.Services.AddControllers().AddOData(opt => opt
+                .Select()
+                .Expand()
+                .Filter()
+                .OrderBy()
+                .Count()
+                .SetMaxTop(100)
+            .AddRouteComponents("odata", modelBuilder.GetEdmModel())
+            );
+
+
             builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
             builder.Services.AddSingleton(sp =>
              {

@@ -1,4 +1,6 @@
-﻿namespace MovieBooker.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MovieBooker.Models
 {
     public class UserDTO
     {

@@ -109,9 +109,9 @@ namespace MovieBooker_backend.Repositories.UserRepository
 
         }
 
-        public IEnumerable<User> GetAllUser()
+        public IEnumerable<UserDTO> GetAllUser()
         {
-            var listUser = _context.Users.Include(u => u.Role).Select(u => new User
+            var listUser = _context.Users.Include(u => u.Role).Select(u => new UserDTO
             {
                 UserId = u.UserId,
                 UserName = u.UserName,
@@ -248,6 +248,44 @@ namespace MovieBooker_backend.Repositories.UserRepository
             _context.Users.Add(user);
             var result = await _context.SaveChangesAsync();
             return result;
+        }
+
+        public void UpdateUser(int id, UserDTO user)
+        {
+           var existingUser = _context.Users.FirstOrDefault(u=>u.UserId == id);
+          if (existingUser != null)
+            {
+                existingUser.UserId = user.UserId;
+                existingUser.Email = user.Email;
+                existingUser.Password = user.Password;
+                existingUser.PhoneNumber = user.PhoneNumber;
+                existingUser.Address = user.Address;
+                existingUser.Gender = user.Gender;
+                existingUser.Avatar = user.Avatar;
+                existingUser.Dob = user.Dob;
+                existingUser.Status = user.Status;
+                existingUser.Role = user.Role;
+                _context.Users.Update(existingUser);
+                _context.SaveChanges();
+            }
+        }
+
+        public void ChangeStatusUser(int id)
+        {
+            var existingUser = _context.Users.FirstOrDefault(u => u.UserId == id);
+            if (existingUser != null)
+            {
+                if(existingUser.Status == true)
+                {
+                    existingUser.Status = false;
+                }
+                else
+                {
+                    existingUser.Status = true;
+                }
+                _context.Users.Update(existingUser);
+                _context.SaveChanges();
+            }
         }
     }
 }

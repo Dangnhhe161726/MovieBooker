@@ -109,8 +109,8 @@ table.table td a {
         color: #2196F3;
     }
 
-    table.table td a.delete {
-        color: #F44336;
+    table.table td a.unlock {
+        color: #18e20f;
     }
 
 table.table td i {

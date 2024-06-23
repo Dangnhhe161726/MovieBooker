@@ -1,0 +1,88 @@
+﻿@page
+@model MovieBooker.Pages.Admin.ManageUserDetailModel
+@{
+}
+<style>
+
+    .form-control:focus {
+        box-shadow: none;
+        border-color: #BA68C8
+    }
+
+    .profile-button {
+        background: rgb(99, 39, 120);
+        box-shadow: none;
+        border: none
+    }
+
+        .profile-button:hover {
+            background: #682773
+        }
+
+        .profile-button:focus {
+            background: #682773;
+            box-shadow: none
+        }
+
+        .profile-button:active {
+            background: #682773;
+            box-shadow: none
+        }
+
+    .back:hover {
+        color: #682773;
+        cursor: pointer
+    }
+
+    .labels {
+        font-size: 11px
+    }
+
+    .add-experience:hover {
+        background: #BA68C8;
+        color: #fff;
+        cursor: pointer;
+        border: solid 1px #BA68C8
+    }
+</style>
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        @foreach (var item in Model.Users)
+        {
+
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <img class="rounded-circle mt-5" width="150px"
+                         src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                    <span class="font-weight-bold">@item.UserName</span><span class="text-black-50">@item.Email</span><span> </span>
+                </div>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Profile Information User</h4>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-12"><label class="labels">User Name</label><input type="text" class="form-control" value="@item.UserName" readonly></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" value="@item.Email" readonly></div>
+                        <div class="col-md-12"><label class="labels">Phone Number</label><input type="text" class="form-control" value="@(item.PhoneNumber ?? "No Data")" readonly></div>
+                        <div class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control" value="@(item.Address ?? "No Data")" readonly></div>
+                        <div class="col-md-12">
+                            <label class="labels">Gender</label>
+                            <input type="text" class="form-control" value="@(item.Gender.HasValue && item.Gender.Value ? "Male" : "Female")" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><label class="labels">Date Of Birth</label><input type="text" class="form-control" value="@(item.Dob.HasValue ? item.Dob.Value.ToString("dd/MM/yyyy") : "No Data")" readonly></div>
+                    <div class="col-md-12"><label class="labels">User Role</label><input type="text" class="form-control" value="@(item.Role?.RoleName ?? "No Data")" readonly></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+            </div>
+        }
+    </div>
+</div>
+</div>
+</div>

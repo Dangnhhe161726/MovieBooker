@@ -1,6 +1,7 @@
 ﻿@page
 @model MovieBooker.Pages.Admin.ManageUserDetailModel
 @{
+
 }
 <style>
 
@@ -56,6 +57,7 @@
                     <img class="rounded-circle mt-5" width="150px"
                          src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
                     <span class="font-weight-bold">@item.UserName</span><span class="text-black-50">@item.Email</span><span> </span>
+                    <input type="hidden" value="@item.UserId" name="id" />
                 </div>
             </div>
             <div class="col-md-5 border-right">
@@ -63,20 +65,43 @@
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h4 class="text-right">Profile Information User</h4>
                     </div>
-                    <div class="row mt-2">
-                        <div class="col-md-12"><label class="labels">User Name</label><input type="text" class="form-control" value="@item.UserName" readonly></div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" value="@item.Email" readonly></div>
-                        <div class="col-md-12"><label class="labels">Phone Number</label><input type="text" class="form-control" value="@(item.PhoneNumber ?? "No Data")" readonly></div>
-                        <div class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control" value="@(item.Address ?? "No Data")" readonly></div>
-                        <div class="col-md-12">
-                            <label class="labels">Gender</label>
-                            <input type="text" class="form-control" value="@(item.Gender.HasValue && item.Gender.Value ? "Male" : "Female")" readonly>
+                    <form method="post">
+                        <div class="row mt-2">
+                            @if (TempData["SuccessMessage"] != null)
+                            {
+                                <label style="color: forestgreen; font-size: 15px" class="labels">
+                                    @TempData["SuccessMessage"]
+                                </label>
+                            }
+                            <div class="col-md-6">
+                                <label class="labels">User Role</label>
+                                <select class="form-control" id="userRole" name="userRole">
+                                    @foreach (var role in Model.Roles)
+                                    {
+                                        var selected = item.Role?.RoleName == role.RoleName ? "selected" : "";
+                                        @Html.Raw($"<option value='{role.RoleId}' {selected}>{role.RoleName}</option>")
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-6" style="margin-top: 24px;"><button class="btn btn-primary profile-button" type="submit">Change Role</button></div>
                         </div>
-                    </div>
-                    <div class="col-md-12"><label class="labels">Date Of Birth</label><input type="text" class="form-control" value="@(item.Dob.HasValue ? item.Dob.Value.ToString("dd/MM/yyyy") : "No Data")" readonly></div>
-                    <div class="col-md-12"><label class="labels">User Role</label><input type="text" class="form-control" value="@(item.Role?.RoleName ?? "No Data")" readonly></div>
+                        <div class="col-md-12">
+
+                            <div class="row mt-2">
+                                <div class="col-md-12"><label class="labels">User Name</label><input asp-for="UserDTO.UserName" type="text" class="form-control" value="@item.UserName" readonly></div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12"><label class="labels">Email</label><input asp-for="UserDTO.Email" type="text" class="form-control" value="@item.Email" readonly></div>
+                                <div class="col-md-12"><label class="labels">Phone Number</label><input asp-for="UserDTO.PhoneNumber" type="text" class="form-control" value="@(item.PhoneNumber ?? "No Data")" readonly></div>
+                                <div class="col-md-12"><label class="labels">Address</label><input type="text" asp-for="UserDTO.Address" class="form-control" value="@(item.Address ?? "No Data")" readonly></div>
+                                <div class="col-md-12">
+                                    <label class="labels">Gender</label>
+                                    <input type="text" class="form-control" asp-for="UserDTO.Gender" value="@(item.Gender.HasValue && item.Gender.Value ? "Male" : "Female")" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-12"><label class="labels">Date Of Birth</label><input asp-for="UserDTO.Dob" type="text" class="form-control" value="@(item.Dob.HasValue ? item.Dob.Value.ToString("dd/MM/yyyy") : "No Data")" readonly></div>
+
+                    </form>
                 </div>
             </div>
             <div class="col-md-4">

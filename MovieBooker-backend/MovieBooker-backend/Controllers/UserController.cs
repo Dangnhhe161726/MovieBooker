@@ -137,10 +137,10 @@ namespace MovieBooker_backend.Controllers
             return Ok(user);
         }
 
-        [HttpPut("UpdateUser/{id}")]
-        public IActionResult UpdateUser(int id, UserDTO updatedUser)
+        [HttpPut("UpdateUser/{email}")]
+        public IActionResult UpdateUser(string email, UpdateUserDTO updatedUser)
         {
-            _userRepository.UpdateUser(id, updatedUser);
+            _userRepository.UpdateUser(email, updatedUser);
             return Ok();
         }
 

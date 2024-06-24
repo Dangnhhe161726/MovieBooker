@@ -13,11 +13,11 @@
         <div class="signin-content">
             <div class="signin-image">
                 <figure><img src="~/images/signin-image.jpg" alt="sing up image"></figure>
-                <a asp-page="/Register/Register" class="signup-image-link">Create an account</a>
+              
             </div>
 
             <div class="signin-form">
-                <h2 class="form-title">Login</h2>
+                <h2 class="form-title">Welcome CGV Cinema</h2>
                 <form method="POST" class="register-form" id="login-form">
                     <div class="form-group">
                         <label for="email"><i class="zmdi zmdi-email"></i></label>
@@ -28,7 +28,8 @@
                         <input type="password" asp-for="User.Password" id="your_pass" placeholder="Password" />
                     </div>
                     <div class="form-group">
-                        <a asp-page="/ForgotPassword/ForgotPassword">Forgot Password?</a>
+                        <a asp-page="/ForgotPassword/ForgotPassword">Forgot Password?</a>  
+                        <a asp-page="/Register/Register">Sign Up?</a>
                     </div>
                     <div class="form-group">
                         <div asp-validation-summary="All" class="text-danger"></div>

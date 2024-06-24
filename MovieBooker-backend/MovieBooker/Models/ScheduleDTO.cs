@@ -7,7 +7,7 @@
         public int? TheaterId { get; set; }
         public int? TimeSlotId { get; set; }
         public DateTime? ScheduleDate { get; set; }
-        //public Movie? Movie { get; set; }
-        //public TimeSlot? TimeSlot { get; set; }
+        public string? MovieTitle { get; set; }
+        public string? Durations { get; set; }
     }
 }

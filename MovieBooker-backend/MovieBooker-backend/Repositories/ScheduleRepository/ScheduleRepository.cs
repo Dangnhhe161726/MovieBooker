@@ -21,7 +21,8 @@ namespace MovieBooker_backend.Repositories.ScheduleRepository
                     TheaterId = s.TheaterId,
                     TimeSlotId = s.TimeSlotId,
                     ScheduleDate = s.ScheduleDate,
-                    //Movie = s.Movie,
+                    MovieTitle = s.Movie.MovieTitle,
+                    Durations = s.Movie.Durations
                     //TimeSlot = s.TimeSlot,
                 }).ToList();
             return schedules;

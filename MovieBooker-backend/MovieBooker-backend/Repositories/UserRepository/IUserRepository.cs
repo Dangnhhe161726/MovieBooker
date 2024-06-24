@@ -14,7 +14,7 @@ namespace MovieBooker_backend.Repositories.UserRepository
         public User GetUserById(int userId);
         public User GetUserByEmail(string email);
         public void AddUser(User user);
-        public void UpdateUser(int id, UserDTO user);
+        public void UpdateUser(string email, UpdateUserDTO user);
 
         public void ResetPasswordUser(string password, string email);
 

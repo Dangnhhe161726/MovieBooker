@@ -17,7 +17,6 @@ namespace MovieBooker_backend.DTO
         public string? Avatar { get; set; }
         public bool? Status { get; set; }
         public Role? Role { get; set; }
-
-        //public int? RoleId = 3;
-    }
+        public int? RoleId { get; set; }
+}
 }

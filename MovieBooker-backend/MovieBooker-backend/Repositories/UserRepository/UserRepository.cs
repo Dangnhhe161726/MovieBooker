@@ -123,7 +123,8 @@ namespace MovieBooker_backend.Repositories.UserRepository
                 Role = u.Role,
                 Status = u.Status,
                 Password = u.Password,
-                Avatar = u.Avatar
+                Avatar = u.Avatar,
+                RoleId = u.RoleId,
             }).ToList();
             return listUser;
         }
@@ -250,21 +251,18 @@ namespace MovieBooker_backend.Repositories.UserRepository
             return result;
         }
 
-        public void UpdateUser(int id, UserDTO user)
+        public void UpdateUser(string email, UpdateUserDTO user)
         {
-           var existingUser = _context.Users.FirstOrDefault(u=>u.UserId == id);
+           var existingUser = _context.Users.FirstOrDefault(u=>u.Email == email);
           if (existingUser != null)
             {
-                existingUser.UserId = user.UserId;
-                existingUser.Email = user.Email;
-                existingUser.Password = user.Password;
+                existingUser.UserName = user.UserName;
                 existingUser.PhoneNumber = user.PhoneNumber;
                 existingUser.Address = user.Address;
                 existingUser.Gender = user.Gender;
                 existingUser.Avatar = user.Avatar;
                 existingUser.Dob = user.Dob;
-                existingUser.Status = user.Status;
-                existingUser.Role = user.Role;
+                existingUser.RoleId = user.RoleId;
                 _context.Users.Update(existingUser);
                 _context.SaveChanges();
             }

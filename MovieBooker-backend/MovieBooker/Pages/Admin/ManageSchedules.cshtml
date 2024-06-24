@@ -13,7 +13,7 @@
         <input type="date" id="start-date" name="StartDate" >
         <label for="end-date">End Date:</label>
         <input type="date" id="end-date" name="EndDate">
-        <button style="background-color: #d38311; border-radius:10px" type="submit" id="apply-date">Apply Date</button>
+        <button style="background-color: #FFD800; border-radius:10px" type="submit" id="apply-date">Apply Date</button>
     </div>
 </form>
 
@@ -42,7 +42,7 @@
 </script>
 
 <div class="wrapper">
-    <h1>Manage Movie Calendar</h1>
+    <a asp-page="/Admin/CreateSchedule">Create Schedule Movie</a>
     <div class="sticky-header">
         <span>Calendar</span>
     </div>
@@ -79,8 +79,10 @@
                         {
                             <div class="entry">
                                 <div class="details">
-                                    <h3>@schedule.MovieId</h3>
-                                 @*   <p>@schedule.Details</p>*@
+                                    <p>Movie Name:</p>
+                                    <h3 style="background: #473BBE; color:white">@schedule.MovieTitle</h3>
+                                    <p>Durations: @schedule.Durations</p>
+                                    <p>Date: @schedule.ScheduleDate.Value.ToString("dd/MM/yyyy")</p>
                                 </div>
                             </div>
                         }

@@ -78,6 +78,10 @@ namespace MovieBooker.Pages.Admin
             }
             return datesInRange;
         }
+        public async Task<IActionResult> OnGetCreateScheduleAsync()
+        {
+            return RedirectToPage("/Admin/CreateSchedule");
+        }
 
         public class SelectDateModel
         {

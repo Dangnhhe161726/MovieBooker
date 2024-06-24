@@ -19,6 +19,7 @@ using Microsoft.OData.ModelBuilder;
 using MovieBooker_backend.DTO;
 using MovieBooker_backend.Repositories.ScheduleRepository;
 using MovieBooker_backend.Repositories.TimeSlotRepository;
+using MovieBooker_backend.Repositories.RoleRepository;
 
 namespace MovieBooker_backend
 {
@@ -100,6 +101,7 @@ namespace MovieBooker_backend
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
             builder.Services.AddScoped<ITimeSlotRepository, TimeSlotRepository>();
+            builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 
             builder.Services.AddAuthentication(options =>
             {

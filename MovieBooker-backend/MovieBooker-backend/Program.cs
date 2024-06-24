@@ -14,6 +14,11 @@ using StackExchange.Redis;
 using System.Text;
 using CloudinaryDotNet;
 using Microsoft.Extensions.Options;
+using MovieBooker_backend.Repositories.ReservationRepository;
+using Microsoft.AspNetCore.OData;
+using System.Reflection.Emit;
+using Microsoft.OData.ModelBuilder;
+using MovieBooker_backend.DTO;
 
 namespace MovieBooker_backend
 {
@@ -36,6 +41,7 @@ namespace MovieBooker_backend
                      cloudinarySettings.ApiSecret));
              });
             builder.Services.AddTransient<ICloudinaryRepository, CloudinaryRepository>();
+            builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
             builder.Services.AddSwaggerGen(option =>
             {
                 option.SwaggerDoc("v1", new OpenApiInfo { Title = "Movie API", Version = "v1" });
@@ -104,6 +110,20 @@ namespace MovieBooker_backend
 
 
             builder.Services.AddAuthorization();
+
+            //Add OData Service
+            var modelBuilder = new ODataConventionModelBuilder();
+            var entitySet = modelBuilder.EntitySet<ReservationDTO>("Reservations");
+            entitySet.EntityType.HasKey(entity => entity.ReservationId);
+            builder.Services.AddControllers().AddOData(options =>
+                options.Select()
+                .Filter()
+                .OrderBy()
+                .Expand()
+                .Count()
+                .SetMaxTop(null)
+                .AddRouteComponents("odata",modelBuilder.GetEdmModel())
+                );
 
             var app = builder.Build();
 

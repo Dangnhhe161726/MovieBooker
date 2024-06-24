@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace MovieBooker_backend.Models
 {
-    public partial class Status
+    public partial class MovieStatus
     {
-        public Status()
+        public MovieStatus()
         {
-            Revervations = new HashSet<Revervation>();
+            Movies = new HashSet<Movie>();
         }
 
         public int StatusId { get; set; }
         public string? StatusName { get; set; }
 
-        public virtual ICollection<Revervation> Revervations { get; set; }
+        public virtual ICollection<Movie> Movies { get; set; }
     }
 }

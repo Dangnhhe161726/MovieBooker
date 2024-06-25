@@ -34,10 +34,11 @@ namespace MovieBooker_backend.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var ConnectionString = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetConnectionString("DefaultConnection");
-                optionsBuilder.UseSqlServer(ConnectionString);
-            }
-        }
+				var ConnectionString = new ConfigurationBuilder()
+						.AddJsonFile("appsettings.json").Build().GetConnectionString("DefaultConnection");
+				optionsBuilder.UseSqlServer(ConnectionString);
+			}
+		}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -399,3 +399,25 @@ FodyWeavers.xsd
 MovieBooker-backend/.vs/MovieBooker-backend/v17/.suo
 MovieBooker-backend/MovieBooker-backend/bin/Debug/net6.0/MovieBooker-backend.dll
 MovieBooker-backend/MovieBooker-backend/obj/Debug/net6.0/MovieBooker-backend.assets.cache
+
+#file build project
+.vs/
+bin/
+MovieBooker-backend\MovieBooker-backend\obj\Debug\net6.0\MovieBooker-backend.AssemblyInfo.cs
+MovieBooker-backend\MovieBooker-backend\obj\Debug\net6.0\MovieBooker-backend.AssemblyInfoInputs.cache
+MovieBooker-backend\MovieBooker-backend\obj\Debug\net6.0\MovieBooker-backend.assets.cache
+MovieBooker-backend\MovieBooker-backend\obj\Debug\net6.0\MovieBooker-backend.GeneratedMSBuildEditorConfig.editorconfig
+MovieBooker-backend\MovieBooker-backend\obj\Debug\net6.0\MovieBooker-backend.csproj.AssemblyReference.cache
+MovieBooker-backend\MovieBooker-backend\obj\Debug\net6.0\MovieBooker-backend.csproj.CoreCompileInputs.cache
+MovieBooker-backend\MovieBooker-backend\obj\Debug\net6.0\MovieBooker-backend.csproj.FileListAbsolute.txt
+MovieBooker-backend\MovieBooker-backend\obj\Debug\net6.0\MovieBooker-backend.dll
+MovieBooker-backend\MovieBooker-backend\obj\Debug\net6.0\MovieBooker-backend.genruntimeconfig.cache
+MovieBooker-backend\MovieBooker-backend\obj\Debug\net6.0\MovieBooker-backend.pdb
+MovieBooker-backend\MovieBooker-backend\obj\Debug\net6.0\ref\MovieBooker-backend.dll
+MovieBooker-backend\MovieBooker-backend\obj\Debug\net6.0\refint\MovieBooker-backend.dll
+MovieBooker-backend\MovieBooker-backend\obj\Debug\net6.0\staticwebassets.build.json
+MovieBooker-backend\MovieBooker-backend\obj\MovieBooker-backend.csproj.nuget.dgspec.json
+MovieBooker-backend\MovieBooker-backend\obj\project.nuget.cache
+MovieBooker-backend\MovieBooker-backend\obj\project.assets.json
+MovieBooker-backend\MovieBooker-backend\obj\MovieBooker-backend.csproj.nuget.g.targets
+MovieBooker-backend\MovieBooker-backend\obj\MovieBooker-backend.csproj.nuget.g.props

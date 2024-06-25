@@ -20,6 +20,12 @@ using MovieBooker_backend.DTO;
 using MovieBooker_backend.Repositories.ScheduleRepository;
 using MovieBooker_backend.Repositories.TimeSlotRepository;
 using MovieBooker_backend.Repositories.RoleRepository;
+using MovieBooker_backend.Repositories.MovieRepository;
+using MovieBooker_backend.Responses;
+using MovieBooker_backend.Repositories.YoutubeRepository;
+using MovieBooker_backend.Repositories.MovieCategoryRepository;
+using MovieBooker_backend.Repositories.MovieStatusRepository;
+using MovieBooker_backend.Repositories.MovieImageRepository;
 
 namespace MovieBooker_backend
 {
@@ -46,8 +52,10 @@ namespace MovieBooker_backend
             .AddRouteComponents("odata", modelBuilder.GetEdmModel())
             );
 
-
-            builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+			//Config auto mapper
+			builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+			//Config cloudinary
+			builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
             builder.Services.AddSingleton(sp =>
              {
                  var cloudinarySettings = sp.GetRequiredService<IOptions<CloudinarySettings>>().Value;
@@ -56,8 +64,21 @@ namespace MovieBooker_backend
                      cloudinarySettings.ApiKey,
                      cloudinarySettings.ApiSecret));
              });
-            builder.Services.AddTransient<ICloudinaryRepository, CloudinaryRepository>();
-            builder.Services.AddSwaggerGen(option =>
+			builder.Services.AddTransient<ICloudinaryRepository, CloudinaryRepository>();
+			//Config OData
+			modelBuilder.EntitySet<MovieResponse>("Movie");
+			builder.Services.AddControllers().AddOData(opt => opt
+				.Select()
+				.Expand()
+				.Filter()
+				.OrderBy()
+				.Count()
+				.SetMaxTop(100)
+			.AddRouteComponents("odata", modelBuilder.GetEdmModel()));
+			//Config Youtube
+			builder.Services.AddTransient<IYoutubeRepository, YoutubeRepository>();
+			//Config Swagger
+			builder.Services.AddSwaggerGen(option =>
             {
                 option.SwaggerDoc("v1", new OpenApiInfo { Title = "Movie API", Version = "v1" });
                 option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -84,7 +105,7 @@ namespace MovieBooker_backend
                     }
                 });
             });
-
+            //Config Identity libraries sercurity
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<bookMovieContext>()
                 .AddDefaultTokenProviders();
@@ -102,8 +123,10 @@ namespace MovieBooker_backend
             builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
             builder.Services.AddScoped<ITimeSlotRepository, TimeSlotRepository>();
             builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+			builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 
-            builder.Services.AddAuthentication(options =>
+
+			builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -128,6 +151,11 @@ namespace MovieBooker_backend
 
 
             builder.Services.AddAuthorization();
+			//Config interface vs class
+			builder.Services.AddScoped<IMovieCategoryRepsitory, MovieCategoryRepository>();
+			builder.Services.AddScoped<IMovieStatusRepository, MovieStatusRepository>();
+			builder.Services.AddScoped<IMovieImageRepository, MovieImageRepository>();
+			builder.Services.AddAuthorization();
 
             var app = builder.Build();
 
@@ -144,7 +172,6 @@ namespace MovieBooker_backend
                 .AllowAnyMethod()
                 .AllowAnyHeader();
             });
-
 
             app.UseStaticFiles();
 

@@ -39,9 +39,12 @@ namespace MovieBooker_backend
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
 
+
+            //Config OData
             var modelBuilder = new ODataConventionModelBuilder();
             modelBuilder.EntitySet<UserDTO>("User");
             modelBuilder.EntitySet<ScheduleDTO>("Schedule");
+            modelBuilder.EntitySet<MovieResponse>("Movie");
             builder.Services.AddControllers().AddOData(opt => opt
                 .Select()
                 .Expand()
@@ -65,16 +68,16 @@ namespace MovieBooker_backend
                      cloudinarySettings.ApiSecret));
              });
 			builder.Services.AddTransient<ICloudinaryRepository, CloudinaryRepository>();
-			//Config OData
-			modelBuilder.EntitySet<MovieResponse>("Movie");
-			builder.Services.AddControllers().AddOData(opt => opt
-				.Select()
-				.Expand()
-				.Filter()
-				.OrderBy()
-				.Count()
-				.SetMaxTop(100)
-			.AddRouteComponents("odata", modelBuilder.GetEdmModel()));
+		
+	
+			//builder.Services.AddControllers().AddOData(opt => opt
+			//	.Select()
+			//	.Expand()
+			//	.Filter()
+			//	.OrderBy()
+			//	.Count()
+			//	.SetMaxTop(100)
+			//.AddRouteComponents("odata", modelBuilder.GetEdmModel()));
 			//Config Youtube
 			builder.Services.AddTransient<IYoutubeRepository, YoutubeRepository>();
 			//Config Swagger

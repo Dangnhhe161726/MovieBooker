@@ -36,6 +36,11 @@ namespace MovieBooker.Pages
             var client = _httpClientFactory.CreateClient();
 
             var response = await client.GetAsync($"https://localhost:5000/api/User/CheckSignUpEmail/{email}");
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                TempData["ErrorMessage"] = "Your email has been locked.";
+                return RedirectToPage("/Login");
+            }
             if (response.IsSuccessStatusCode)
             {
                 var getUser = await response.Content.ReadAsStringAsync();

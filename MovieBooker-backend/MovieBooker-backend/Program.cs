@@ -14,6 +14,12 @@ using StackExchange.Redis;
 using System.Text;
 using CloudinaryDotNet;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.OData;
+using Microsoft.OData.ModelBuilder;
+using MovieBooker_backend.DTO;
+using MovieBooker_backend.Repositories.ScheduleRepository;
+using MovieBooker_backend.Repositories.TimeSlotRepository;
+using MovieBooker_backend.Repositories.RoleRepository;
 
 namespace MovieBooker_backend
 {
@@ -26,6 +32,21 @@ namespace MovieBooker_backend
             // Add services to the container.
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
+
+            var modelBuilder = new ODataConventionModelBuilder();
+            modelBuilder.EntitySet<UserDTO>("User");
+            modelBuilder.EntitySet<ScheduleDTO>("Schedule");
+            builder.Services.AddControllers().AddOData(opt => opt
+                .Select()
+                .Expand()
+                .Filter()
+                .OrderBy()
+                .Count()
+                .SetMaxTop(100)
+            .AddRouteComponents("odata", modelBuilder.GetEdmModel())
+            );
+
+
             builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
             builder.Services.AddSingleton(sp =>
              {
@@ -76,7 +97,11 @@ namespace MovieBooker_backend
 
             builder.Services.AddDbContext<bookMovieContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
+            builder.Services.AddScoped<ITimeSlotRepository, TimeSlotRepository>();
+            builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 
             builder.Services.AddAuthentication(options =>
             {
@@ -97,9 +122,8 @@ namespace MovieBooker_backend
                     ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
                 };
-
-
             });
+
 
 
 

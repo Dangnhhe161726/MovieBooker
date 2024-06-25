@@ -20,5 +20,9 @@ namespace MovieBooker_backend
         public DateTime Dob { get; set; }
 
         public int Role = 3;
+        public string? Avatar { get; set; }
+        public bool Status = true;
+
+
     }
 }

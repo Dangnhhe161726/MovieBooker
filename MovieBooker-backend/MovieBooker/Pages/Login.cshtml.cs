@@ -28,6 +28,10 @@ namespace MovieBooker.Pages
         public User User { get; set; } = default!;
         public void OnGet()
         {
+            if (TempData.ContainsKey("ErrorMessage"))
+            {
+                ModelState.AddModelError(string.Empty, TempData["ErrorMessage"].ToString());
+            }
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -63,6 +67,9 @@ namespace MovieBooker.Pages
             }
 
             if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                ModelState.AddModelError(string.Empty, "Your email has been locked.");
+            }else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
                 ModelState.AddModelError(string.Empty, "Email or password invalid.");
             }

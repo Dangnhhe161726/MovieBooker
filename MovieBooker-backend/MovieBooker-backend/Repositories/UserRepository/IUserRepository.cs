@@ -10,11 +10,15 @@ namespace MovieBooker_backend.Repositories.UserRepository
         public Task<int> SignUpInternalAsync(SignUpModel model);
         public Task<TokenResponse> GenerateTokensAsync(User user);
 
-        public IEnumerable<User> GetAllUser();
+        public IEnumerable<UserDTO> GetAllUser();
         public User GetUserById(int userId);
         public User GetUserByEmail(string email);
         public void AddUser(User user);
+        public void UpdateUser(string email, UpdateUserDTO user);
 
+        public void ResetPasswordUser(string password, string email);
+
+        public void ChangeStatusUser(int id);
         public Task<TokenResponse> LoginGoogle(User model);
 
     }

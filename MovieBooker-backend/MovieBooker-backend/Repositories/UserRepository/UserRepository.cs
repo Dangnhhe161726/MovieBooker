@@ -109,9 +109,23 @@ namespace MovieBooker_backend.Repositories.UserRepository
 
         }
 
-        public IEnumerable<User> GetAllUser()
+        public IEnumerable<UserDTO> GetAllUser()
         {
-            var listUser = _context.Users.ToList();
+            var listUser = _context.Users.Include(u => u.Role).Select(u => new UserDTO
+            {
+                UserId = u.UserId,
+                UserName = u.UserName,
+                Email = u.Email,
+                PhoneNumber = u.PhoneNumber,
+                Address = u.Address,
+                Gender = u.Gender,
+                Dob = u.Dob,
+                Role = u.Role,
+                Status = u.Status,
+                Password = u.Password,
+                Avatar = u.Avatar,
+                RoleId = u.RoleId,
+            }).ToList();
             return listUser;
         }
 
@@ -125,7 +139,14 @@ namespace MovieBooker_backend.Repositories.UserRepository
                    UserId = u.UserId,
                    UserName = u.UserName,
                    Email = u.Email,
-                   Role = u.Role 
+                   PhoneNumber = u.PhoneNumber,
+                   Address = u.Address,
+                   Gender = u.Gender,
+                   Dob = u.Dob,
+                   Role = u.Role, 
+                   Status = u.Status,
+                   Password = u.Password, 
+                   Avatar = u.Avatar
                })
                .FirstOrDefault();
 
@@ -135,8 +156,23 @@ namespace MovieBooker_backend.Repositories.UserRepository
         public User GetUserById(int userId)
         {
             var user = _context.Users
-            .Include(u => u.Role)
-            .FirstOrDefault(u => u.UserId == userId);
+          .Include(u => u.Role)
+          .Where(u => u.UserId == userId)
+          .Select(u => new User
+          {
+              UserId = u.UserId,
+              UserName = u.UserName,
+              Email = u.Email,
+              PhoneNumber = u.PhoneNumber,
+              Address = u.Address,
+              Gender = u.Gender,
+              Dob = u.Dob,
+              Role = u.Role,
+              Status = u.Status,
+              Password = u.Password,
+              Avatar = u.Avatar
+          })
+          .FirstOrDefault();
             return user;
         }
 
@@ -148,6 +184,14 @@ namespace MovieBooker_backend.Repositories.UserRepository
             if (user == null)
             {
                 return null;
+            }
+            if(user.Status == false)
+            {
+                return new TokenResponse
+                {
+                    AccessToken = "1",
+                    RefreshToken = "1"
+                };
             }
 
             var authClaims = new List<Claim>
@@ -199,11 +243,58 @@ namespace MovieBooker_backend.Repositories.UserRepository
                 Gender = model.Gender,
                 Dob = model.Dob,
                 RoleId = model.Role,
+                Status = model.Status
             };
 
             _context.Users.Add(user);
             var result = await _context.SaveChangesAsync();
             return result;
+        }
+
+        public void UpdateUser(string email, UpdateUserDTO user)
+        {
+           var existingUser = _context.Users.FirstOrDefault(u=>u.Email == email);
+          if (existingUser != null)
+            {
+                existingUser.UserName = user.UserName;
+                existingUser.PhoneNumber = user.PhoneNumber;
+                existingUser.Address = user.Address;
+                existingUser.Gender = user.Gender;
+                existingUser.Avatar = user.Avatar;
+                existingUser.Dob = user.Dob;
+                existingUser.RoleId = user.RoleId;
+                _context.Users.Update(existingUser);
+                _context.SaveChanges();
+            }
+        }
+
+        public void ChangeStatusUser(int id)
+        {
+            var existingUser = _context.Users.FirstOrDefault(u => u.UserId == id);
+            if (existingUser != null)
+            {
+                if(existingUser.Status == true)
+                {
+                    existingUser.Status = false;
+                }
+                else
+                {
+                    existingUser.Status = true;
+                }
+                _context.Users.Update(existingUser);
+                _context.SaveChanges();
+            }
+        }
+
+        public void ResetPasswordUser(string email, string password)
+        {
+            var existingUser = _context.Users.FirstOrDefault(u => u.Email == email); 
+            if (existingUser != null)
+            {
+                existingUser.Password = password;   
+                _context.Users.Update(existingUser); 
+                _context.SaveChanges();
+            }
         }
     }
 }

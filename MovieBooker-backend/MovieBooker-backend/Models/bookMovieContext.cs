@@ -19,13 +19,13 @@ namespace MovieBooker_backend.Models
         public virtual DbSet<Movie> Movies { get; set; } = null!;
         public virtual DbSet<MovieCategory> MovieCategories { get; set; } = null!;
         public virtual DbSet<MovieImage> MovieImages { get; set; } = null!;
+        public virtual DbSet<MovieStatus> MovieStatuses { get; set; } = null!;
         public virtual DbSet<Payment> Payments { get; set; } = null!;
         public virtual DbSet<Revervation> Revervations { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<Room> Rooms { get; set; } = null!;
         public virtual DbSet<Schedule> Schedules { get; set; } = null!;
         public virtual DbSet<Seat> Seats { get; set; } = null!;
-        public virtual DbSet<Status> Statuses { get; set; } = null!;
         public virtual DbSet<Theater> Theaters { get; set; } = null!;
         public virtual DbSet<TimeSlot> TimeSlots { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
@@ -34,23 +34,31 @@ namespace MovieBooker_backend.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var ConnectionString = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetConnectionString("DefaultConnection");
-                optionsBuilder.UseSqlServer(ConnectionString);
-            }
-        }
+				var ConnectionString = new ConfigurationBuilder()
+						.AddJsonFile("appsettings.json").Build().GetConnectionString("DefaultConnection");
+				optionsBuilder.UseSqlServer(ConnectionString);
+			}
+		}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Movie>(entity =>
             {
-                entity.Property(e => e.MovieId)
-                    .HasMaxLength(10)
-                    .HasColumnName("movieId")
-                    .IsFixedLength();
+                entity.Property(e => e.MovieId).HasColumnName("movieId");
 
                 entity.Property(e => e.CategoryId).HasColumnName("categoryId");
 
                 entity.Property(e => e.Description).HasColumnName("description");
+
+                entity.Property(e => e.Director)
+                    .HasMaxLength(50)
+                    .HasColumnName("director");
+
+                entity.Property(e => e.Durations)
+                    .HasMaxLength(50)
+                    .HasColumnName("durations");
+
+                entity.Property(e => e.Enable).HasColumnName("enable");
 
                 entity.Property(e => e.MovieTitle)
                     .HasMaxLength(50)
@@ -62,10 +70,19 @@ namespace MovieBooker_backend.Models
                     .HasColumnType("datetime")
                     .HasColumnName("releaseDate");
 
+                entity.Property(e => e.StatusId).HasColumnName("statusId");
+
+                entity.Property(e => e.Trailer).HasColumnName("trailer");
+
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Movies)
                     .HasForeignKey(d => d.CategoryId)
                     .HasConstraintName("FK_Movies_MovieCategory");
+
+                entity.HasOne(d => d.Status)
+                    .WithMany(p => p.Movies)
+                    .HasForeignKey(d => d.StatusId)
+                    .HasConstraintName("FK_Movies_MovieStatus");
             });
 
             modelBuilder.Entity<MovieCategory>(entity =>
@@ -87,15 +104,25 @@ namespace MovieBooker_backend.Models
 
                 entity.Property(e => e.LinkImage).HasColumnName("linkImage");
 
-                entity.Property(e => e.MovieId)
-                    .HasMaxLength(10)
-                    .HasColumnName("movieId")
-                    .IsFixedLength();
+                entity.Property(e => e.MovieId).HasColumnName("movieId");
 
                 entity.HasOne(d => d.Movie)
                     .WithMany(p => p.MovieImages)
                     .HasForeignKey(d => d.MovieId)
                     .HasConstraintName("FK_MovieImage_Movies");
+            });
+
+            modelBuilder.Entity<MovieStatus>(entity =>
+            {
+                entity.HasKey(e => e.StatusId);
+
+                entity.ToTable("MovieStatus");
+
+                entity.Property(e => e.StatusId).HasColumnName("statusId");
+
+                entity.Property(e => e.StatusName)
+                    .HasMaxLength(50)
+                    .HasColumnName("statusName");
             });
 
             modelBuilder.Entity<Payment>(entity =>
@@ -118,27 +145,29 @@ namespace MovieBooker_backend.Models
 
                 entity.Property(e => e.ReservationId).HasColumnName("reservationId");
 
+                entity.Property(e => e.MovieId).HasColumnName("movieId");
+
                 entity.Property(e => e.ReservationDate)
                     .HasColumnType("datetime")
                     .HasColumnName("reservationDate");
 
                 entity.Property(e => e.SeatId).HasColumnName("seatId");
 
-                entity.Property(e => e.StatusId).HasColumnName("statusId");
+                entity.Property(e => e.Status).HasColumnName("status");
 
                 entity.Property(e => e.TimeSlotId).HasColumnName("timeSlotId");
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
+                entity.HasOne(d => d.Movie)
+                    .WithMany(p => p.Revervations)
+                    .HasForeignKey(d => d.MovieId)
+                    .HasConstraintName("FK_Revervations_Movies");
+
                 entity.HasOne(d => d.Seat)
                     .WithMany(p => p.Revervations)
                     .HasForeignKey(d => d.SeatId)
                     .HasConstraintName("FK_Revervations_Seats");
-
-                entity.HasOne(d => d.Status)
-                    .WithMany(p => p.Revervations)
-                    .HasForeignKey(d => d.StatusId)
-                    .HasConstraintName("FK_Revervations_Status");
 
                 entity.HasOne(d => d.TimeSlot)
                     .WithMany(p => p.Revervations)
@@ -180,22 +209,13 @@ namespace MovieBooker_backend.Models
             {
                 entity.HasKey(e => e.SchedulesId);
 
-                entity.Property(e => e.SchedulesId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("schedulesId");
+                entity.Property(e => e.SchedulesId).HasColumnName("schedulesId");
 
-                entity.Property(e => e.EndDate)
+                entity.Property(e => e.MovieId).HasColumnName("movieId");
+
+                entity.Property(e => e.ScheduleDate)
                     .HasColumnType("datetime")
-                    .HasColumnName("endDate");
-
-                entity.Property(e => e.MovieId)
-                    .HasMaxLength(10)
-                    .HasColumnName("movieId")
-                    .IsFixedLength();
-
-                entity.Property(e => e.StartDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("startDate");
+                    .HasColumnName("scheduleDate");
 
                 entity.Property(e => e.TheaterId).HasColumnName("theaterId");
 
@@ -239,17 +259,6 @@ namespace MovieBooker_backend.Models
                     .HasConstraintName("FK_Seats_Rooms");
             });
 
-            modelBuilder.Entity<Status>(entity =>
-            {
-                entity.ToTable("Status");
-
-                entity.Property(e => e.StatusId).HasColumnName("statusId");
-
-                entity.Property(e => e.StatusName)
-                    .HasMaxLength(50)
-                    .HasColumnName("statusName");
-            });
-
             modelBuilder.Entity<Theater>(entity =>
             {
                 entity.Property(e => e.TheaterId).HasColumnName("theaterId");
@@ -268,11 +277,13 @@ namespace MovieBooker_backend.Models
                 entity.Property(e => e.TimeSlotId).HasColumnName("timeSlotId");
 
                 entity.Property(e => e.EndTime)
-                    .HasColumnType("datetime")
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
                     .HasColumnName("endTime");
 
                 entity.Property(e => e.StartTime)
-                    .HasColumnType("datetime")
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
                     .HasColumnName("startTime");
             });
 

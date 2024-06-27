@@ -130,7 +130,7 @@ namespace MovieBooker_backend.Controllers
 
         [EnableQuery]
         [HttpGet("GetAllUser")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult Get()
         {
             var user = _userRepository.GetAllUser();

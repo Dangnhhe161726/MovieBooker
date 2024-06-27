@@ -26,6 +26,7 @@ using MovieBooker_backend.Repositories.YoutubeRepository;
 using MovieBooker_backend.Repositories.MovieCategoryRepository;
 using MovieBooker_backend.Repositories.MovieStatusRepository;
 using MovieBooker_backend.Repositories.MovieImageRepository;
+using MovieBooker_backend.Repositories.TheaterRepository;
 
 namespace MovieBooker_backend
 {
@@ -127,9 +128,10 @@ namespace MovieBooker_backend
             builder.Services.AddScoped<ITimeSlotRepository, TimeSlotRepository>();
             builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 			builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+            builder.Services.AddScoped<ITheaterRepository, TheaterRepository>();
 
 
-			builder.Services.AddAuthentication(options =>
+            builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;

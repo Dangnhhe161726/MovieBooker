@@ -1,7 +1,7 @@
 ﻿@page
 @model MovieBooker.Pages.Admin.ManageSchedulesModel
 @{
-
+    Layout = "_AdminLayout";
 }
 
 <link rel="stylesheet" href="~/css/ManageSchedules.css" asp-append-version="true" />
@@ -42,7 +42,6 @@
 </script>
 
 <div class="wrapper">
-    <a asp-page="/Admin/CreateSchedule">Create Schedule Movie</a>
     <div class="sticky-header">
         <span>Calendar</span>
     </div>

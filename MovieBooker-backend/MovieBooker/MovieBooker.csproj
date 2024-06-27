@@ -14,8 +14,4 @@
 	<PackageReference Include="MailKit" Version="3.4.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\User\" />
-  </ItemGroup>
-
 </Project>

@@ -1,6 +1,8 @@
 ﻿@page
 @model MovieBooker.Pages.Admin.ManageUsersModel
-
+@{
+    Layout = "_AdminLayout";
+}
 
 <link rel="stylesheet" href="~/css/ManageUser.css" asp-append-version="true" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" asp-append-version="true">
@@ -16,6 +18,30 @@
 
 <div class="container-xl">
     <div class="table-responsive">
+        @if (TempData["User"] == "Customer") {
+            <div class="search-field d-none d-md-block" style="margin-bottom: 5px;">
+                <form class="d-flex align-items-center h-100" method="post">
+                <button type="submit" class="input-group-prepend bg-transparent">
+                    <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                    </button>
+                    <input type="hidden" name="check" value="Customer">
+                <input type="text" name="search" class="form-control bg-transparent border-0" placeholder="Search" style="width: 96%">
+            </form>
+            </div>
+        }
+        else
+        {
+            <div class="search-field d-none d-md-block" style="margin-bottom: 5px;">
+                <form class="d-flex align-items-center h-100" method="post">
+                    <button type="submit" class="input-group-prepend bg-transparent">
+                        <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                    </button>
+                    <input type="hidden" name="check" value="Staff">
+                    <input type="text" name="search" class="form-control bg-transparent border-0" placeholder="Search" style="width: 96%">
+                </form>
+            </div>
+        }
+
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
@@ -41,40 +67,65 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach(var item in Model.Users){
-                    <tr>
-                        <td>@item.UserId</td>
+                    @foreach (var item in Model.Users)
+                    {
+                        <tr>
+                            <td>@item.UserId</td>
                             <td>
                                 <a href="#">
-                                    <img style="width: 30px; height: 30px;" 
-                                    src="https://res.cloudinary.com/dwfo16yhs/image/upload/v1719067021/img_prn231/zxgmfruitrszcrh5jvld.png" 
-                                    class="avatar" alt="Avatar">
+                                    <img style="width: 30px; height: 30px;"
+                                         src="https://res.cloudinary.com/dwfo16yhs/image/upload/v1719067021/img_prn231/zxgmfruitrszcrh5jvld.png"
+                                         class="avatar" alt="Avatar">
                                 </a>
                             </td>
-                        <td>@item.UserName</td>
-                        <td>@item.Email</td>
-                        <td>@item.Role.RoleName</td>                  
-                            @if(item.Status == true)
+                            <td>@item.UserName</td>
+                            <td>@item.Email</td>
+                            <td>@item.Role.RoleName</td>
+                            @if (item.Status == true)
                             {
-                            <td><span class="status text-success">&bull;</span> Active</td>
-                            }else{
+                                <td><span class="status text-success">&bull;</span> Active</td>
+                            }
+                            else
+                            {
                                 <td><span class="status text-danger">&bull;</span>Suspended</td>
                             }
                             <td>
                                 <a asp-page="/Admin/ManageUserDetail" asp-route-id="@item.UserId" class="settings" title="View" data-toggle="tooltip">
-                                    <i class="material-icons">&#xE8f4;</i></a>
-                                @if (item.Status == true)
+                                    <i class="material-icons">&#xE8f4;</i>
+                                </a>
+                                @if (TempData["User"] == "Customer")
                                 {
-                                    <a asp-page-handler="ChangeStatusUser" asp-route-id="@item.UserId" class="unlock" title="Active" data-toggle="tooltip" onclick="return confirmLock('@item.UserId');">
-                                        <i class="material-icons">&#xE898;</i></a>
-                                }
-                                else{
-                                    <a asp-page-handler="ChangeStatusUser" asp-route-id="@item.UserId" class="unlock" title="Suspended" data-toggle="tooltip" onclick="return confirmUnlock('@item.UserId');">
-                                        <i style="color: red" class="material-icons">&#xE897;</i></a>
+                                    @if (item.Status == true)
+                                    {
+                                        <a asp-page-handler="ChangeStatusUser" asp-route-id="@item.UserId" asp-route-check="Customer" class="unlock" title="Active" data-toggle="tooltip" onclick="return confirmLock('@item.UserId');">
+                                            <i class="material-icons">&#xE898;</i>
+                                        </a>
                                     }
-                                </td>
-                    </tr>
-                    }      
+                                    else
+                                    {
+                                        <a asp-page-handler="ChangeStatusUser" asp-route-id="@item.UserId" asp-route-check="Customer" class="unlock" title="Suspended" data-toggle="tooltip" onclick="return confirmUnlock('@item.UserId');">
+                                            <i style="color: red" class="material-icons">&#xE897;</i>
+                                        </a>
+                                    }
+                                }
+                                else
+                                {
+                                    @if (item.Status == true)
+                                    {
+                                        <a asp-page-handler="ChangeStatusUser" asp-route-id="@item.UserId" asp-route-check="Staff" class="unlock" title="Active" data-toggle="tooltip" onclick="return confirmLock('@item.UserId');">
+                                            <i class="material-icons">&#xE898;</i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-page-handler="ChangeStatusUser" asp-route-id="@item.UserId" asp-route-check="Staff" class="unlock" title="Suspended" data-toggle="tooltip" onclick="return confirmUnlock('@item.UserId');">
+                                            <i style="color: red" class="material-icons">&#xE897;</i>
+                                        </a>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
             <div class="clearfix">

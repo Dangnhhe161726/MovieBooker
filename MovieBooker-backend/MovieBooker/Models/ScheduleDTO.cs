@@ -9,5 +9,8 @@
         public DateTime? ScheduleDate { get; set; }
         public string? MovieTitle { get; set; }
         public string? Durations { get; set; }
+        public string? TimeSlot { get; set; }
+        public string? TheaterName { get; set; }
+        public string? movieImage { get; set; }
     }
 }

@@ -1,0 +1,398 @@
+﻿@page
+@model MovieBooker.Pages.Users.Cart.BookSeatModel
+@{
+}
+<style>
+    .container {
+        max-width: 70%;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    .details {
+        margin-bottom: 20px;
+    }
+
+    .screen {
+        width: 50%;
+        height: 45px;
+        margin: 20px auto 40px;
+        text-align: center;
+        background: url(https://res.cloudinary.com/dwfo16yhs/image/upload/v1719585386/img_prn231/wtgphsj59poreosdfrqq.png) no-repeat top center transparent;
+        background-size: 100% auto;
+    }
+
+    .seating-chart {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .seat-row {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 5px; /* Khoảng cách giữa các hàng */
+    }
+
+    .seat {
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        margin: 2px; /* Khoảng cách giữa các ghế */
+        cursor: pointer;
+    }
+
+    .regular {
+        background-color: lightgreen;
+    }
+
+    .vip {
+        background-color: orange;
+    }
+
+    .sweetbox {
+        background-color: pink;
+    }
+
+    .booking-info {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+        .booking-info button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+            .booking-info button:hover {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+    .checked {
+        background-color: red;
+    }
+
+    .selected {
+        background-color: gray;
+    }
+
+    .legend {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .legend-box {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+    .movie-details {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #000;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .previous, .next {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+        .previous:hover, .next:hover {
+            background-color: #ff4444;
+        }
+
+    .movie-info {
+        display: flex;
+        flex-grow: 1;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+        .movie-info img {
+            width: 60px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+.movie-description, .movie-pricing {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+.movie-description p, .movie-pricing p {
+            margin: 0;
+            font-size: 14px;
+        }
+</style>
+<div class="container">
+    <h1>BOOKING ONLINE</h1>
+    <div class="details">
+        @foreach(var m in Model.schedules){
+        <p>@m.TheaterName | Cinema 7 | Số ghế (106/106)</p>
+        <p>@m.ScheduleDate.Value.ToString("dd/MM/yyyy") @m.TimeSlot</p>
+        }
+    </div>
+    <div class="screen"></div>
+    <div class="seating-chart">
+        <!-- Row A -->
+        <div class="seat-row">
+            <div class="seat regular" data-seat="A1">A1</div>
+            <div class="seat regular" data-seat="A2">A2</div>
+            <div class="seat regular" data-seat="A3">A3</div>
+            <div class="seat regular" data-seat="A4">A4</div>
+            <div class="seat regular" data-seat="A5">A5</div>
+            <div class="seat regular" data-seat="A6">A6</div>
+            <div class="seat regular" data-seat="A7">A7</div>
+            <div class="seat regular" data-seat="A8">A8</div>
+            <div class="seat regular" data-seat="A9">A9</div>
+            <div class="seat regular" data-seat="A10">A10</div>
+            <div class="seat regular" data-seat="A11">A11</div>
+            <div class="seat regular" data-seat="A12">A12</div>
+        </div>
+        <!-- Row B -->
+        <div class="seat-row">
+            <div class="seat regular" data-seat="B1">B1</div>
+            <div class="seat regular" data-seat="B2">B2</div>
+            <div class="seat regular" data-seat="B3">B3</div>
+            <div class="seat regular" data-seat="B4">B4</div>
+            <div class="seat regular" data-seat="B5">B5</div>
+            <div class="seat regular" data-seat="B6">B6</div>
+            <div class="seat regular" data-seat="B7">B7</div>
+            <div class="seat regular" data-seat="B8">B8</div>
+            <div class="seat regular" data-seat="B9">B9</div>
+            <div class="seat regular" data-seat="B10">B10</div>
+            <div class="seat regular" data-seat="B11">B11</div>
+            <div class="seat regular" data-seat="B12">B12</div>
+        </div>
+        <!-- Row C -->
+        <div class="seat-row">
+            <div class="seat regular" data-seat="C1">C1</div>
+            <div class="seat regular" data-seat="C2">C2</div>
+            <div class="seat regular" data-seat="C3">C3</div>
+            <div class="seat regular" data-seat="C4">C4</div>
+            <div class="seat regular" data-seat="C5">C5</div>
+            <div class="seat regular" data-seat="C6">C6</div>
+            <div class="seat regular" data-seat="C7">C7</div>
+            <div class="seat regular" data-seat="C8">C8</div>
+            <div class="seat regular" data-seat="C9">C9</div>
+            <div class="seat regular" data-seat="C10">C10</div>
+            <div class="seat regular" data-seat="C11">C11</div>
+            <div class="seat regular" data-seat="C12">C12</div>
+        </div>
+        <!-- Row D -->
+        <div class="seat-row">
+            <div class="seat vip selected" data-seat="D1">D1</div>
+            <div class="seat vip selected" data-seat="D2">D2</div>
+            <div class="seat vip" data-seat="D3">D3</div>
+            <div class="seat vip" data-seat="D4">D4</div>
+            <div class="seat vip" data-seat="D5">D5</div>
+            <div class="seat vip" data-seat="D6">D6</div>
+            <div class="seat vip" data-seat="D7">D7</div>
+            <div class="seat vip" data-seat="D8">D8</div>
+            <div class="seat vip" data-seat="D9">D9</div>
+            <div class="seat vip" data-seat="D10">D10</div>
+            <div class="seat vip" data-seat="D11">D11</div>
+            <div class="seat vip" data-seat="D12">D12</div>
+        </div>
+        <!-- Row E -->
+        <div class="seat-row">
+            <div class="seat vip" data-seat="E1">E1</div>
+            <div class="seat vip" data-seat="E2">E2</div>
+            <div class="seat vip" data-seat="E3">E3</div>
+            <div class="seat vip" data-seat="E4">E4</div>
+            <div class="seat vip" data-seat="E5">E5</div>
+            <div class="seat vip" data-seat="E6">E6</div>
+            <div class="seat vip" data-seat="E7">E7</div>
+            <div class="seat vip" data-seat="E8">E8</div>
+            <div class="seat vip" data-seat="E9">E9</div>
+            <div class="seat vip" data-seat="E10">E10</div>
+            <div class="seat vip" data-seat="E11">E11</div>
+            <div class="seat vip" data-seat="E12">E12</div>
+        </div>
+        <!-- Row F -->
+        <div class="seat-row">
+            <div class="seat vip" data-seat="F1">F1</div>
+            <div class="seat vip" data-seat="F2">F2</div>
+            <div class="seat vip" data-seat="F3">F3</div>
+            <div class="seat vip" data-seat="F4">F4</div>
+            <div class="seat vip" data-seat="F5">F5</div>
+            <div class="seat vip" data-seat="F6">F6</div>
+            <div class="seat vip" data-seat="F7">F7</div>
+            <div class="seat vip" data-seat="F8">F8</div>
+            <div class="seat vip" data-seat="F9">F9</div>
+            <div class="seat vip" data-seat="F10">F10</div>
+            <div class="seat vip" data-seat="F11">F11</div>
+            <div class="seat vip" data-seat="F12">F12</div>
+        </div>
+        <!-- Row G -->
+        <div class="seat-row">
+            <div class="seat vip" data-seat="G1">G1</div>
+            <div class="seat vip" data-seat="G2">G2</div>
+            <div class="seat vip" data-seat="G3">G3</div>
+            <div class="seat vip" data-seat="G4">G4</div>
+            <div class="seat vip" data-seat="G5">G5</div>
+            <div class="seat vip" data-seat="G6">G6</div>
+            <div class="seat vip" data-seat="G7">G7</div>
+            <div class="seat vip" data-seat="G8">G8</div>
+            <div class="seat vip" data-seat="G9">G9</div>
+            <div class="seat vip" data-seat="G10">G10</div>
+            <div class="seat vip" data-seat="G11">G11</div>
+            <div class="seat vip" data-seat="G12">G12</div>
+        </div>
+        <!-- Row H -->
+        <div class="seat-row">
+            <div class="seat vip" data-seat="H1">H1</div>
+            <div class="seat vip" data-seat="H2">H2</div>
+            <div class="seat vip" data-seat="H3">H3</div>
+            <div class="seat vip" data-seat="H4">H4</div>
+            <div class="seat vip" data-seat="H5">H5</div>
+            <div class="seat vip" data-seat="H6">H6</div>
+            <div class="seat vip" data-seat="H7">H7</div>
+            <div class="seat vip" data-seat="H8">H8</div>
+            <div class="seat vip" data-seat="H9">H9</div>
+            <div class="seat vip" data-seat="H10">H10</div>
+            <div class="seat vip" data-seat="H11">H11</div>
+            <div class="seat vip" data-seat="H12">H12</div>
+        </div>
+        <!-- Row I -->
+        <div class="seat-row">
+            <div class="seat sweetbox" data-seat="I1">I1</div>
+            <div class="seat sweetbox" data-seat="I2">I2</div>
+            <div class="seat sweetbox" data-seat="I3">I3</div>
+            <div class="seat sweetbox" data-seat="I4">I4</div>
+            <div class="seat sweetbox" data-seat="I5">I5</div>
+            <div class="seat sweetbox" data-seat="I6">I6</div>
+            <div class="seat sweetbox" data-seat="I7">I7</div>
+            <div class="seat sweetbox" data-seat="I8">I8</div>
+            <div class="seat sweetbox" data-seat="I9">I9</div>
+            <div class="seat sweetbox" data-seat="I10">I10</div>
+            <div class="seat sweetbox" data-seat="I11">I11</div>
+            <div class="seat sweetbox" data-seat="I12">I12</div>
+        </div>
+
+    </div>
+    <div class="legend">
+        <div><span class="legend-box checked"></span> Checked</div>
+        <div><span class="legend-box selected"></span> Đã chọn</div>
+        <div><span class="legend-box regular"></span> Thường</div>
+        <div><span class="legend-box vip"></span> VIP</div>
+        <div><span class="legend-box sweetbox"></span> Sweetbox</div>
+    </div>
+    <div class="movie-details">
+        @foreach(var m in Model.schedules){
+        <button class="previous">&lt; PREVIOUS</button>
+        <div class="movie-info">
+            <img src="@m.movieImage" alt="Movie Poster">
+            <div class="movie-description">
+                <p>@m.MovieTitle</p>
+                <p>Rap: @m.TheaterName</p>
+                    <p>Suất chiếu: @m.TimeSlot, @m.ScheduleDate.Value.ToString("dd/MM/yyyy")</p>
+                <p>Phòng chiếu: Cinema 6</p>
+                <p id="selected-seats">Ghế: </p>
+            </div>
+            <div class="movie-pricing">
+                <p>Tên phim: 249.818,00 đ</p>
+                <p>Combo: 0,00 đ</p>
+                <p>Tổng: 249.818,00 đ</p>
+            </div>
+        </div>
+        <button class="next">NEXT &gt;</button>
+        }
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const seats = document.querySelectorAll('.seat');
+        const selectedSeatsElement = document.getElementById('selected-seats');
+
+        let firstSelectedType = null;
+        let selectedSeats = [];
+
+        seats.forEach(seat => {
+            seat.addEventListener('click', () => {
+                if (seat.classList.contains('selected')) {
+                    alert('Seat cannot be selected');
+                } else if (seat.classList.contains('checked')) {
+                    seat.classList.remove('checked');
+                    firstSelectedType = null;
+                    selectedSeats = selectedSeats.filter(s => s !== seat.dataset.seat);
+                } else {
+                    const seatType = getSeatType(seat.dataset.seat);
+                    if (firstSelectedType === null) {
+                        firstSelectedType = seatType;
+                        seat.classList.add('checked');
+                        selectedSeats.push(seat.dataset.seat);
+                    } else {
+                        if (seatType === firstSelectedType) {
+                            seat.classList.add('checked');
+                            selectedSeats.push(seat.dataset.seat);
+                        } else {
+                            alert('Bạn phải chọn ghế cùng loại.');
+                        }
+                    }
+                }
+                updateSelectedSeats();
+            });
+        });
+
+        function getSeatType(seatName) {
+            if (seatName.startsWith('A') || seatName.startsWith('B') || seatName.startsWith('C')) {
+                return 'regular';
+            } else if (seatName.startsWith('D') || seatName.startsWith('E') || seatName.startsWith('F') || seatName.startsWith('G') || seatName.startsWith('H')) {
+                return 'vip';
+            } else if (seatName.startsWith('I')) {
+                return 'sweetbox';
+            }
+            return 'unknown';
+        }
+
+        function updateSelectedSeats() {
+            const seatTypes = {
+                'regular': 'Thường',
+                'vip': 'Vip',
+                'sweetbox': 'Sweetbox'
+            };
+            const seatsByType = selectedSeats.reduce((acc, seat) => {
+                const type = getSeatType(seat);
+                if (!acc[type]) acc[type] = [];
+                acc[type].push(seat);
+                return acc;
+            }, {});
+
+            let displayText = 'Ghế: ';
+            for (const [type, seats] of Object.entries(seatsByType)) {
+                displayText += `${seatTypes[type]} ${seats.join(', ')}, `;
+            }
+            selectedSeatsElement.textContent = displayText.slice(0, -2);
+        }
+    });
+
+</script>
+
+

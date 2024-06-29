@@ -56,8 +56,10 @@ namespace MovieBooker_backend.Repositories.ScheduleRepository
                     TimeSlotId = s.TimeSlotId,
                     ScheduleDate = s.ScheduleDate,
                     MovieTitle = s.Movie.MovieTitle,
-                    Durations = s.Movie.Durations
-                    //TimeSlot = s.TimeSlot,
+                    Durations = s.Movie.Durations,
+                    TimeSlot = s.TimeSlot.StartTime,
+                    TheaterName = s.Theater.TheaterName,
+                    movieImage = s.Movie.MovieImages.First().LinkImage
                 }).ToList();
             return schedules;
         }

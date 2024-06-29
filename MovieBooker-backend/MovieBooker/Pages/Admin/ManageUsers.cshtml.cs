@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MovieBooker.Models;
 using StackExchange.Redis;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
@@ -25,12 +26,23 @@ namespace MovieBooker.Pages.Admin
 
             if (!string.IsNullOrEmpty(accessToken))
             {
+
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-                HttpResponseMessage response = await _httpClient.GetAsync("https://localhost:5000/api/User/GetAllUser?$filter=roleId eq 3");
-                if (response.IsSuccessStatusCode)
+                var handler = new JwtSecurityTokenHandler();
+                var jwtToken = handler.ReadToken(accessToken) as JwtSecurityToken;
+                var roleClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value;
+                if (roleClaim == "Admin")
                 {
-                    TempData["User"] = "Customer";
-                    Users = await response.Content.ReadFromJsonAsync<List<UserDTO>>();
+                    HttpResponseMessage response = await _httpClient.GetAsync("https://localhost:5000/api/User/GetAllUser?$filter=roleId eq 3");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        TempData["User"] = "Customer";
+                        Users = await response.Content.ReadFromJsonAsync<List<UserDTO>>();
+                    }
+                    else
+                    {
+                        return RedirectToPage("/Error");
+                    }
                 }
                 else
                 {

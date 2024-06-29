@@ -1,0 +1,303 @@
+﻿@page
+@model MovieBooker.Pages.Users.Cart.TicketModel
+@{
+    Layout = null;
+    int? idmovie = (int)TempData["movieId"];
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Showtimes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+@*    <link rel="stylesheet" href="style.css">*@
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            text-decoration: none;
+            font-size: 24px;
+            color: #333;
+            float: right;
+        }
+
+        .date-picker, .location-picker, .type-picker, .showtimes {
+            margin-bottom: 20px;
+        }
+
+        .dates {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .date {
+            padding: 10px;
+            margin: 5px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            width: 60px;
+        }
+
+            .date.active {
+                background-color: #333;
+                color: #fff;
+                border-color: #333;
+            }
+
+            .date span {
+                display: block;
+                font-size: 12px;
+                color: #666;
+            }
+
+        .location-picker {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .location {
+            padding: 10px;
+            margin: 5px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .location.active {
+                background-color: #333;
+                color: #fff;
+                border-color: #333;
+            }
+
+        .type-picker {
+            display: flex;
+            justify-content: center;
+        }
+
+        .type {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .type.active {
+                background-color: #333;
+                color: #fff;
+                border-color: #333;
+            }
+
+        .showtimes .cinema {
+            margin-bottom: 20px;
+        }
+
+        .cinema h3 {
+            margin: 10px 0;
+        }
+
+        .times {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .time {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            user-select: none;
+        }
+            .time.active {
+                background-color: #333;
+                color: #fff;
+                border-color: #333;
+            }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a asp-page="/Users/Movies/DetailMovie" asp-route-id="@idmovie" class="back-button"><i class="fas fa-times"></i></a>
+    </div>
+    <div class="container">
+        <div class="date-picker">
+            <div class="dates">
+                @foreach(var date in Model.SelectedDates)
+                {
+                    <a asp-page-handler="Schedule" asp-route-selectedate="@date" asp-route-movieId="@idmovie" style="text-decoration:none; color:black">
+                        <div id="date-@date.ToString("yyyyMMdd")" class="date"
+                             data-date="@date.ToString("yyyy-MM-dd")" onclick="selectDate(this)">
+                            <span>@date.ToString("MM ddd")</span><br>
+                            @date.Day
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+        <div class="location-picker">
+            <div class="location active">Hà Nội</div>
+          @*  <div class="location">Đà Nẵng</div>
+            <div class="location">Cần Thơ</div>
+            <div class="location">Đồng Nai</div>
+            <div class="location">Hải Phòng</div>
+            <div class="location">Quảng Ninh</div>
+            <div class="location">Bà Rịa-Vũng Tàu</div>
+            <div class="location">Bình Định</div>
+            <div class="location">Bình Dương</div>
+            <div class="location">Đắk Lắk</div>
+            <div class="location">Trà Vinh</div>
+            <div class="location">Yên Bái</div>
+            <div class="location">Vĩnh Long</div>
+            <div class="location">Kiên Giang</div>
+            <div class="location">Hậu Giang</div>
+            <div class="location">Hà Tĩnh</div>
+            <div class="location">Phú Yên</div>
+            <div class="location">Đồng Tháp</div>
+            <div class="location">Bạc Liêu</div>
+            <div class="location">Hưng Yên</div>
+            <div class="location">Khánh Hòa</div>
+            <div class="location">Kon Tum</div>
+            <div class="location">Lạng Sơn</div>
+            <div class="location">Nghệ An</div>
+            <div class="location">Phú Thọ</div>
+            <div class="location">Quảng Ngãi</div>
+            <div class="location">Sóc Trăng</div>
+            <div class="location">Sơn La</div>
+            <div class="location">Tây Ninh</div>
+            <div class="location">Thái Nguyên</div>
+            <div class="location">Tiền Giang</div>*@
+        </div>
+@*        <div class="type-picker">
+            <button class="type active">2D Phụ Đề Việt</button>
+            <button class="type">2D Lồng Tiếng Việt</button>
+            <button class="type">IMAX2D Phụ Đề Việt</button>
+            <button class="type">4DX2D Phụ Đề Việt</button>
+        </div>*@
+        <form method="post">
+        <div class="showtimes">
+                @{
+                    int count = 0;
+                }
+            @foreach (var theater in Model.theaters)
+            {
+            <div class="cinema">
+                <h3>@theater.TheaterName</h3>
+                    <div class="times" data-theater-id="@theater.TheaterId">
+                      
+                        @foreach(var time in Model.schedules)
+                        {
+                            @if(time.TheaterId == theater.TheaterId)
+                            {
+                                <span class="time" data-timeslot-id="@time.TimeSlotId"
+                                onclick="selectTime(this, @theater.TheaterId, @time.TimeSlotId)">@time.TimeSlot</span>
+                                count++;
+                            }
+                        }
+                        @if (count == 0)
+                        {
+                            <span>Không có lịch chiếu</span>
+                        }
+                </div>
+            </div>
+            }
+        </div>
+        @if(count > 0){
+            <button type="submit">Next</button>
+            <input type="hidden" name="SelectedTheaterId" id="selectedTheaterId" />
+            <input type="hidden" name="SelectedTimeSlotId" id="selectedTimeSlotId" />
+            <input type="hidden" name="movieId" value="@idmovie" />
+        }
+        </form>
+    </div>
+</body>
+</html>
+<script>
+    // Hàm để thiết lập cookie
+    function setCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    // Hàm để lấy giá trị của cookie
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Kiểm tra xem đã lưu trữ ngày được chọn trong cookie chưa
+        var selectedDate = getCookie('selectedDate');
+        if (selectedDate) {
+            // Tìm div có data-date tương ứng với selectedDate và thêm lớp 'active'
+            var selectedDiv = document.querySelector('.date[data-date="' + selectedDate + '"]');
+            if (selectedDiv) {
+                selectedDiv.classList.add('active');
+            }
+        }
+    });
+
+    function selectDate(selectedDiv) {
+        // Lấy ngày tương ứng từ thuộc tính data-date của div được nhấp vào
+        var selectedDate = selectedDiv.getAttribute('data-date');
+
+        // Xóa lớp 'active' khỏi tất cả các div có class 'date'
+        document.querySelectorAll('.date').forEach(function (el) {
+            el.classList.remove('active');
+        });
+
+        // Thêm lớp 'active' vào div được nhấp vào
+        selectedDiv.classList.add('active');
+        // Lưu trữ ngày được chọn vào cookie
+        setCookie('selectedDate', selectedDate, 7);
+    }
+
+    function selectTime(selectedTimeDiv, theaterId, timeSlotId) {
+        if (selectedTimeDiv.classList.contains('active')) {
+            selectedTimeDiv.classList.remove('active');
+            document.getElementById('selectedTheaterId').value = '';
+            document.getElementById('selectedTimeSlotId').value = '';
+        } else {
+            document.querySelectorAll('.time').forEach(function (el) {
+                el.classList.remove('active');
+            });
+            selectedTimeDiv.classList.add('active');
+            document.getElementById('selectedTheaterId').value = theaterId;
+            document.getElementById('selectedTimeSlotId').value = timeSlotId;
+        }
+    }
+</script>

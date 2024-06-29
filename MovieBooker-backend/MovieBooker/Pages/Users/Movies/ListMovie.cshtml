@@ -26,11 +26,15 @@
                         <div class="col-md-3">
                             <div class="upcome_2i1 clearfix position-relative">
                                 <div class="upcome_2i1i clearfix">
-                                    <img src="https://res.cloudinary.com/dwfo16yhs/image/upload/v1719050854/img_prn231/bwg2pcprjrb1graxbduh.jpg" class="w-100" alt="abc">
+                                    <img src="@moive.MovieImages.First().LinkImage" class="w-100" alt="abc">
                                 </div>
                                 <div class="upcome_2i1i1 clearfix position-absolute top-0 text-center w-100">
                                     <h6 class="text-uppercase"><a class="button_1" href="@moive.Trailer">View Trailer</a></h6>
-                                    <h6 class="text-uppercase mb-0"><a class="button_2" href="@moive.MovieId">View Details</a></h6>
+                                    <h6 class="text-uppercase mb-0">
+                                        <a class="button_2"
+                                       asp-page="/Users/Movies/DetailMovie"
+                                       asp-route-id="@moive.MovieId">View Details</a>
+                                    </h6>
                                 </div>
                             </div>
                             <div class="upcome_2i_last bg-white p-3">
@@ -52,7 +56,7 @@
                                         @if (TempData["movie"] == "status2")
                                         {
                                             <div class="upcome_2i_lastir pt-3">
-                                                <span><a class="col_red rounded" href="#"><i class="fa fa-shopping-cart"></i>Đặt Vé</a></span>
+                                                <span><a class="col_red rounded" asp-page="/Users/Cart/Ticket" asp-route-id="@moive.MovieId"><i class="fa fa-shopping-cart"></i></a></span>
                                             </div>
                                         }
                                         else if (TempData["movie"] == "status1")

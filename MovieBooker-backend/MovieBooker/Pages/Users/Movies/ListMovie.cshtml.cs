@@ -24,6 +24,8 @@ namespace MovieBooker.Pages.Users.Movies
                     TempData["movie"] = "status1";
                 }
             }
+   
+
             return Page();
         }
     }

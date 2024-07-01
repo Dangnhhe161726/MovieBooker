@@ -6,6 +6,7 @@ using MovieBooker.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using StackExchange.Redis;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Security.Claims;
@@ -57,7 +58,22 @@ namespace MovieBooker.Pages
                     {
                         Response.Cookies.Append("Token", "savetoken");
                         Response.Cookies.Append("RefreshToken", token.RefreshToken);
-                        return RedirectToPage("/Index");
+
+                        var handler = new JwtSecurityTokenHandler();
+                        var jwtToken = handler.ReadToken(accessToken) as JwtSecurityToken;
+                        var roleClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value;
+                        if (roleClaim == "Admin")
+                        {
+                            return RedirectToPage("/Admin/ManageUsers");
+                        }
+                        else if (roleClaim == "Customer")
+                        {
+                            return RedirectToPage("/Index");
+                        }
+                        else if (roleClaim == "Staff")
+                        {
+                            return RedirectToPage("");
+                        }
                     }
                 }
                 else

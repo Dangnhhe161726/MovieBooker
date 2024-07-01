@@ -16,39 +16,53 @@ namespace MovieBooker.Pages.Users.Cart
         public List<TheaterDTO> theaters { get; set; }
 
         public List<ScheduleDTO> schedules { get; set; }
+        private readonly IAuthenService _authenticationService;
+        public TicketModel(IAuthenService authenticationService)
+        {
+            _authenticationService = authenticationService;
+        }
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            DateTime startDate = DateTime.Today;
-            DateTime endDate = DateTime.Today.AddDays(28);
-
-            string start;
-            if (Request.Cookies.TryGetValue("selectedDate", out var selectedDate))
+            var accessToken = await _authenticationService.GetAccessTokenAsync();
+            if (accessToken == null)
             {
-                start = selectedDate;
+                return RedirectToPage("/Login");
             }
             else
             {
-                start = startDate.ToString("yyyy-MM-dd");
-            }
-           
-            //string end = endDate.ToString("yyyy-MM-dd");
-            SelectedDates = InitializeDefaults(startDate, endDate);
-            HttpClient _httpClient = new HttpClient();
-            HttpResponseMessage response = await _httpClient.GetAsync("https://localhost:5000/api/Theater/GetAllTheater");
-            if (response.IsSuccessStatusCode)
-            {
-                theaters = await response.Content.ReadFromJsonAsync<List<TheaterDTO>>();
-            }
-            if (schedules == null)
-            {
-                HttpResponseMessage response2 = await _httpClient.GetAsync($"https://localhost:5000/api/Schedule/GetSchedule?$filter=scheduleDate eq {start} and movieId eq {id}");
-                if (response2.IsSuccessStatusCode)
+
+                DateTime startDate = DateTime.Today;
+                DateTime endDate = DateTime.Today.AddDays(28);
+
+                string start;
+                if (Request.Cookies.TryGetValue("selectedDate", out var selectedDate))
                 {
-                    schedules = await response2.Content.ReadFromJsonAsync<List<ScheduleDTO>>();
+                    start = selectedDate;
                 }
+                else
+                {
+                    start = startDate.ToString("yyyy-MM-dd");
+                }
+
+                //string end = endDate.ToString("yyyy-MM-dd");
+                SelectedDates = InitializeDefaults(startDate, endDate);
+                HttpClient _httpClient = new HttpClient();
+                HttpResponseMessage response = await _httpClient.GetAsync("https://localhost:5000/api/Theater/GetAllTheater");
+                if (response.IsSuccessStatusCode)
+                {
+                    theaters = await response.Content.ReadFromJsonAsync<List<TheaterDTO>>();
+                }
+                if (schedules == null)
+                {
+                    HttpResponseMessage response2 = await _httpClient.GetAsync($"https://localhost:5000/api/Schedule/GetSchedule?$filter=scheduleDate eq {start} and movieId eq {id}");
+                    if (response2.IsSuccessStatusCode)
+                    {
+                        schedules = await response2.Content.ReadFromJsonAsync<List<ScheduleDTO>>();
+                    }
+                }
+                TempData["movieId"] = id;
+                return Page();
             }
-            TempData["movieId"] = id;
-            return Page();
         }
         private List<DateTime> InitializeDefaults(DateTime startDate, DateTime endDate)
         {

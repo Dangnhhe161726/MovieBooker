@@ -3,6 +3,7 @@
 @{
 }
 <section id="upcome" class="p_3 bg-light">
+
     <div class="container-xl">
         <div class="row upcome_1 text-center">
             <div class="col-md-12">
@@ -56,7 +57,7 @@
                                         @if (TempData["movie"] == "status2")
                                         {
                                             <div class="upcome_2i_lastir pt-3">
-                                                <span><a class="col_red rounded" asp-page="/Users/Cart/Ticket" asp-route-id="@moive.MovieId"><i class="fa fa-shopping-cart"></i></a></span>
+                                                <span><a style="width: 70px;" class="col_red rounded" asp-page="/Users/Cart/Ticket" asp-route-id="@moive.MovieId">MUA VÉ</a></span>
                                             </div>
                                         }
                                         else if (TempData["movie"] == "status1")

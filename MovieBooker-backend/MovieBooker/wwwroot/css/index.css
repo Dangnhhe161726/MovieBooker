@@ -48,14 +48,13 @@ height:100%;
 display:block;
  }
 
-.upcome_2i_lastir span a{
-display:inline-block; 
-border:1px solid #ff44441f;
-width:45px;
-height:45px;
-line-height:42px;
-text-align:center;
- }
+.upcome_2i_lastir span a {
+    display: inline-block;
+    border: 1px solid #ff44441f;
+    height: 45px;
+    line-height: 42px;
+    text-align: center;
+}
 .upcome_2i_lastir span:hover a{
 background:#ff4444;
 color:#fff;

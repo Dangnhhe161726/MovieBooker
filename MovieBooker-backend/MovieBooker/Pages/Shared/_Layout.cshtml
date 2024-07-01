@@ -1,5 +1,6 @@
 ﻿@using StackExchange.Redis;
 @using System.IdentityModel.Tokens.Jwt;
+@using MovieBooker.Dtos;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -81,23 +82,34 @@
                     <ul class="navbar-nav mb-0 ms-auto">
 
                         <li class="nav-item">
-                            <select name="categories" class="form-select bg-light" required="">
-                                <option value="">All Categories</option>
-                                <option>Movie</option>
-                                <option>Video</option>
-                                <option>Tv-Show</option>
-                                <option>Music</option>
-                            </select>
+                            @if (TempData["enable"] != null)
+                            {
+                                int status = (int)TempData["movieStatusId"];
+                       
+                                <form method="post">
+                                    <select name="categories" class="form-select bg-light">
+                                        <option value="">All Categories</option>
+                                        @foreach (var cate in Model.category)
+                                        {
+                                            <option value="@cate.CategoryId">@cate.CategoryName</option>
+                                        }
+                                    </select>
 
-                            <div class="input-group">
-                                <input type="text" class="form-control border-start-0" placeholder="Search Movie">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-primary bg_yell" type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
+                                    <div class="input-group">
+                                        <input type="hidden" value="@status" name="statusId"/>
+                                        <input name="moviename" type="text" class="form-control border-start-0" placeholder="Search Movie">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary bg_yell" type="submit"
+                                                asp-page="/Users/Movies/ListMovie"
+                                                asp-page-handler="SearchMovie">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </form>
+                            }
                         </li>
+
                         @{
 
                             if (token == null)

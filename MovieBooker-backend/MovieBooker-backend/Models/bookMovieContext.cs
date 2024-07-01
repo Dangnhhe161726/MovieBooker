@@ -26,6 +26,7 @@ namespace MovieBooker_backend.Models
         public virtual DbSet<Room> Rooms { get; set; } = null!;
         public virtual DbSet<Schedule> Schedules { get; set; } = null!;
         public virtual DbSet<Seat> Seats { get; set; } = null!;
+        public virtual DbSet<SeatType> SeatTypes { get; set; } = null!;
         public virtual DbSet<Theater> Theaters { get; set; } = null!;
         public virtual DbSet<TimeSlot> TimeSlots { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
@@ -34,11 +35,10 @@ namespace MovieBooker_backend.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-				var ConnectionString = new ConfigurationBuilder()
-						.AddJsonFile("appsettings.json").Build().GetConnectionString("DefaultConnection");
-				optionsBuilder.UseSqlServer(ConnectionString);
-			}
-		}
+                var ConnectionString = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetConnectionString("DefaultConnection");
+                optionsBuilder.UseSqlServer(ConnectionString);
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -105,6 +105,10 @@ namespace MovieBooker_backend.Models
                 entity.Property(e => e.LinkImage).HasColumnName("linkImage");
 
                 entity.Property(e => e.MovieId).HasColumnName("movieId");
+
+                entity.Property(e => e.PublicId)
+                    .HasMaxLength(255)
+                    .HasColumnName("publicId");
 
                 entity.HasOne(d => d.Movie)
                     .WithMany(p => p.MovieImages)
@@ -253,10 +257,30 @@ namespace MovieBooker_backend.Models
                     .HasColumnName("seatNumber")
                     .IsFixedLength();
 
+                entity.Property(e => e.SeatTypeId).HasColumnName("seatTypeId");
+
                 entity.HasOne(d => d.Room)
                     .WithMany(p => p.Seats)
                     .HasForeignKey(d => d.RoomId)
                     .HasConstraintName("FK_Seats_Rooms");
+
+                entity.HasOne(d => d.SeatType)
+                    .WithMany(p => p.Seats)
+                    .HasForeignKey(d => d.SeatTypeId)
+                    .HasConstraintName("FK_Seats_SeatType");
+            });
+
+            modelBuilder.Entity<SeatType>(entity =>
+            {
+                entity.ToTable("SeatType");
+
+                entity.Property(e => e.SeatTypeId).HasColumnName("seatTypeId");
+
+                entity.Property(e => e.Price).HasColumnName("price");
+
+                entity.Property(e => e.TypeName)
+                    .HasMaxLength(50)
+                    .HasColumnName("typeName");
             });
 
             modelBuilder.Entity<Theater>(entity =>

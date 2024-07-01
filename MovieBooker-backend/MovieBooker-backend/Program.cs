@@ -27,6 +27,7 @@ using MovieBooker_backend.Repositories.MovieCategoryRepository;
 using MovieBooker_backend.Repositories.MovieStatusRepository;
 using MovieBooker_backend.Repositories.MovieImageRepository;
 using MovieBooker_backend.Repositories.TheaterRepository;
+using MovieBooker_backend.Repositories.SeatRepository;
 
 namespace MovieBooker_backend
 {
@@ -129,6 +130,7 @@ namespace MovieBooker_backend
             builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 			builder.Services.AddScoped<IMovieRepository, MovieRepository>();
             builder.Services.AddScoped<ITheaterRepository, TheaterRepository>();
+            builder.Services.AddScoped<ISeatRepository, SeatRepository>();
 
 
             builder.Services.AddAuthentication(options =>

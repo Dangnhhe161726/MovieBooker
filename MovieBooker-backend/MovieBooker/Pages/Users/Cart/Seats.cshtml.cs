@@ -9,6 +9,7 @@ namespace MovieBooker.Pages.Users.Cart
         [BindProperty(SupportsGet = true)]
         public TicketDTO ticket {  get; set; }
         public List<ScheduleDTO> schedules { get; set; }
+        public List<SeatDTO> seats { get; set; }    
         public async Task<IActionResult> OnGetAsync()
         {
             string? date = ticket.start;
@@ -22,6 +23,13 @@ namespace MovieBooker.Pages.Users.Cart
             {
                 schedules = await response2.Content.ReadFromJsonAsync<List<ScheduleDTO>>();
             }
+            HttpResponseMessage response3 = await _httpClient.GetAsync("https://localhost:5000/api/Seat/GetSeat");
+            if (response3.IsSuccessStatusCode)
+            {
+                seats = await response3.Content.ReadFromJsonAsync<List<SeatDTO>>();
+            }
+
+
             return Page();  
         }
     }

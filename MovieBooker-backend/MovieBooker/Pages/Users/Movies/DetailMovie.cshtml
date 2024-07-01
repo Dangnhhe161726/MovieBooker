@@ -26,7 +26,7 @@
             {
                 <div class="img-item">
                     <a href="#" data-id="@count">
-                        <img src="@img.LinkImage" alt="shoe image">
+                        <img src="@img.LinkImage" alt="shoe image" style="height: 8.9rem;">
                     </a>
                 </div>
                 count++;
@@ -60,7 +60,7 @@
                     <li>Director: <span>@dt.Director</span></li>
                     <li>Durations: <span>@dt.Durations</span></li>
                     <li>Category: <span>@dt.Category.CategoryName</span></li>
-                    <li>Release Date: <span>@dt.ReleaseDate</span></li>
+                    <li>Release Date: <span>@dt.ReleaseDate.Value.ToString("dd/MM/yyyy")</span></li>
                 </ul>
             </div>
 

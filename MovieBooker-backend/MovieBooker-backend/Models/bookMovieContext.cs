@@ -20,12 +20,12 @@ namespace MovieBooker_backend.Models
         public virtual DbSet<MovieCategory> MovieCategories { get; set; } = null!;
         public virtual DbSet<MovieImage> MovieImages { get; set; } = null!;
         public virtual DbSet<MovieStatus> MovieStatuses { get; set; } = null!;
-        public virtual DbSet<Payment> Payments { get; set; } = null!;
         public virtual DbSet<Revervation> Revervations { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<Room> Rooms { get; set; } = null!;
         public virtual DbSet<Schedule> Schedules { get; set; } = null!;
         public virtual DbSet<Seat> Seats { get; set; } = null!;
+        public virtual DbSet<SeatType> SeatTypes { get; set; } = null!;
         public virtual DbSet<Theater> Theaters { get; set; } = null!;
         public virtual DbSet<TimeSlot> TimeSlots { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
@@ -34,9 +34,10 @@ namespace MovieBooker_backend.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("server=localhost,1434;database=bookMovie; uid=sa;pwd=Abc1234567890@;Trusted_Connection=True;Encrypt=False; Integrated Security=False");
+                var ConnectionString = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetConnectionString("DefaultConnection");
+                optionsBuilder.UseSqlServer(ConnectionString);
             }
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -105,6 +106,10 @@ namespace MovieBooker_backend.Models
 
                 entity.Property(e => e.MovieId).HasColumnName("movieId");
 
+                entity.Property(e => e.PublicId)
+                    .HasMaxLength(255)
+                    .HasColumnName("publicId");
+
                 entity.HasOne(d => d.Movie)
                     .WithMany(p => p.MovieImages)
                     .HasForeignKey(d => d.MovieId)
@@ -124,20 +129,6 @@ namespace MovieBooker_backend.Models
                     .HasColumnName("statusName");
             });
 
-            modelBuilder.Entity<Payment>(entity =>
-            {
-                entity.Property(e => e.PaymentId).HasColumnName("paymentId");
-
-                entity.Property(e => e.ReservationId).HasColumnName("reservationId");
-
-                entity.Property(e => e.TotalAmount).HasColumnName("totalAmount");
-
-                entity.HasOne(d => d.Reservation)
-                    .WithMany(p => p.Payments)
-                    .HasForeignKey(d => d.ReservationId)
-                    .HasConstraintName("FK_Payments_Revervations1");
-            });
-
             modelBuilder.Entity<Revervation>(entity =>
             {
                 entity.HasKey(e => e.ReservationId);
@@ -155,6 +146,8 @@ namespace MovieBooker_backend.Models
                 entity.Property(e => e.Status).HasColumnName("status");
 
                 entity.Property(e => e.TimeSlotId).HasColumnName("timeSlotId");
+
+                entity.Property(e => e.TotalAmount).HasColumnName("totalAmount");
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
@@ -252,10 +245,30 @@ namespace MovieBooker_backend.Models
                     .HasColumnName("seatNumber")
                     .IsFixedLength();
 
+                entity.Property(e => e.SeatTypeId).HasColumnName("seatTypeId");
+
                 entity.HasOne(d => d.Room)
                     .WithMany(p => p.Seats)
                     .HasForeignKey(d => d.RoomId)
                     .HasConstraintName("FK_Seats_Rooms");
+
+                entity.HasOne(d => d.SeatType)
+                    .WithMany(p => p.Seats)
+                    .HasForeignKey(d => d.SeatTypeId)
+                    .HasConstraintName("FK_Seats_SeatType");
+            });
+
+            modelBuilder.Entity<SeatType>(entity =>
+            {
+                entity.ToTable("SeatType");
+
+                entity.Property(e => e.SeatTypeId).HasColumnName("seatTypeId");
+
+                entity.Property(e => e.Price).HasColumnName("price");
+
+                entity.Property(e => e.TypeName)
+                    .HasMaxLength(50)
+                    .HasColumnName("typeName");
             });
 
             modelBuilder.Entity<Theater>(entity =>

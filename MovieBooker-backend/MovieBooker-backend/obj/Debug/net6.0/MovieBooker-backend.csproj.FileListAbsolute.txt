@@ -88,6 +88,8 @@ D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend
 D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.AspNetCore.OData.dll
+D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
 D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
 D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
 D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
@@ -103,7 +105,11 @@ D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend
 D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
 D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.OData.Core.dll
+D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.OData.Edm.dll
+D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.OData.ModelBuilder.dll
 D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.OpenApi.dll
+D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.Spatial.dll
 D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
 D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Newtonsoft.Json.dll
 D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Pipelines.Sockets.Unofficial.dll
@@ -152,9 +158,3 @@ D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend
 D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\obj\Debug\net6.0\MovieBooker-backend.pdb
 D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\obj\Debug\net6.0\MovieBooker-backend.genruntimeconfig.cache
 D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\obj\Debug\net6.0\ref\MovieBooker-backend.dll
-D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.AspNetCore.OData.dll
-D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
-D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.OData.Core.dll
-D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.OData.Edm.dll
-D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.OData.ModelBuilder.dll
-D:\PRN231 Projects and Demos\MovieBooker\MovieBooker-backend\MovieBooker-backend\bin\Debug\net6.0\Microsoft.Spatial.dll

@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.OData;
 using System.Reflection.Emit;
 using Microsoft.OData.ModelBuilder;
 using MovieBooker_backend.DTO;
+using MovieBooker_backend.Repositories.DashboardRepository;
 
 namespace MovieBooker_backend
 {
@@ -42,6 +43,7 @@ namespace MovieBooker_backend
              });
             builder.Services.AddTransient<ICloudinaryRepository, CloudinaryRepository>();
             builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
+            builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
             builder.Services.AddSwaggerGen(option =>
             {
                 option.SwaggerDoc("v1", new OpenApiInfo { Title = "Movie API", Version = "v1" });
@@ -113,8 +115,6 @@ namespace MovieBooker_backend
 
             //Add OData Service
             var modelBuilder = new ODataConventionModelBuilder();
-            var entitySet = modelBuilder.EntitySet<ReservationDTO>("Reservations");
-            entitySet.EntityType.HasKey(entity => entity.ReservationId);
             builder.Services.AddControllers().AddOData(options =>
                 options.Select()
                 .Filter()

@@ -1,10 +1,11 @@
 ﻿using MovieBooker_backend.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace MovieBooker_backend.DTO
 {
     public class ReservationDTO
     {
-
+        [Key]
         public int ReservationId { get; set; }
         public int? UserId { get; set; }
         public string? SeatNumber { get; set; }

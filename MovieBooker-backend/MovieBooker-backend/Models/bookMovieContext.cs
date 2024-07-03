@@ -20,7 +20,6 @@ namespace MovieBooker_backend.Models
         public virtual DbSet<MovieCategory> MovieCategories { get; set; } = null!;
         public virtual DbSet<MovieImage> MovieImages { get; set; } = null!;
         public virtual DbSet<MovieStatus> MovieStatuses { get; set; } = null!;
-        public virtual DbSet<Payment> Payments { get; set; } = null!;
         public virtual DbSet<Revervation> Revervations { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<Room> Rooms { get; set; } = null!;
@@ -129,20 +128,6 @@ namespace MovieBooker_backend.Models
                     .HasColumnName("statusName");
             });
 
-            modelBuilder.Entity<Payment>(entity =>
-            {
-                entity.Property(e => e.PaymentId).HasColumnName("paymentId");
-
-                entity.Property(e => e.ReservationId).HasColumnName("reservationId");
-
-                entity.Property(e => e.TotalAmount).HasColumnName("totalAmount");
-
-                entity.HasOne(d => d.Reservation)
-                    .WithMany(p => p.Payments)
-                    .HasForeignKey(d => d.ReservationId)
-                    .HasConstraintName("FK_Payments_Revervations1");
-            });
-
             modelBuilder.Entity<Revervation>(entity =>
             {
                 entity.HasKey(e => e.ReservationId);
@@ -160,6 +145,8 @@ namespace MovieBooker_backend.Models
                 entity.Property(e => e.Status).HasColumnName("status");
 
                 entity.Property(e => e.TimeSlotId).HasColumnName("timeSlotId");
+
+                entity.Property(e => e.TotalAmount).HasColumnName("totalAmount");
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
 

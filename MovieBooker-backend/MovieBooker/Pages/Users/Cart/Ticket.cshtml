@@ -22,7 +22,7 @@
     <div class="container">
         <div class="date-picker">
             <div class="dates">
-                @foreach(var date in Model.SelectedDates)
+                @foreach (var date in Model.SelectedDates)
                 {
                     <a asp-page-handler="Schedule" asp-route-selectedate="@date" asp-route-movieId="@idmovie" style="text-decoration:none; color:black">
                         <div id="date-@date.ToString("yyyyMMdd")" class="date"
@@ -36,7 +36,7 @@
         </div>
         <div class="location-picker">
             <div class="location active">Hà Nội</div>
-          @*  <div class="location">Đà Nẵng</div>
+            @*  <div class="location">Đà Nẵng</div>
             <div class="location">Cần Thơ</div>
             <div class="location">Đồng Nai</div>
             <div class="location">Hải Phòng</div>
@@ -67,46 +67,56 @@
             <div class="location">Thái Nguyên</div>
             <div class="location">Tiền Giang</div>*@
         </div>
-@*        <div class="type-picker">
-            <button class="type active">2D Phụ Đề Việt</button>
-            <button class="type">2D Lồng Tiếng Việt</button>
-            <button class="type">IMAX2D Phụ Đề Việt</button>
-            <button class="type">4DX2D Phụ Đề Việt</button>
+        @*        <div class="type-picker">
+        <button class="type active">2D Phụ Đề Việt</button>
+        <button class="type">2D Lồng Tiếng Việt</button>
+        <button class="type">IMAX2D Phụ Đề Việt</button>
+        <button class="type">4DX2D Phụ Đề Việt</button>
         </div>*@
-        <form method="post">
-        <div class="showtimes">
+        <form method="post" onsubmit="return validateForm()">
+            <div class="showtimes">
                 @{
                     int count = 0;
                 }
-            @foreach (var theater in Model.theaters)
-            {
-            <div class="cinema">
-                <h3>@theater.TheaterName</h3>
-                    <div class="times" data-theater-id="@theater.TheaterId">
-                      
-                        @foreach(var time in Model.schedules)
-                        {
-                            @if(time.TheaterId == theater.TheaterId)
+                @foreach (var theater in Model.theaters)
+                {
+                    <div class="cinema">
+                        <h3>@theater.TheaterName</h3>
+                        <div class="times" data-theater-id="@theater.TheaterId">
+
+                            @foreach (var time in Model.schedules)
                             {
-                                <span class="time" data-timeslot-id="@time.TimeSlotId"
-                                onclick="selectTime(this, @theater.TheaterId, @time.TimeSlotId)">@time.TimeSlot</span>
-                                count++;
+                                @if (time.TheaterId == theater.TheaterId)
+                                {
+                                    <span class="time" data-timeslot-id="@time.TimeSlotId"
+                                          onclick="selectTime(this, @theater.TheaterId, @time.TimeSlotId)">@time.TimeSlot</span>
+                                    count++;
+                                }
                             }
-                        }
-                        @if (count == 0)
-                        {
-                            <span>Không có lịch chiếu</span>
-                        }
-                </div>
+                            @if (count == 0)
+                            {
+                                <span>Không có lịch chiếu</span>
+                            }
+                        </div>
+                    </div>
+                }
             </div>
+            @if (count > 0)
+            {
+                <button style="background: linear-gradient(89deg, #5e7188, #3e4b5b); border: 0;
+    transition: opacity 0.3s ease;
+    font-size: 0.875rem;
+    line-height: 1;
+    font-family: 'ubuntu-bold', sans-serif;
+                        min-width: 100px;
+                        color: #ffffff;
+                        height: 35px;" type="submit">
+                    Next
+                </button>
+                <input type="hidden" name="SelectedTheaterId" id="selectedTheaterId" />
+                <input type="hidden" name="SelectedTimeSlotId" id="selectedTimeSlotId" />
+                <input type="hidden" name="movieId" value="@idmovie" />
             }
-        </div>
-        @if(count > 0){
-            <button type="submit">Next</button>
-            <input type="hidden" name="SelectedTheaterId" id="selectedTheaterId" />
-            <input type="hidden" name="SelectedTimeSlotId" id="selectedTimeSlotId" />
-            <input type="hidden" name="movieId" value="@idmovie" />
-        }
         </form>
     </div>
 </body>
@@ -175,5 +185,15 @@
             document.getElementById('selectedTheaterId').value = theaterId;
             document.getElementById('selectedTimeSlotId').value = timeSlotId;
         }
+    }
+    function validateForm() {
+        var selectedTheaterId = document.getElementById('selectedTheaterId').value;
+        var selectedTimeSlotId = document.getElementById('selectedTimeSlotId').value;
+
+        if (!selectedTheaterId || !selectedTimeSlotId) {
+            alert("Vui lòng chọn thời gian");
+            return false;
+        }
+        return true;
     }
 </script>

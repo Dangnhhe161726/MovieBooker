@@ -32,5 +32,11 @@ namespace MovieBooker.Pages.Users.Cart
 
             return Page();  
         }
+
+        public async Task<IActionResult> OnPostBuyTicketAsync(int timeSlotId, double movieprice, List<int> seatId) 
+        {
+            Console.WriteLine(timeSlotId + " " + movieprice);
+            return await OnGetAsync();
+        }
     }
 }

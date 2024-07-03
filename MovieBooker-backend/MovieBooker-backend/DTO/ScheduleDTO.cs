@@ -16,5 +16,7 @@ namespace MovieBooker_backend.DTO
         public string? TimeSlot { get; set; }
         public string? TheaterName { get; set; }
         public string? movieImage { get; set; }
+
+        public double? MoviepPrice { get; set; }
     }
 }

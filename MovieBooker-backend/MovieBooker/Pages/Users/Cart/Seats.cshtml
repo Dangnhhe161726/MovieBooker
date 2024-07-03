@@ -5,11 +5,13 @@
 <link rel="stylesheet" href="~/css/Seat.css" asp-append-version="true" />
 <div class="container">
     <h1>BOOKING ONLINE</h1>
+    <form method="post">
     <div class="details">
         @foreach (var m in Model.schedules)
         {
             <p>@m.TheaterName | Cinema 7 | Số ghế (106/106)</p>
             <p>@m.ScheduleDate.Value.ToString("dd/MM/yyyy") @m.TimeSlot</p>
+                <input type="hidden" value="@m.TimeSlotId" name="timeSlotId">
         }
     </div>
     <div class="screen"></div>
@@ -19,7 +21,7 @@
             {
                 @if (rowa.SeatTypeName.Trim().Equals("regular") && rowa.Row.Trim().Equals("A"))
                 {
-                    <div class="seat regular" data-seat="@rowa.SeatNumber">@rowa.SeatNumber</div>
+                        <div class="seat regular" data-seat="@rowa.SeatNumber" data-seat-id="@rowa.SeatId">@rowa.SeatNumber</div>
                 }
             }
         </div>
@@ -29,7 +31,7 @@
 
                 @if (rowb.SeatTypeName.Trim().Equals("regular") && rowb.Row.Trim().Equals("B"))
                 {
-                    <div class="seat regular" data-seat="@rowb.SeatNumber">@rowb.SeatNumber</div>
+                        <div class="seat regular" data-seat="@rowb.SeatNumber" data-seat-id="@rowb.SeatId">@rowb.SeatNumber</div>
                 }
             }
         </div>
@@ -38,7 +40,7 @@
             {
                 @if (rowc.SeatTypeName.Trim().Equals("regular") && rowc.Row.Trim().Equals("C"))
                 {
-                    <div class="seat regular" data-seat="@rowc.SeatNumber">@rowc.SeatNumber</div>
+                        <div class="seat regular" data-seat="@rowc.SeatNumber" data-seat-id="@rowc.SeatId">@rowc.SeatNumber</div>
                 }
             }
         </div>
@@ -47,7 +49,7 @@
             {
                 @if (rowd.SeatTypeName.Trim().Equals("vip") && rowd.Row.Trim().Equals("D"))
                 {
-                    <div class="seat vip" data-seat="@rowd.SeatNumber">@rowd.SeatNumber</div>
+                        <div class="seat vip" data-seat="@rowd.SeatNumber" data-seat-id="@rowd.SeatId">@rowd.SeatNumber</div>
                 }
             }
         </div>
@@ -56,7 +58,7 @@
             {
                 @if (rowe.SeatTypeName.Trim().Equals("vip") && rowe.Row.Trim().Equals("E"))
                 {
-                    <div class="seat vip" data-seat="@rowe.SeatNumber">@rowe.SeatNumber</div>
+                        <div class="seat vip" data-seat="@rowe.SeatNumber" data-seat-id="@rowe.SeatId">@rowe.SeatNumber</div>
                 }
             }
         </div>
@@ -65,7 +67,7 @@
             {
                 @if (rowf.SeatTypeName.Trim().Equals("vip") && rowf.Row.Trim().Equals("F"))
                 {
-                    <div class="seat vip" data-seat="@rowf.SeatNumber">@rowf.SeatNumber</div>
+                        <div class="seat vip" data-seat="@rowf.SeatNumber" data-seat-id="@rowf.SeatId">@rowf.SeatNumber</div>
                 }
             }
         </div>
@@ -74,7 +76,7 @@
             {
                 @if (rowg.SeatTypeName.Trim().Equals("vip") && rowg.Row.Trim().Equals("G"))
                 {
-                    <div class="seat vip" data-seat="@rowg.SeatNumber">@rowg.SeatNumber</div>
+                        <div class="seat vip" data-seat="@rowg.SeatNumber" data-seat-id="@rowg.SeatId">@rowg.SeatNumber</div>
                 }
             }
         </div>
@@ -83,7 +85,7 @@
             {
                 @if (rowh.SeatTypeName.Trim().Equals("vip") && rowh.Row.Trim().Equals("H"))
                 {
-                    <div class="seat vip" data-seat="@rowh.SeatNumber">@rowh.SeatNumber</div>
+                        <div class="seat vip" data-seat="@rowh.SeatNumber" data-seat-id="@rowh.SeatId">@rowh.SeatNumber</div>
                 }
             }
         </div>
@@ -92,7 +94,7 @@
             {
                 @if (rowi.SeatTypeName.Trim().Equals("sweetbox") && rowi.Row.Trim().Equals("I"))
                 {
-                    <div class="seat sweetbox" data-seat="@rowi.SeatNumber">@rowi.SeatNumber</div>
+                        <div class="seat sweetbox" data-seat="@rowi.SeatNumber" data-seat-id="@rowi.SeatId">@rowi.SeatNumber</div>
                 }
             }
         </div>
@@ -133,20 +135,23 @@
                     <p id="selected-seats">Ghế: </p>
                 </div>
                 <div class="movie-pricing">
-                    <p>Tên phim: 249.818,00 đ</p>
+                    <p>Giá vé: @m.MoviepPrice VND</p>
                     <p>Combo: 0,00 đ</p>
-                    <p>Tổng: 249.818,00 đ</p>
+                    <p>Tổng:  @m.MoviepPrice VND</p>
                 </div>
             </div>
-            <button class="next">NEXT &gt;</button>
+            <input type="hidden" value="@m.MoviepPrice" name="movieprice"/>
+            <button type="submit" asp-page-handler="BuyTicket" class="next">NEXT &gt;</button>
         }
     </div>
+    </form>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const seats = document.querySelectorAll('.seat');
         const selectedSeatsElement = document.getElementById('selected-seats');
-
+        const form = document.querySelector('form');
+      
         let firstSelectedType = null;
         let selectedSeats = [];
 
@@ -158,16 +163,19 @@
                     seat.classList.remove('checked');
                     firstSelectedType = null;
                     selectedSeats = selectedSeats.filter(s => s !== seat.dataset.seat);
+                    removeHiddenInput(seat.dataset.seatId);
                 } else {
                     const seatType = getSeatType(seat.dataset.seat);
                     if (firstSelectedType === null) {
                         firstSelectedType = seatType;
                         seat.classList.add('checked');
                         selectedSeats.push(seat.dataset.seat);
+                        addHiddenInput(seat.dataset.seatId);
                     } else {
                         if (seatType === firstSelectedType) {
                             seat.classList.add('checked');
                             selectedSeats.push(seat.dataset.seat);
+                            addHiddenInput(seat.dataset.seatId);
                         } else {
                             alert('Bạn phải chọn ghế cùng loại.');
                         }
@@ -206,6 +214,21 @@
                 displayText += `${seatTypes[type]} ${seats.join(', ')}, `;
             }
             selectedSeatsElement.textContent = displayText.slice(0, -2);
+        }
+        function addHiddenInput(seatId) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'seatId';
+            input.value = seatId;
+            input.id = `seat-${seatId}`;
+            form.appendChild(input);
+        }
+
+        function removeHiddenInput(seatId) {
+            const input = document.getElementById(`seat-${seatId}`);
+            if (input) {
+                form.removeChild(input);
+            }
         }
     });
 

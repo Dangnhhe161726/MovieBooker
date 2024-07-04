@@ -1,0 +1,81 @@
+﻿@page
+@model MovieBooker.Pages.Manage.ReservationHistoryModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+}
+
+<link rel="stylesheet" href="~/assets/vendors/mdi/css/materialdesignicons.min.css">
+<link rel="stylesheet" href="~/assets/vendors/ti-icons/css/themify-icons.css">
+<link rel="stylesheet" href="~/assets/vendors/css/vendor.bundle.base.css">
+<link rel="stylesheet" href="~/assets/vendors/font-awesome/css/font-awesome.min.css" />
+<link rel="stylesheet" href="~/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
+<link rel="stylesheet" href="~/assets/css/style.css">
+<link rel="shortcut icon" href="~/assets/images/favicon.png" />
+
+<div class="container-fluid page-body-wrapper">
+@*     <form method="get">
+        <input type="text" name="SearchTerm" value="@Model.SearchTerm" placeholder="Search by movie title..." />
+        <select name="StatusFilter">
+            <option value="">All</option>
+            <option value="true" selected="@(Model.StatusFilter == true)">Enabled</option>
+            <option value="false" selected="@(Model.StatusFilter == false)">Disabled</option>
+        </select>
+        <input type="datetime-local" name="StartTime" value="@Model.StartTime?.ToString("yyyy-MM-ddTHH:mm")" />
+        <input type="datetime-local" name="EndTime" value="@Model.EndTime?.ToString("yyyy-MM-ddTHH:mm")" />
+        <button type="submit">Filter</button>
+    </form> *@
+    <div class="main-panel">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Reservation Records</h4>
+                    </p>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th> ReservationID </th>
+                                <th> UserID </th>
+                                <th> Seat - Room </th>
+                                <th> Movie Title </th>
+                                <th> Start Time </th>
+                                <th> End Time </th>
+                                <th> Reservation Date </th>
+                                <th> Price </th>
+                                <th> Status </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var res in Model.reservations)
+                            {
+                                @if (@res.Status != null)
+                                {
+                                    <tr>
+                                        <td> @res.ReservationId </td>
+                                        <td> @res.UserId </td>
+                                        <td> @res.SeatNumber - @res.RoomNumber </td>
+                                        <td> @res.MovieTitle </td>
+                                        <td> @res.StartTime </td>
+                                        <td> @res.EndTime </td>
+                                        <td> @res.ReservationDate </td>
+                                        <td> @res.Price </td>
+                                        <td>
+                                            @if (@res.Status.Value)
+                                            {
+                                                <label class="badge badge-success">Enable</label>
+                                            }
+                                            else
+                                            {
+                                                <label class="badge badge-danger">Disable</label>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

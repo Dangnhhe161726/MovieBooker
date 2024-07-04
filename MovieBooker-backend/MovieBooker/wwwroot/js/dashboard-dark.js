@@ -25,21 +25,12 @@
     const bgColor2 = ["rgba(54, 215, 232, 1"];
     const bgColor3 = ["rgba(255, 191, 150, 1)"];
 
-    // Process monthInfo to extract the data you need
-    var salesData = monthInfo.map(item => item.sales); // Adjust as necessary
-    var ordersData = monthInfo.map(item => item.orders); // Adjust as necessary
-    var labels = monthInfo.map(item => item.month); // If you have labels
-
-    console.log('Sales Data:', salesData);
-    console.log('Orders Data:', ordersData);
-    console.log('Labels:', labels);
-
     new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: labels,
+        labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG'],
         datasets: [{
-          label: "Sales",
+          label: "CHN",
           borderColor: gradientStrokeViolet,
           backgroundColor: gradientStrokeViolet,
           fillColor: bgColor1,
@@ -48,23 +39,37 @@
           fill: false,
           borderWidth: 1,
           fill: 'origin',
-          data: salesData,
+          data: [20, 40, 15, 35, 25, 50, 30, 20],
           barPercentage: 0.5,
-          categoryPercentage: 1,
+          categoryPercentage: 0.5,
         },
         {
-          label: "Orders",
+          label: "USA",
           borderColor: gradientStrokeRed,
           backgroundColor: gradientStrokeRed,
           hoverBackgroundColor: gradientStrokeRed,
+          fillColor: bgColor2,
+          pointRadius: 0,
+          fill: false,
+          borderWidth: 1,
+          fill: 'origin',
+          data: [40, 30, 20, 10, 50, 15, 35, 40],
+          barPercentage: 0.5,
+          categoryPercentage: 0.5,
+        },
+        {
+          label: "UK",
+          borderColor: gradientStrokeBlue,
+          backgroundColor: gradientStrokeBlue,
+          hoverBackgroundColor: gradientStrokeBlue,
           fillColor: bgColor3,
           pointRadius: 0,
           fill: false,
           borderWidth: 1,
           fill: 'origin',
-          data: ordersData,
-          barPercentage: 0.5, // 0.5
-          categoryPercentage: 1,
+          data: [70, 10, 30, 40, 25, 50, 15, 30],
+          barPercentage: 0.5,
+          categoryPercentage: 0.5,
         }
         ]
       },

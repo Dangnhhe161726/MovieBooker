@@ -28,6 +28,9 @@ using MovieBooker_backend.Repositories.MovieStatusRepository;
 using MovieBooker_backend.Repositories.MovieImageRepository;
 using MovieBooker_backend.Repositories.TheaterRepository;
 using MovieBooker_backend.Repositories.SeatRepository;
+using MovieBooker_backend.Repositories.ReservationRepository;
+using System.Reflection.Emit;
+using MovieBooker_backend.Repositories.DashboardRepository;
 
 namespace MovieBooker_backend
 {
@@ -83,7 +86,9 @@ namespace MovieBooker_backend
 			//Config Youtube
 			builder.Services.AddTransient<IYoutubeRepository, YoutubeRepository>();
 			//Config Swagger
-			builder.Services.AddSwaggerGen(option =>
+            builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
+            builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
+            builder.Services.AddSwaggerGen(option =>
             {
                 option.SwaggerDoc("v1", new OpenApiInfo { Title = "Movie API", Version = "v1" });
                 option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -163,6 +168,18 @@ namespace MovieBooker_backend
 			builder.Services.AddScoped<IMovieStatusRepository, MovieStatusRepository>();
 			builder.Services.AddScoped<IMovieImageRepository, MovieImageRepository>();
 			builder.Services.AddAuthorization();
+
+            //Add OData Service
+            var modelBuilder = new ODataConventionModelBuilder();
+            builder.Services.AddControllers().AddOData(options =>
+                options.Select()
+                .Filter()
+                .OrderBy()
+                .Expand()
+                .Count()
+                .SetMaxTop(null)
+                .AddRouteComponents("odata",modelBuilder.GetEdmModel())
+                );
 
             var app = builder.Build();
 

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MovieBooker_backend.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
+using System.Data;
 
 namespace MovieBooker_backend.Repositories.ReservationRepository
 {
@@ -34,7 +35,6 @@ namespace MovieBooker_backend.Repositories.ReservationRepository
                                     .ToList();
             return listReservation;
         }
-
         public ReservationDTO GetReservationById(int resId)
         {
             var res = _context.Revervations
@@ -55,7 +55,6 @@ namespace MovieBooker_backend.Repositories.ReservationRepository
                                     .FirstOrDefault();
             return res;
         }
-
         public async Task<int> AddNewReservation(Revervation res)
         {
             var reservation = new Revervation
@@ -72,6 +71,37 @@ namespace MovieBooker_backend.Repositories.ReservationRepository
             _context.Revervations.Add(reservation);
             var result = await _context.SaveChangesAsync();
             return result;
+        }
+        public DataTable GenerateReport(string type)
+        {
+            var dataTable = new DataTable();
+            dataTable.Columns.Add("ReservationID", typeof(int));
+            dataTable.Columns.Add("Movie Title", typeof(string));
+            dataTable.Columns.Add("Price", typeof(double));
+            dataTable.Columns.Add("Reservation Date", typeof(string));
+
+            
+            IEnumerable<ReservationDTO> resList = GetAllReservation();
+            foreach (ReservationDTO r in resList)
+            {
+                var row = dataTable.NewRow();
+                row["ReservationID"] = r.ReservationId;
+                row["Movie Title"] = r.MovieTitle;
+                row["Price"] = r.Price;
+                // Ensure the ReservationDate is of type DateTime
+                if (r.ReservationDate != null)
+                {
+                    row["Reservation Date"] = r.ReservationDate.Value.ToString("dd/MM/yyyy");
+                }
+                else
+                {
+                    row["Reservation Date"] = DBNull.Value;
+                }
+                
+                dataTable.Rows.Add(row);
+            }
+
+            return dataTable;
         }
     }
 }

@@ -85,7 +85,7 @@
                             @if (TempData["enable"] != null)
                             {
                                 int status = (int)TempData["movieStatusId"];
-                       
+
                                 <form method="post">
                                     <select name="categories" class="form-select bg-light">
                                         <option value="">All Categories</option>
@@ -96,7 +96,7 @@
                                     </select>
 
                                     <div class="input-group">
-                                        <input type="hidden" value="@status" name="statusId"/>
+                                        <input type="hidden" value="@status" name="statusId" />
                                         <input name="moviename" type="text" class="form-control border-start-0" placeholder="Search Movie">
                                         <span class="input-group-btn">
                                             <button class="btn btn-primary bg_yell" type="submit"
@@ -201,23 +201,23 @@
         </div>
     </section>
 
-    @*   <script>
-    window.onscroll = function () { myFunction() };
+    <script>
+        window.onscroll = function () { myFunction() };
 
-    var navbar_sticky = document.getElementById("navbar_sticky");
-    var sticky = navbar_sticky.offsetTop;
-    var navbar_height = document.querySelector('.navbar').offsetHeight;
+        var navbar_sticky = document.getElementById("navbar_sticky");
+        var sticky = navbar_sticky.offsetTop;
+        var navbar_height = document.querySelector('.navbar').offsetHeight;
 
-    function myFunction() {
-    if (window.pageYOffset >= sticky + navbar_height) {
-    navbar_sticky.classList.add("sticky")
-    document.body.style.paddingTop = navbar_height + 'px';
-    } else {
-    navbar_sticky.classList.remove("sticky");
-    document.body.style.paddingTop = '0'
-    }
-    }
-    </script>*@
+        function myFunction() {
+            if (window.pageYOffset >= sticky + navbar_height) {
+                navbar_sticky.classList.add("sticky")
+                document.body.style.paddingTop = navbar_height + 'px';
+            } else {
+                navbar_sticky.classList.remove("sticky");
+                document.body.style.paddingTop = '0'
+            }
+        }
+    </script>
     <script src="~/assets/vendors/chart.js/chart.umd.js"></script>
     <script src="~/assets/js/off-canvas.js"></script>
     <script src="~/assets/js/misc.js"></script>

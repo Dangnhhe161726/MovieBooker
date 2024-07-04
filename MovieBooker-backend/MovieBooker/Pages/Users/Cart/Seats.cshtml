@@ -21,7 +21,7 @@
             {
                 @if (rowa.SeatTypeName.Trim().Equals("regular") && rowa.Row.Trim().Equals("A"))
                 {
-                        <div class="seat regular" data-seat="@rowa.SeatNumber" data-seat-id="@rowa.SeatId">@rowa.SeatNumber</div>
+                        <div class="seat regular @(rowa.IsBooked ? "selected" : "")" data-seat="@rowa.SeatNumber" data-seat-id="@rowa.SeatId">@rowa.SeatNumber</div>
                 }
             }
         </div>
@@ -31,7 +31,7 @@
 
                 @if (rowb.SeatTypeName.Trim().Equals("regular") && rowb.Row.Trim().Equals("B"))
                 {
-                        <div class="seat regular" data-seat="@rowb.SeatNumber" data-seat-id="@rowb.SeatId">@rowb.SeatNumber</div>
+                        <div class="seat regular @(rowb.IsBooked ? "selected" : "")" data-seat="@rowb.SeatNumber" data-seat-id="@rowb.SeatId">@rowb.SeatNumber</div>
                 }
             }
         </div>
@@ -40,7 +40,7 @@
             {
                 @if (rowc.SeatTypeName.Trim().Equals("regular") && rowc.Row.Trim().Equals("C"))
                 {
-                        <div class="seat regular" data-seat="@rowc.SeatNumber" data-seat-id="@rowc.SeatId">@rowc.SeatNumber</div>
+                        <div class="seat regular @(rowc.IsBooked ? "selected" : "")" data-seat="@rowc.SeatNumber" data-seat-id="@rowc.SeatId">@rowc.SeatNumber</div>
                 }
             }
         </div>
@@ -49,7 +49,7 @@
             {
                 @if (rowd.SeatTypeName.Trim().Equals("vip") && rowd.Row.Trim().Equals("D"))
                 {
-                        <div class="seat vip" data-seat="@rowd.SeatNumber" data-seat-id="@rowd.SeatId">@rowd.SeatNumber</div>
+                        <div class="seat vip @(rowd.IsBooked ? "selected" : "")" data-seat="@rowd.SeatNumber" data-seat-id="@rowd.SeatId">@rowd.SeatNumber</div>
                 }
             }
         </div>
@@ -58,7 +58,7 @@
             {
                 @if (rowe.SeatTypeName.Trim().Equals("vip") && rowe.Row.Trim().Equals("E"))
                 {
-                        <div class="seat vip" data-seat="@rowe.SeatNumber" data-seat-id="@rowe.SeatId">@rowe.SeatNumber</div>
+                        <div class="seat vip @(rowe.IsBooked ? "selected" : "")" data-seat="@rowe.SeatNumber" data-seat-id="@rowe.SeatId">@rowe.SeatNumber</div>
                 }
             }
         </div>
@@ -67,7 +67,7 @@
             {
                 @if (rowf.SeatTypeName.Trim().Equals("vip") && rowf.Row.Trim().Equals("F"))
                 {
-                        <div class="seat vip" data-seat="@rowf.SeatNumber" data-seat-id="@rowf.SeatId">@rowf.SeatNumber</div>
+                        <div class="seat vip @(rowf.IsBooked ? "selected" : "")" data-seat="@rowf.SeatNumber" data-seat-id="@rowf.SeatId">@rowf.SeatNumber</div>
                 }
             }
         </div>
@@ -76,7 +76,7 @@
             {
                 @if (rowg.SeatTypeName.Trim().Equals("vip") && rowg.Row.Trim().Equals("G"))
                 {
-                        <div class="seat vip" data-seat="@rowg.SeatNumber" data-seat-id="@rowg.SeatId">@rowg.SeatNumber</div>
+                        <div class="seat vip @(rowg.IsBooked ? "selected" : "")" data-seat="@rowg.SeatNumber" data-seat-id="@rowg.SeatId">@rowg.SeatNumber</div>
                 }
             }
         </div>
@@ -85,7 +85,7 @@
             {
                 @if (rowh.SeatTypeName.Trim().Equals("vip") && rowh.Row.Trim().Equals("H"))
                 {
-                        <div class="seat vip" data-seat="@rowh.SeatNumber" data-seat-id="@rowh.SeatId">@rowh.SeatNumber</div>
+                        <div class="seat vip @(rowh.IsBooked ? "selected" : "")" data-seat="@rowh.SeatNumber" data-seat-id="@rowh.SeatId">@rowh.SeatNumber</div>
                 }
             }
         </div>
@@ -94,7 +94,7 @@
             {
                 @if (rowi.SeatTypeName.Trim().Equals("sweetbox") && rowi.Row.Trim().Equals("I"))
                 {
-                        <div class="seat sweetbox" data-seat="@rowi.SeatNumber" data-seat-id="@rowi.SeatId">@rowi.SeatNumber</div>
+                        <div class="seat sweetbox @(rowi.IsBooked ? "selected" : "")" data-seat="@rowi.SeatNumber" data-seat-id="@rowi.SeatId">@rowi.SeatNumber</div>
                 }
             }
         </div>
@@ -124,7 +124,7 @@
     <div class="movie-details">
         @foreach (var m in Model.schedules)
         {
-            <button class="previous">&lt; PREVIOUS</button>
+            <button type="button" class="previous">&lt; PREVIOUS</button>
             <div class="movie-info">
                 <img src="@m.movieImage" alt="Movie Poster">
                 <div class="movie-description">
@@ -141,7 +141,9 @@
                 </div>
             </div>
             <input type="hidden" value="@m.MoviepPrice" name="movieprice"/>
-            <button type="submit" asp-page-handler="BuyTicket" class="next">NEXT &gt;</button>
+            <input type="hidden" value="@m.MovieId" name="movieId"/>
+            <input type="hidden" value="@m.SchedulesId" name="scheduleId"/>
+            <button type="submit" asp-page="/Users/Cart/PayTicket" asp-page-handler="BuyTicket" class="next">NEXT &gt;</button>
         }
     </div>
     </form>

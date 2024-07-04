@@ -28,15 +28,20 @@ namespace MovieBooker.Pages.Users.Cart
             {
                 seats = await response3.Content.ReadFromJsonAsync<List<SeatDTO>>();
             }
-
+            var bookedSeats = new List<int>();
+            foreach (var seat in seats)
+            {
+                if (seat.SeatId == 1)
+                {
+                    seat.IsBooked = true;
+                }
+                else
+                {
+                    seat.IsBooked = false;
+                }
+            }
 
             return Page();  
-        }
-
-        public async Task<IActionResult> OnPostBuyTicketAsync(int timeSlotId, double movieprice, List<int> seatId) 
-        {
-            Console.WriteLine(timeSlotId + " " + movieprice);
-            return await OnGetAsync();
         }
     }
 }

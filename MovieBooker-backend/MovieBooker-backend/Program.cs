@@ -59,9 +59,8 @@ namespace MovieBooker_backend
                 .SetMaxTop(100)
             .AddRouteComponents("odata", modelBuilder.GetEdmModel())
             );
-
-			//Config auto mapper
-			builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            //Config auto mapper
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 			//Config cloudinary
 			builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
             builder.Services.AddSingleton(sp =>
@@ -169,17 +168,7 @@ namespace MovieBooker_backend
 			builder.Services.AddScoped<IMovieImageRepository, MovieImageRepository>();
 			builder.Services.AddAuthorization();
 
-            //Add OData Service
-            var modelBuilder = new ODataConventionModelBuilder();
-            builder.Services.AddControllers().AddOData(options =>
-                options.Select()
-                .Filter()
-                .OrderBy()
-                .Expand()
-                .Count()
-                .SetMaxTop(null)
-                .AddRouteComponents("odata",modelBuilder.GetEdmModel())
-                );
+            
 
             var app = builder.Build();
 

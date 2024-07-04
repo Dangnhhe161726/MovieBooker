@@ -5,5 +5,7 @@ namespace MovieBooker_backend.Repositories.CloudinaryRepository
     public interface ICloudinaryRepository
     {
         public Task<UploadResult> UploadImageAsync(Stream imageStream, string fileName);
-    }
+        public Task<DeletionResult> DeleteImageAsync(string publicId);
+
+	}
 }

@@ -6,53 +6,114 @@
 	ViewData["Title"] = "Movie Detail";
 	Layout = "_AdminLayout";
 }
+<style>
+	.image-gallery {
+		display: flex;
+		overflow-x: auto;
+		gap: 10px;
+		white-space: nowrap;
+	}
+
+	.image-item {
+		position: relative;
+		flex: 0 0 auto;
+		margin-right: 10px;
+	}
+
+		.image-item img {
+			width: 150px;
+			height: 200px;
+			object-fit: cover;
+			display: block;
+		}
+
+	.form-group {
+		margin-bottom: 20px;
+	}
+
+	.scroll-view {
+		overflow-x: auto;
+	}
+
+</style>
 <div class="content-wrapper">
 	<div class="row">
 		<div class="col-12 grid-margin stretch-card">
 			<div class="card">
 				<div class="card-body">
-					<h4 class="card-title">Basic form elements</h4>
-					<p class="card-description"> Basic form elements </p>
-					<form class="forms-sample">
-						<div class="form-group">
-							<label for="exampleInputName1">Name</label>
-							<input type="text" class="form-control" id="exampleInputName1" placeholder="Name">
-						</div>
-						<div class="form-group">
-							<label for="exampleInputEmail3">Email address</label>
-							<input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
-						</div>
-						<div class="form-group">
-							<label for="exampleInputPassword4">Password</label>
-							<input type="password" class="form-control" id="exampleInputPassword4" placeholder="Password">
-						</div>
-						<div class="form-group">
-							<label for="exampleSelectGender">Gender</label>
-							<select class="form-select" id="exampleSelectGender">
-								<option>Male</option>
-								<option>Female</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label>File upload</label>
-							<input type="file" name="img[]" class="file-upload-default">
-							<div class="input-group col-xs-12">
-								<input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-								<span class="input-group-append">
-									<button class="file-upload-browse btn btn-gradient-primary py-3" type="button">Upload</button>
-								</span>
+					<div class="form-group">
+						<a asp-page="/admin/movie/index">
+							<i class="fa fa-mail-reply" style="font-size: 20px; color: #b66dff" ;"></i>
+						</a>
+					</div>
+					<div class="form-group">
+						<label>Image</label>
+						<br />
+						@if(Model.movie.MovieImages == null || Model.movie.MovieImages.Count == 0)
+						{
+							<input type="text" class="form-control" placeholder="Movie do not have image" readonly>
+						}
+						else
+						{
+							<div class="image-gallery scroll-view">
+								@foreach (var item in Model.movie.MovieImages)
+								{
+									<div class="image-item">
+										<img src="@item.LinkImage" alt="Image Movie" width="150" height="200">
+									</div>
+								}
 							</div>
+						}
+					</div>
+					<div class="form-group">
+						<label for="MovieTitle">Title</label>
+						<input type="text" class="form-control" id="MovieTitle" placeholder="Title book" asp-for="@Model.movie.MovieTitle" readonly>
+					</div>
+					<div class="form-group">
+						<label for="Description">Description</label>
+						<input type="text" class="form-control" id="Description" placeholder="Description" asp-for="@Model.movie.Description" readonly>
+					</div>
+					<div class="form-group">
+						<label for="Price">Price</label>
+						<input type="number" class="form-control" id="Price" placeholder="Price" asp-for="@Model.movie.Price" readonly>
+					</div>
+					<div class="form-group">
+						<label for="Director">Director</label>
+						<input type="text" class="form-control" id="Director" placeholder="Director" asp-for="@Model.movie.Director" readonly>
+					</div>
+					<div class="form-group">
+						<label for="Durations">Durations</label>
+						<input type="text" class="form-control" id="Durations" placeholder="Durations" asp-for="@Model.movie.Durations" readonly>
+					</div>
+					<div class="form-group">
+						<label for="ReleaseDate">Release Date</label>
+						<input type="date" class="form-control" id="ReleaseDate" placeholder="ReleaseDate" asp-for="@Model.movie.ReleaseDate" readonly>
+					</div>
+					<div class="form-group">
+						<label for="Category">Category</label>
+						<input type="text" class="form-control" id="Category" placeholder="Category" asp-for="@Model.movie.Category.CategoryName" readonly>
+					</div>
+					<div class="form-group">
+						<label for="Status">Status</label>
+						<input type="text" class="form-control" id="Status" placeholder="Status" asp-for="@Model.movie.Status.StatusName" readonly>
+					</div>
+					<div class="form-group">
+						<label for="Trailer">Trailer</label>
+						<div class="input-group">
+							@if (Model.movie.Trailer == null)
+							{
+								<input type="text" class="form-control" placeholder="Movie do not have trailer" readonly>
+							}
+							else
+							{
+								<iframe width="560" height="315" src="@Model.movie.Trailer" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border: 10px solid black;"></iframe>
+							}
 						</div>
-						<div class="form-group">
-							<label for="exampleInputCity1">City</label>
-							<input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
-						</div>
-						<div class="form-group">
-							<label for="exampleTextarea1">Textarea</label>
-							<textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
-						</div>
-						<button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
-						<button class="btn btn-light">Cancel</button>
+					</div>
+					<form method="get" class="forms-sample" asp-page="/admin/movie/edit">
+						<input type="hidden" name="id" asp-for="@Model.movie.MovieId" />
+						<button type="submit" class="btn btn-gradient-primary me-2">Edit</button>
+						<a asp-page="/admin/movie/index" class="btn btn-light">Cancel</a>
 					</form>
 				</div>
 			</div>

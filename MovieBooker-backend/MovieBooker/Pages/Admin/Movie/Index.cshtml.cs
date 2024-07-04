@@ -18,6 +18,5 @@ namespace MovieBooker.Pages.Admin.Movie
                 moives = await response.Content.ReadFromJsonAsync<List<MovieDto>>();
             }
         }
-
     }
 }

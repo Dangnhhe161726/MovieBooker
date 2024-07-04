@@ -29,21 +29,19 @@ namespace MovieBooker_backend.Repositories.MovieImageRepository
 			return _mapper.Map<List<MovieImageResponse>>(images);
 		}
 
-		public List<MovieImageResponse> insert(List<MovieImageResponse> newImages)
+		public MovieImageResponse insert(MovieImageResponse newImage)
 		{
-			foreach (var item in newImages)
+			var image = new MovieImage
 			{
-				var image = new MovieImage
-				{
-					Id = item.Id,
-					LinkImage = item.LinkImage,
-					MovieId = item.Id,
-					Movie = _context.Movies.FirstOrDefault(m => m.MovieId == item.MovieId)
-				};
-				_context.MovieImages.Add(image);
-				_context.SaveChanges();
-			}
-			return newImages;
+				Id = newImage.Id,
+				LinkImage = newImage.LinkImage,
+				MovieId = newImage.Id,
+				PublicId = newImage.PublicId,
+				Movie = _context.Movies.FirstOrDefault(m => m.MovieId == newImage.MovieId)
+			};
+			_context.MovieImages.Add(image);
+			_context.SaveChanges();
+			return newImage;
 		}
 
 		public MovieImageResponse update(int id, MovieImageResponse updateImage)
@@ -52,6 +50,7 @@ namespace MovieBooker_backend.Repositories.MovieImageRepository
 			if (existingImage == null) throw new Exception("Not found");
 			existingImage.LinkImage = updateImage.LinkImage;
 			existingImage.MovieId = updateImage.MovieId;
+			existingImage.PublicId = updateImage.PublicId;
 			var movie = _context.Movies.FirstOrDefault(m => m.MovieId == updateImage.MovieId);
 			if (movie == null) throw new Exception("Not found");
 			existingImage.Movie = movie;

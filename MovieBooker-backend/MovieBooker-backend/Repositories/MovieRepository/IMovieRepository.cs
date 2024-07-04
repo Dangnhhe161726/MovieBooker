@@ -10,5 +10,8 @@ namespace MovieBooker_backend.Repositories.MovieRepository
 		public MovieResponse getById(int id);
 
 		public MovieResponse update(MovieDto updateMovie);
+		public void deleteById(int id);
+
+		public MovieResponse insert(MovieDto newMovie);
 	}
 }

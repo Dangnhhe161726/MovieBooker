@@ -1,20 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MovieBooker.Dtos;
-using System.IO;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace MovieBooker.Pages.Admin.Movie
 {
-	public class EditModel : PageModel
+	public class InsertModel : PageModel
 	{
 		private readonly IHttpClientFactory _httpClientFactory;
 		private readonly ILogger<EditModel> _logger;
 
-		public EditModel(IHttpClientFactory httpClientFactory, ILogger<EditModel> logger)
+		public InsertModel(IHttpClientFactory httpClientFactory, ILogger<EditModel> logger)
 		{
 			_httpClientFactory = httpClientFactory;
 			_logger = logger;
@@ -25,32 +22,20 @@ namespace MovieBooker.Pages.Admin.Movie
 		public List<VideoDetailDto> VideoDetails { get; set; }
 		public List<MovieCategoryDto> MovieCategories { get; set; }
 		public List<MovieStatusDto> MovieStatuses { get; set; }
-		public List<MovieImageDto> Images { get; set; }
 		public IFormFileCollection NewImages { get; set; }
 
-		public async Task<IActionResult> OnGetAsync(int? id)
+		public async Task<IActionResult> OnGetAsync()
 		{
-			if (id == null)
-			{
-				_logger.LogError("Movie ID is null.");
-				return RedirectToPage("/Admin/Movie/Index");
-			}
-
 			var httpClient = _httpClientFactory.CreateClient();
-
 			try
 			{
-				movie = await FetchMovieAsync(httpClient, id.Value);
 				var fetchTasks = new List<Task>
 				{
 					FetchVideoDetailsAsync(httpClient),
 					FetchMovieCategoriesAsync(httpClient),
 					FetchMovieStatusesAsync(httpClient),
-					FetchMovieImagesAsync(httpClient)
 				};
-
 				await Task.WhenAll(fetchTasks);
-
 				return Page();
 			}
 			catch (Exception ex)
@@ -63,32 +48,31 @@ namespace MovieBooker.Pages.Admin.Movie
 		public async Task<IActionResult> OnPostAsync()
 		{
 			var httpClient = _httpClientFactory.CreateClient();
-
 			try
 			{
 				if (movie == null)
 				{
 					throw new Exception("Movie object is null");
 				}
-
-				await UpdateMovieAsync(httpClient, movie);
-				var images = await UploadImagesAsync(httpClient, NewImages);
-
-				if (images == null) throw new Exception("Image upload failed");
-
-				await InsertImagesAsync(httpClient, images, movie.MovieId);
-
-				return RedirectToPage("/Admin/Movie/Edit", new { id = movie.MovieId });
+				var newMovie = await InsertMovieAsync(httpClient, movie);
+				if(NewImages != null && NewImages.Count != 0)
+				{
+					var images = await UploadImagesAsync(httpClient, NewImages);
+					if (images == null) throw new Exception("Image upload failed");
+					await InsertImagesAsync(httpClient, images, newMovie.MovieId);
+				}
+				return RedirectToPage("/Admin/Movie/Index");
 			}
 			catch (Exception ex)
 			{
-				// Log the exception (ex) here if needed
-				return RedirectToPage("/Admin/Movie/Edit", new { id = movie.MovieId });
+				return Page();
 			}
+
 		}
-		private async Task UpdateMovieAsync(HttpClient httpClient, MovieDto movie)
+
+		private async Task<MovieDto> InsertMovieAsync(HttpClient httpClient, MovieDto movie)
 		{
-			var updateMovie = new
+			var newMovie = new
 			{
 				MovieId = movie.MovieId,
 				movieTitle = movie.MovieTitle,
@@ -101,17 +85,17 @@ namespace MovieBooker.Pages.Admin.Movie
 				categoryId = movie.CategoryId,
 				statusId = movie.StatusId
 			};
-
-			string jsonUpdateMovie = JsonSerializer.Serialize(updateMovie);
-			var requestMovie = new HttpRequestMessage(HttpMethod.Put, "https://localhost:5000/api/Movie")
+			string jsonUpdateMovie = JsonSerializer.Serialize(newMovie);
+			var requestMovie = new HttpRequestMessage(HttpMethod.Post, "https://localhost:5000/api/Movie")
 			{
 				Headers = { { "accept", "*/*" } },
 				Content = new StringContent(jsonUpdateMovie, Encoding.UTF8, "application/json")
 			};
-
-			var responseUpdateMovie = await httpClient.SendAsync(requestMovie);
-			responseUpdateMovie.EnsureSuccessStatusCode();
+			var responseInsertMovie = await httpClient.SendAsync(requestMovie);
+			responseInsertMovie.EnsureSuccessStatusCode();
+			return await responseInsertMovie.Content.ReadFromJsonAsync<MovieDto>();
 		}
+
 		private async Task<List<ImageDto>> UploadImagesAsync(HttpClient httpClient, IEnumerable<IFormFile> newImages)
 		{
 			var requestUploadImage = new HttpRequestMessage(HttpMethod.Post, "https://localhost:5000/api/Images/upload")
@@ -160,25 +144,6 @@ namespace MovieBooker.Pages.Admin.Movie
 			}
 		}
 
-		private async Task<MovieDto> FetchMovieAsync(HttpClient httpClient, int id)
-		{
-			var apiUrl = $"https://localhost:5000/api/movie?filter=MovieId eq {id}";
-			var response = await httpClient.GetAsync(apiUrl);
-
-			if (!response.IsSuccessStatusCode)
-			{
-				throw new HttpRequestException($"Failed to fetch movie with ID {id}");
-			}
-
-			var movies = await response.Content.ReadFromJsonAsync<List<MovieDto>>();
-			if (movies == null || movies.Count != 1)
-			{
-				throw new Exception($"Movie with ID {id} not found or multiple entries returned.");
-			}
-
-			return movies.First();
-		}
-
 		private async Task FetchVideoDetailsAsync(HttpClient httpClient)
 		{
 			var apiUrl = "https://localhost:5000/api/Video";
@@ -219,20 +184,6 @@ namespace MovieBooker.Pages.Admin.Movie
 
 			MovieStatuses = await response.Content.ReadFromJsonAsync<List<MovieStatusDto>>()
 							?? new List<MovieStatusDto>();
-		}
-
-		private async Task FetchMovieImagesAsync(HttpClient httpClient)
-		{
-			var apiUrl = "https://localhost:5000/api/MovieImage";
-			var response = await httpClient.GetAsync(apiUrl);
-
-			if (!response.IsSuccessStatusCode)
-			{
-				throw new HttpRequestException("Failed to fetch movie images.");
-			}
-
-			Images = await response.Content.ReadFromJsonAsync<List<MovieImageDto>>()
-					 ?? new List<MovieImageDto>();
 		}
 	}
 }

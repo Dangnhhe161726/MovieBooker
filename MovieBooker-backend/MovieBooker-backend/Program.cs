@@ -52,6 +52,7 @@ namespace MovieBooker_backend
 			var modelBuilder = new ODataConventionModelBuilder();
 			//modelBuilder.EntitySet<UserDTO>("User");
 			modelBuilder.EntitySet<MovieResponse>("Movie");
+            modelBuilder.EntitySet<MovieImageResponse>("MovieImage");
 			builder.Services.AddControllers().AddOData(opt => opt
 				.Select()
 				.Expand()

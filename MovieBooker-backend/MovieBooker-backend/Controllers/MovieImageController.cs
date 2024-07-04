@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using MovieBooker_backend.Repositories.MovieImageRepository;
 using MovieBooker_backend.Responses;
 
@@ -17,13 +18,14 @@ namespace MovieBooker_backend.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult getAll()
+		[EnableQuery]
+		public IActionResult Get()
 		{
 			return Ok(movieImageRepository.getAll());
 		}
 
 		[HttpPost]
-		public IActionResult insert(List<MovieImageResponse> newImage)
+		public IActionResult insert(MovieImageResponse newImage)
 		{
 			var images = movieImageRepository.insert(newImage);
 			return Ok(images);

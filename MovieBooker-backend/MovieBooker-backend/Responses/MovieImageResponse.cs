@@ -8,6 +8,6 @@ namespace MovieBooker_backend.Responses
         public int Id { get; set; }
         public int? MovieId { get; set; }
         public string? LinkImage { get; set; }
-
+        public string? PublicId { get; set; }
     }
 }

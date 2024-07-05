@@ -23,6 +23,9 @@ namespace MovieBooker_backend.Repositories.ReservationRepository
                                     {
                                         ReservationId = r.ReservationId,
                                         UserId = r.UserId,
+                                        SeatId = r.SeatId,
+                                        TimeSlotId = r.TimeSlotId,
+                                        MovieId = r.MovieId,
                                         SeatNumber = r.Seat.SeatNumber,
                                         RoomNumber = r.Seat.Room.RoomNumber,
                                         MovieTitle = r.Movie.MovieTitle,

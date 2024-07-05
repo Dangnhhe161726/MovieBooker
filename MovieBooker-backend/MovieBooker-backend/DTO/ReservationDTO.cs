@@ -8,6 +8,9 @@ namespace MovieBooker_backend.DTO
         [Key]
         public int ReservationId { get; set; }
         public int? UserId { get; set; }
+        public int? SeatId { get; set; }
+        public int? TimeSlotId { get; set; }
+        public int? MovieId { get; set; }
         public string? SeatNumber { get; set; }
         public string? RoomNumber { get; set; }
         public string? MovieTitle { get; set; }

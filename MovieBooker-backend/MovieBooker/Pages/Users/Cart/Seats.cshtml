@@ -5,155 +5,144 @@
 <link rel="stylesheet" href="~/css/Seat.css" asp-append-version="true" />
 <div class="container">
     <h1>BOOKING ONLINE</h1>
-    <form method="post">
-    <div class="details">
-        @foreach (var m in Model.schedules)
-        {
-            <p>@m.TheaterName | Cinema 7 | Số ghế (106/106)</p>
-            <p>@m.ScheduleDate.Value.ToString("dd/MM/yyyy") @m.TimeSlot</p>
+    <form method="post" id="booking-form">
+        <div class="details">
+            @foreach (var m in Model.schedules)
+            {
+                <p>@m.TheaterName | Cinema 7 | Số ghế (106/106)</p>
+                <p>@m.ScheduleDate.Value.ToString("dd/MM/yyyy") @m.TimeSlot</p>
                 <input type="hidden" value="@m.TimeSlotId" name="timeSlotId">
-        }
-    </div>
-    <div class="screen"></div>
-    <div class="seating-chart">
-        <div class="seat-row">
-            @foreach (var rowa in Model.seats)
-            {
-                @if (rowa.SeatTypeName.Trim().Equals("regular") && rowa.Row.Trim().Equals("A"))
+            }
+        </div>
+        <div class="screen"></div>
+        <div class="seating-chart">
+            <div class="seat-row">
+                @foreach (var rowa in Model.seats)
                 {
+                    @if (rowa.SeatTypeName.Trim().Equals("regular") && rowa.Row.Trim().Equals("A"))
+                    {
                         <div class="seat regular @(rowa.IsBooked ? "selected" : "")" data-seat="@rowa.SeatNumber" data-seat-id="@rowa.SeatId">@rowa.SeatNumber</div>
+                    }
                 }
-            }
-        </div>
-        <div class="seat-row">
-            @foreach (var rowb in Model.seats)
-            {
-
-                @if (rowb.SeatTypeName.Trim().Equals("regular") && rowb.Row.Trim().Equals("B"))
-                {
-                        <div class="seat regular @(rowb.IsBooked ? "selected" : "")" data-seat="@rowb.SeatNumber" data-seat-id="@rowb.SeatId">@rowb.SeatNumber</div>
-                }
-            }
-        </div>
-        <div class="seat-row">
-            @foreach (var rowc in Model.seats)
-            {
-                @if (rowc.SeatTypeName.Trim().Equals("regular") && rowc.Row.Trim().Equals("C"))
-                {
-                        <div class="seat regular @(rowc.IsBooked ? "selected" : "")" data-seat="@rowc.SeatNumber" data-seat-id="@rowc.SeatId">@rowc.SeatNumber</div>
-                }
-            }
-        </div>
-        <div class="seat-row">
-            @foreach (var rowd in Model.seats)
-            {
-                @if (rowd.SeatTypeName.Trim().Equals("vip") && rowd.Row.Trim().Equals("D"))
-                {
-                        <div class="seat vip @(rowd.IsBooked ? "selected" : "")" data-seat="@rowd.SeatNumber" data-seat-id="@rowd.SeatId">@rowd.SeatNumber</div>
-                }
-            }
-        </div>
-        <div class="seat-row">
-            @foreach (var rowe in Model.seats)
-            {
-                @if (rowe.SeatTypeName.Trim().Equals("vip") && rowe.Row.Trim().Equals("E"))
-                {
-                        <div class="seat vip @(rowe.IsBooked ? "selected" : "")" data-seat="@rowe.SeatNumber" data-seat-id="@rowe.SeatId">@rowe.SeatNumber</div>
-                }
-            }
-        </div>
-        <div class="seat-row">
-            @foreach (var rowf in Model.seats)
-            {
-                @if (rowf.SeatTypeName.Trim().Equals("vip") && rowf.Row.Trim().Equals("F"))
-                {
-                        <div class="seat vip @(rowf.IsBooked ? "selected" : "")" data-seat="@rowf.SeatNumber" data-seat-id="@rowf.SeatId">@rowf.SeatNumber</div>
-                }
-            }
-        </div>
-        <div class="seat-row">
-            @foreach (var rowg in Model.seats)
-            {
-                @if (rowg.SeatTypeName.Trim().Equals("vip") && rowg.Row.Trim().Equals("G"))
-                {
-                        <div class="seat vip @(rowg.IsBooked ? "selected" : "")" data-seat="@rowg.SeatNumber" data-seat-id="@rowg.SeatId">@rowg.SeatNumber</div>
-                }
-            }
-        </div>
-        <div class="seat-row">
-            @foreach (var rowh in Model.seats)
-            {
-                @if (rowh.SeatTypeName.Trim().Equals("vip") && rowh.Row.Trim().Equals("H"))
-                {
-                        <div class="seat vip @(rowh.IsBooked ? "selected" : "")" data-seat="@rowh.SeatNumber" data-seat-id="@rowh.SeatId">@rowh.SeatNumber</div>
-                }
-            }
-        </div>
-        <div class="seat-row">
-            @foreach (var rowi in Model.seats)
-            {
-                @if (rowi.SeatTypeName.Trim().Equals("sweetbox") && rowi.Row.Trim().Equals("I"))
-                {
-                        <div class="seat sweetbox @(rowi.IsBooked ? "selected" : "")" data-seat="@rowi.SeatNumber" data-seat-id="@rowi.SeatId">@rowi.SeatNumber</div>
-                }
-            }
-        </div>
-        <!-- Row D -->
-@*        <div class="seat-row">
-            <div class="seat vip selected" data-seat="D1">D1</div>
-            <div class="seat vip selected" data-seat="D2">D2</div>
-            <div class="seat vip" data-seat="D3">D3</div>
-            <div class="seat vip" data-seat="D4">D4</div>
-            <div class="seat vip" data-seat="D5">D5</div>
-            <div class="seat vip" data-seat="D6">D6</div>
-            <div class="seat vip" data-seat="D7">D7</div>
-            <div class="seat vip" data-seat="D8">D8</div>
-            <div class="seat vip" data-seat="D9">D9</div>
-            <div class="seat vip" data-seat="D10">D10</div>
-            <div class="seat vip" data-seat="D11">D11</div>
-            <div class="seat vip" data-seat="D12">D12</div>
-        </div>*@
-    </div>
-    <div class="legend">
-        <div><span class="legend-box checked"></span> Checked</div>
-        <div><span class="legend-box selected"></span> Đã chọn</div>
-        <div><span class="legend-box regular"></span> Thường</div>
-        <div><span class="legend-box vip"></span> VIP</div>
-        <div><span class="legend-box sweetbox"></span> Sweetbox</div>
-    </div>
-    <div class="movie-details">
-        @foreach (var m in Model.schedules)
-        {
-            <button type="button" class="previous">&lt; PREVIOUS</button>
-            <div class="movie-info">
-                <img src="@m.movieImage" alt="Movie Poster">
-                <div class="movie-description">
-                    <p>@m.MovieTitle</p>
-                    <p>Rap: @m.TheaterName</p>
-                    <p>Suất chiếu: @m.TimeSlot, @m.ScheduleDate.Value.ToString("dd/MM/yyyy")</p>
-                    <p>Phòng chiếu: Cinema 6</p>
-                    <p id="selected-seats">Ghế: </p>
-                </div>
-                <div class="movie-pricing">
-                    <p>Giá vé: @m.MoviepPrice VND</p>
-                    <p>Combo: 0,00 đ</p>
-                    <p>Tổng:  @m.MoviepPrice VND</p>
-                </div>
             </div>
-            <input type="hidden" value="@m.MoviepPrice" name="movieprice"/>
-            <input type="hidden" value="@m.MovieId" name="movieId"/>
-            <input type="hidden" value="@m.SchedulesId" name="scheduleId"/>
-            <button type="submit" asp-page="/Users/Cart/PayTicket" asp-page-handler="BuyTicket" class="next">NEXT &gt;</button>
-        }
-    </div>
+            <div class="seat-row">
+                @foreach (var rowb in Model.seats)
+                {
+
+                    @if (rowb.SeatTypeName.Trim().Equals("regular") && rowb.Row.Trim().Equals("B"))
+                    {
+                        <div class="seat regular @(rowb.IsBooked ? "selected" : "")" data-seat="@rowb.SeatNumber" data-seat-id="@rowb.SeatId">@rowb.SeatNumber</div>
+                    }
+                }
+            </div>
+            <div class="seat-row">
+                @foreach (var rowc in Model.seats)
+                {
+                    @if (rowc.SeatTypeName.Trim().Equals("regular") && rowc.Row.Trim().Equals("C"))
+                    {
+                        <div class="seat regular @(rowc.IsBooked ? "selected" : "")" data-seat="@rowc.SeatNumber" data-seat-id="@rowc.SeatId">@rowc.SeatNumber</div>
+                    }
+                }
+            </div>
+            <div class="seat-row">
+                @foreach (var rowd in Model.seats)
+                {
+                    @if (rowd.SeatTypeName.Trim().Equals("vip") && rowd.Row.Trim().Equals("D"))
+                    {
+                        <div class="seat vip @(rowd.IsBooked ? "selected" : "")" data-seat="@rowd.SeatNumber" data-seat-id="@rowd.SeatId">@rowd.SeatNumber</div>
+                    }
+                }
+            </div>
+            <div class="seat-row">
+                @foreach (var rowe in Model.seats)
+                {
+                    @if (rowe.SeatTypeName.Trim().Equals("vip") && rowe.Row.Trim().Equals("E"))
+                    {
+                        <div class="seat vip @(rowe.IsBooked ? "selected" : "")" data-seat="@rowe.SeatNumber" data-seat-id="@rowe.SeatId">@rowe.SeatNumber</div>
+                    }
+                }
+            </div>
+            <div class="seat-row">
+                @foreach (var rowf in Model.seats)
+                {
+                    @if (rowf.SeatTypeName.Trim().Equals("vip") && rowf.Row.Trim().Equals("F"))
+                    {
+                        <div class="seat vip @(rowf.IsBooked ? "selected" : "")" data-seat="@rowf.SeatNumber" data-seat-id="@rowf.SeatId">@rowf.SeatNumber</div>
+                    }
+                }
+            </div>
+            <div class="seat-row">
+                @foreach (var rowg in Model.seats)
+                {
+                    @if (rowg.SeatTypeName.Trim().Equals("vip") && rowg.Row.Trim().Equals("G"))
+                    {
+                        <div class="seat vip @(rowg.IsBooked ? "selected" : "")" data-seat="@rowg.SeatNumber" data-seat-id="@rowg.SeatId">@rowg.SeatNumber</div>
+                    }
+                }
+            </div>
+            <div class="seat-row">
+                @foreach (var rowh in Model.seats)
+                {
+                    @if (rowh.SeatTypeName.Trim().Equals("vip") && rowh.Row.Trim().Equals("H"))
+                    {
+                        <div class="seat vip @(rowh.IsBooked ? "selected" : "")" data-seat="@rowh.SeatNumber" data-seat-id="@rowh.SeatId">@rowh.SeatNumber</div>
+                    }
+                }
+            </div>
+            <div class="seat-row">
+                @foreach (var rowi in Model.seats)
+                {
+                    @if (rowi.SeatTypeName.Trim().Equals("sweetbox") && rowi.Row.Trim().Equals("I"))
+                    {
+                        <div class="seat sweetbox @(rowi.IsBooked ? "selected" : "")" data-seat="@rowi.SeatNumber" data-seat-id="@rowi.SeatId">@rowi.SeatNumber</div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="legend">
+            <div><span class="legend-box checked"></span> Checked</div>
+            <div><span class="legend-box selected"></span> Đã chọn</div>
+            <div><span class="legend-box regular"></span> Thường</div>
+            <div><span class="legend-box vip"></span> VIP</div>
+            <div><span class="legend-box sweetbox"></span> Sweetbox</div>
+        </div>
+        <div class="movie-details">
+            @foreach (var m in Model.schedules)
+            {
+                <button type="button" class="previous">&lt; PREVIOUS</button>
+                <div class="movie-info">
+                    <img src="@m.movieImage" alt="Movie Poster">
+                    <div class="movie-description">
+                        <p>@m.MovieTitle</p>
+                        <p>Rap: @m.TheaterName</p>
+                        <p>Suất chiếu: @m.TimeSlot, @m.ScheduleDate.Value.ToString("dd/MM/yyyy")</p>
+                        <p>Phòng chiếu: Cinema 6</p>
+                        <p id="selected-seats">Ghế: </p>
+                    </div>
+                    <div class="movie-pricing">
+                        <p>Giá vé: @m.MoviepPrice VND</p>
+                        <p>Combo: 0,00 đ</p>
+                        <p>Tổng: <span id="total-price">@m.MoviepPrice VND</span></p>
+                    </div>
+                </div>
+                <input type="hidden" value="@m.MoviepPrice" name="movieprice" />
+                <input type="hidden" value="@m.MovieId" name="movieId" />
+                <input type="hidden" value="@m.SchedulesId" name="scheduleId" />
+                <input type="hidden" id="final-total-price" name="finalTotalPrice" value="@m.MoviepPrice" />
+                <button type="submit" asp-page="/Users/Cart/PayTicket" asp-page-handler="BuyTicket" class="next">NEXT &gt;</button>
+            }
+        </div>
     </form>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const seats = document.querySelectorAll('.seat');
         const selectedSeatsElement = document.getElementById('selected-seats');
-        const form = document.querySelector('form');
-      
+        const totalPriceElement = document.getElementById('total-price');
+        const finalTotalPriceInput = document.getElementById('final-total-price');
+        //const form = document.querySelector('form');
+        const form = document.getElementById('booking-form');
+
         let firstSelectedType = null;
         let selectedSeats = [];
 
@@ -184,7 +173,14 @@
                     }
                 }
                 updateSelectedSeats();
+                updateTotalPrice();
             });
+        });
+        form.addEventListener('submit', (e) => {
+            if (selectedSeats.length === 0) {
+                e.preventDefault();
+                alert('Vui lòng chọn vị trí ghế của bạn.');
+            }
         });
 
         function getSeatType(seatName) {
@@ -217,6 +213,27 @@
             }
             selectedSeatsElement.textContent = displayText.slice(0, -2);
         }
+
+        function updateTotalPrice() {
+            const moviePrice = parseFloat(document.querySelector('input[name="movieprice"]').value);
+            let totalPrice = 0;
+
+            selectedSeats.forEach(seat => {
+                const seatType = getSeatType(seat);
+                if (seatType === 'regular') {
+                    totalPrice += moviePrice * 1.05;
+                } else if (seatType === 'vip') {
+                    totalPrice += moviePrice * 1.10;
+                } else if (seatType === 'sweetbox') {
+                    totalPrice += moviePrice * 1.15;
+                }
+            });
+
+            const roundedTotalPrice = Math.round(totalPrice);
+            totalPriceElement.textContent = `${roundedTotalPrice} VND`;
+            finalTotalPriceInput.value = roundedTotalPrice;
+        }
+
         function addHiddenInput(seatId) {
             const input = document.createElement('input');
             input.type = 'hidden';
@@ -233,7 +250,6 @@
             }
         }
     });
-
 </script>
 
 

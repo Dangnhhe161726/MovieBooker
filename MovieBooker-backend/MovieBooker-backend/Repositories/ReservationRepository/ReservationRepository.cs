@@ -106,5 +106,21 @@ namespace MovieBooker_backend.Repositories.ReservationRepository
 
             return dataTable;
         }
+
+        public void CreateReservation(CreateReservationDTO reservation)
+        {
+            var res = new Revervation
+            {
+                UserId = reservation.UserId,
+                MovieId = reservation.MovieId,
+                TimeSlotId = reservation.TimeSlotId,
+                SeatId = reservation.SeatId,
+                Status = reservation.Status,
+                ReservationDate = reservation.ReservationDate,
+                TotalAmount = reservation.TotalAmount,
+            };
+            _context.Revervations.Add(res);
+            _context.SaveChanges();
+        }
     }
 }

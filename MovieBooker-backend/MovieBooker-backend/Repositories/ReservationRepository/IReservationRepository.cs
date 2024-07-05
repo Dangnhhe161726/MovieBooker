@@ -11,5 +11,7 @@ namespace MovieBooker_backend.Repositories.ReservationRepository
         public ReservationDTO GetReservationById(int resId);
         public Task<int> AddNewReservation(Revervation res);
         public DataTable GenerateReport(string type);
+
+        public void CreateReservation(CreateReservationDTO reservation);
     }
 }

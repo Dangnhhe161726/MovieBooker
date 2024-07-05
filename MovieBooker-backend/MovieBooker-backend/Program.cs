@@ -50,6 +50,7 @@ namespace MovieBooker_backend
             modelBuilder.EntitySet<UserDTO>("User");
             modelBuilder.EntitySet<ScheduleDTO>("Schedule");
             modelBuilder.EntitySet<MovieResponse>("Movie");
+            modelBuilder.EntitySet<ReservationDTO>("Reservation");
             builder.Services.AddControllers().AddOData(opt => opt
                 .Select()
                 .Expand()

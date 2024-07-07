@@ -31,6 +31,7 @@ using MovieBooker_backend.Repositories.SeatRepository;
 using MovieBooker_backend.Repositories.ReservationRepository;
 using System.Reflection.Emit;
 using MovieBooker_backend.Repositories.DashboardRepository;
+using MovieBooker_backend.Repositories.VnPayRepository;
 
 namespace MovieBooker_backend
 {
@@ -136,6 +137,7 @@ namespace MovieBooker_backend
 			builder.Services.AddScoped<IMovieRepository, MovieRepository>();
             builder.Services.AddScoped<ITheaterRepository, TheaterRepository>();
             builder.Services.AddScoped<ISeatRepository, SeatRepository>();
+            builder.Services.AddScoped<IVnPayRepository, VnPayRepository>();
 
 
             builder.Services.AddAuthentication(options =>

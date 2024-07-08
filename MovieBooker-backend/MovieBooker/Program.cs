@@ -32,8 +32,8 @@ namespace MovieBooker
                .AddCookie()
                .AddGoogle(options =>
              {
-                options.ClientId = "";
-                options.ClientSecret = "";
+                options.ClientId = "347146462426";
+                options.ClientSecret = "3k6c0q1ctq51no6v92ld5q1b6t6krald.apps.googleusercontent.com";
                 options.CallbackPath = "/signin-google";
             });
 

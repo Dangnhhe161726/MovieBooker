@@ -101,6 +101,7 @@ namespace MovieBooker.Pages.Admin
                         return RedirectToPage(new { handler = "Staff" });
                     }
                 }
+
                 else
                 {
                     return Page();

@@ -83,7 +83,7 @@ namespace MovieBooker.Pages
             }
             else
             {
-                var user = new User { Email = email, UserName = name, RoleId = 3, PhoneNumber = phone };
+                var user = new User { Email = email, UserName = name, RoleId = 3, PhoneNumber = phone, Status = true};
                 var client2 = _httpClientFactory.CreateClient();
                 var response2 = await client2.PostAsJsonAsync("https://localhost:5000/api/User/LoginGoogle", user);
                 if (response2.IsSuccessStatusCode)

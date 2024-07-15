@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="~/css/DetailMovie.css" asp-append-version="true" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" asp-append-version="true" />
 
-@*<div class="card-wrapper">*@
 <div class="card">
     <!-- card left -->
     <div class="product-imgs">
@@ -38,7 +37,6 @@
     {
         <div class="product-content">
             <h2 class="product-title">@dt.MovieTitle</h2>
-            <a href="#" class="product-link">visit nike store</a>
             <div class="product-rating">
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
@@ -48,9 +46,8 @@
                 <span>4.7(21)</span>
             </div>
 
-            <div class="product-price">
-                <p class="last-price">Old Price: <span>$257.00</span></p>
-                <p class="new-price">New Price: <span>@dt.Price vnd (5%)</span></p>
+            <div class="product-price">            
+                <p class="new-price">Price Movie Ticket: <span>@dt.Price vnd</span></p>
             </div>
 
             <div class="product-detail">
@@ -61,6 +58,10 @@
                     <li>Durations: <span>@dt.Durations</span></li>
                     <li>Category: <span>@dt.Category.CategoryName</span></li>
                     <li>Release Date: <span>@dt.ReleaseDate.Value.ToString("dd/MM/yyyy")</span></li>
+                    <li><span>
+                                <button class="btn" onclick="showTrailer('@dt.Trailer')"><i class="fas fa-hand-point-right"></i> View Trailer</button>
+                        </span>
+                    </li>
                 </ul>
             </div>
 
@@ -73,9 +74,15 @@
                     </span>
                 </div>
             }
+   
         </div>
     }
 </div>
-@*</div>*@
+<div id="trailerModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeTrailer()">&times;</span>
+        <iframe id="trailerFrame" width="100%" height="400" frameborder="0" allowfullscreen></iframe>
+    </div>
+</div>
 
 <script src="/js/detailMovie.js" asp-append-version="true"></script>

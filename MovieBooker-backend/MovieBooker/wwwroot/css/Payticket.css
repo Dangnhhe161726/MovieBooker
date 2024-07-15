@@ -49,6 +49,7 @@ h1 {
 .discount-options label, .gift-section label, .payment-method-section label {
     display: block;
     margin-bottom: 10px;
+    padding-top: 5px;
 }
 
 .total-section {

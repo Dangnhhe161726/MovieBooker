@@ -26,9 +26,9 @@
 
                 <div class="section gift-section">
                     <div class="section-header">
-                        <span>Bước 1: THẺ QUÀ TẶNG</span>
+                        <span>Bước 1: Email xác nhận</span>
                     </div>
-                    <label><input type="text" name="gift"> Thẻ quà tặng</label>
+                        <label><input type="text" name="confirmemail" placeholder="Email" style=" width: 50%;" required></label>
                 </div>
 
                 <div class="section payment-method-section">
@@ -37,9 +37,9 @@
                     </div>
     @*                <label><input type="radio" name="payment"> ATM card (Thẻ nội địa)</label>
                     <label><input type="radio" name="payment"> Thẻ quốc tế (Visa, Master, Amex, JCB)</label>
-                    <label><input type="radio" name="payment"> MoMo: Nhập MM24 - 5K, nhận thẻ 10k 4G/5G</label>
-                    <label><input type="radio" name="payment"> ZaloPay - 84k/vé + gói quà ưu đãi 530k</label>*@
-                    <label><input type="radio" name="payment" required> VNPAY</label>
+                    <label><input type="radio" name="payment"> MoMo: Nhập MM24 - 5K, nhận thẻ 10k 4G/5G</label>*@
+                    <label><input type="radio" name="payment" value="paypal" required>Paypal</label>
+                    <label><input type="radio" name="payment" value="vnpay" required> VNPAY</label>
                 </div>
             </div>
 
@@ -59,13 +59,12 @@
                 </div>
 
                 <div class="footer">
-                    <label><input type="checkbox" name="terms"> Tôi đồng ý với điều khoản sử dụng và mua vé cho người có độ tuổi phù hợp</label>
+                    <label><input required type="checkbox" name="terms"> Tôi đồng ý với điều khoản sử dụng và mua vé cho người có độ tuổi phù hợp</label>
                 </div>
             </div>
         </div>
 
         <div class="movie-info">
-            <button class="previous-button">PREVIOUS</button>
             <img src="@sch.movieImage" alt="Movie Poster">
             <div class="movie-details">
                 <div class="movie-title">@sch.MovieTitle</div>
@@ -92,7 +91,7 @@
             <input type="hidden" value="@sch.MovieId" name="movieid">
             <input type="hidden" value="@sch.ScheduleDate" name="resdate">
             <input type="hidden" value="@sch.SchedulesId" name="schedulesId"/>
-            <button type="submit" asp-page-handler="PaymentVNPAY" class="payment-button">PAYMENT</button>
+            <button type="submit" asp-page-handler="Payment" class="payment-button">PAYMENT</button>
         </div>
     }
     </form>

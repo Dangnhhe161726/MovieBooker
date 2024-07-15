@@ -84,8 +84,8 @@ namespace MovieBooker.Pages.Users.Cart
         //    return RedirectToPage("/Users/Cart/BookedSuccess");
         //}
 
-        public async Task<IActionResult> OnPostPaymentVNPAYAsync(int timeslotid, int movieid, 
-            double totalprice, DateTime resdate,int schedulesId)
+        public async Task<IActionResult> OnPostPaymentAsync(int timeslotid, int movieid,
+            double totalprice, DateTime resdate, int schedulesId, string confirmemail, string payment)
         {
             HttpClient httpClient = new HttpClient();
             var seatIdJson = TempData["seatId"].ToString();
@@ -107,14 +107,16 @@ namespace MovieBooker.Pages.Users.Cart
                 userId = id.UserId;
             }
 
+            if (payment == "vnpay")
+            {
             var model = new VnPaymentRequestModel
             {
                 Amount = totalprice,
                 CreatedDate = DateTime.Now,
-                FullName = "HOAN",
+                FullName = confirmemail,
                 Description = "movie ticket",
-                OrderId = new Random().Next(1000,9999)
-        };
+                OrderId = new Random().Next(1000, 9999)
+            };
 
             HttpResponseMessage response = await httpClient.PostAsJsonAsync("https://localhost:5000/api/VnPay/CreatePaymentUrl", model);
             if (response.IsSuccessStatusCode)
@@ -142,8 +144,15 @@ namespace MovieBooker.Pages.Users.Cart
                     TempData["seatId"] = JsonConvert.SerializeObject(seatId);
                     TempData["email"] = email;
                     TempData["scheduleId"] = schedulesId;
+                    TempData["confirmemail"] = confirmemail;
                     return Redirect(paymentUrl);
                 }
+            }
+            return RedirectToPage("/Error");
+            }
+            else if(payment == "paypal")
+            {
+                return RedirectToPage("/Index");
             }
             return RedirectToPage("/Error");
         }

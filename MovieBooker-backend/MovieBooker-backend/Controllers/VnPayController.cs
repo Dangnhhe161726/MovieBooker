@@ -33,7 +33,7 @@ namespace MovieBooker_backend.Controllers
                 }
                 else if (response.VnPayResponseCode == "24")
                 {
-                    return BadRequest("https://localhost:7175");
+                    return Redirect("https://localhost:7175");
                 }
                 else
                 {

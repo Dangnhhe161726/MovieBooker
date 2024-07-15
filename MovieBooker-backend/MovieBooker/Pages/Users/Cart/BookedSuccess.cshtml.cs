@@ -17,8 +17,9 @@ namespace MovieBooker.Pages.Users.Cart
         {
             HttpClient _httpClient = new HttpClient();
             var reservationjson = TempData["resevation"].ToString();
-            string emails =(string) TempData["email"];
+            string emails =(string) TempData["confirmemail"];
             int scheduleId =(int) TempData["scheduleId"];
+
             var seatIdJson = TempData["seatId"].ToString();
             List<int> seatId = JsonConvert.DeserializeObject<List<int>>(seatIdJson);
             List<CreateResevationDTO> reservation = JsonConvert.DeserializeObject<List<CreateResevationDTO>>(reservationjson);

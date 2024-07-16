@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MovieBooker.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Org.BouncyCastle.Crypto.Prng;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.Xml;
+using System.Text;
 
 namespace MovieBooker.Pages.Users.Cart
 {
@@ -109,22 +111,55 @@ namespace MovieBooker.Pages.Users.Cart
 
             if (payment == "vnpay")
             {
-            var model = new VnPaymentRequestModel
-            {
-                Amount = totalprice,
-                CreatedDate = DateTime.Now,
-                FullName = confirmemail,
-                Description = "movie ticket",
-                OrderId = new Random().Next(1000, 9999)
-            };
-
-            HttpResponseMessage response = await httpClient.PostAsJsonAsync("https://localhost:5000/api/VnPay/CreatePaymentUrl", model);
-            if (response.IsSuccessStatusCode)
-            {
-                string paymentUrlJson = await response.Content.ReadAsStringAsync();
-                var paymentUrlObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(paymentUrlJson);
-                if (paymentUrlObject != null && paymentUrlObject.TryGetValue("paymentUrl", out string paymentUrl))
+                var model = new VnPaymentRequestModel
                 {
+                    Amount = totalprice,
+                    CreatedDate = DateTime.Now,
+                    FullName = confirmemail,
+                    Description = "movie ticket",
+                    OrderId = new Random().Next(1000, 9999)
+                };
+
+                HttpResponseMessage response = await httpClient.PostAsJsonAsync("https://localhost:5000/api/VnPay/CreatePaymentUrl", model);
+                if (response.IsSuccessStatusCode)
+                {
+                    string paymentUrlJson = await response.Content.ReadAsStringAsync();
+                    var paymentUrlObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(paymentUrlJson);
+                    if (paymentUrlObject != null && paymentUrlObject.TryGetValue("paymentUrl", out string paymentUrl))
+                    {
+                        var reservations = new List<CreateResevationDTO>();
+                        for (int i = 0; i < seatId.Count(); i++)
+                        {
+                            var res = new CreateResevationDTO
+                            {
+                                MovieId = movieid,
+                                UserId = userId,
+                                TimeSlotId = timeslotid,
+                                SeatId = seatId[i],
+                                ReservationDate = resdate,
+                                Status = true,
+                                TotalAmount = totalprice / seatId.Count(),
+                            };
+                            reservations.Add(res);
+                        }
+                        TempData["resevation"] = JsonConvert.SerializeObject(reservations);
+                        TempData["seatId"] = JsonConvert.SerializeObject(seatId);
+                        TempData["email"] = email;
+                        TempData["scheduleId"] = schedulesId;
+                        TempData["confirmemail"] = confirmemail;
+                        return Redirect(paymentUrl);
+                    }
+                }
+                return RedirectToPage("/Error");
+            }
+            else if (payment == "paypal")
+            {
+                var response = await _httpClient.PostAsync("https://localhost:5000/api/PayPal/create-payment", new StringContent(totalprice.ToString(), Encoding.UTF8, "application/json"));
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseBody = await response.Content.ReadAsStringAsync();
+                    var approvalUrl = JObject.Parse(responseBody)["approvalUrl"].ToString();
+
                     var reservations = new List<CreateResevationDTO>();
                     for (int i = 0; i < seatId.Count(); i++)
                     {
@@ -145,14 +180,9 @@ namespace MovieBooker.Pages.Users.Cart
                     TempData["email"] = email;
                     TempData["scheduleId"] = schedulesId;
                     TempData["confirmemail"] = confirmemail;
-                    return Redirect(paymentUrl);
+                    return Redirect(approvalUrl);
                 }
-            }
-            return RedirectToPage("/Error");
-            }
-            else if(payment == "paypal")
-            {
-                return RedirectToPage("/Index");
+                return RedirectToPage("/Error");
             }
             return RedirectToPage("/Error");
         }

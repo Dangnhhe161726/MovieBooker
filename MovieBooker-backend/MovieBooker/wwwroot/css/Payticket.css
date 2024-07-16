@@ -112,9 +112,11 @@ h1 {
     margin-top: 20px;
     border-radius: 5px;
 }
+
 .previous-button:hover {
-        background-color: #ff4444;
-    }
+    background-color: #ff4444;
+}
+
 .payment-button:hover {
     background-color: #ff4444;
 }
@@ -156,4 +158,47 @@ h1 {
 
 .movie-format, .movie-time, .movie-seat, .movie-price {
     margin: 5px 0;
+}
+
+.payment-options {
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .payment-option:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .payment-option input[type="radio"] {
+        display: none;
+    }
+
+    .payment-option img.payment-logo {
+        width: 40px;
+        height: auto;
+        margin-right: 10px;
+    }
+
+    .payment-option input[type="radio"]:checked + .payment-logo {
+        border: 2px solid #007bff;
+    }
+
+.payment-option input[type="radio"]:checked + .payment-logo:hover {
+  filter: brightness(85%);
 }

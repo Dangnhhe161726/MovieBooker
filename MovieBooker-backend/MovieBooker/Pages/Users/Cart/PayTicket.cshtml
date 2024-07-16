@@ -38,8 +38,18 @@
     @*                <label><input type="radio" name="payment"> ATM card (Thẻ nội địa)</label>
                     <label><input type="radio" name="payment"> Thẻ quốc tế (Visa, Master, Amex, JCB)</label>
                     <label><input type="radio" name="payment"> MoMo: Nhập MM24 - 5K, nhận thẻ 10k 4G/5G</label>*@
-                    <label><input type="radio" name="payment" value="paypal" required>Paypal</label>
-                    <label><input type="radio" name="payment" value="vnpay" required> VNPAY</label>
+                        <div class="payment-options">
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="paypal" required>
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Paypal_2014_logo.png" alt="PayPal Logo" class="payment-logo">
+                                PayPal
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="vnpay" required>
+                                <img src="https://vinadesign.vn/uploads/images/2023/05/vnpay-logo-vinadesign-25-12-57-55.jpg" alt="VNPAY Logo" class="payment-logo">
+                                VNPAY
+                            </label>
+                        </div>
                 </div>
             </div>
 

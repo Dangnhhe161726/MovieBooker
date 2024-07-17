@@ -1,0 +1,153 @@
+﻿@page
+@model MovieBooker.Pages.Users.Profile.MyTicketModel
+@{
+}
+<style>
+    .sidebar {
+        background-color: #eaeaea;
+        padding: 0;
+        list-style-type: none;
+    }
+
+        .sidebar li {
+            padding: 10px 20px;
+            font-weight: bold;
+        }
+
+            .sidebar li.active, .sidebar li:hover {
+                background-color: #e74c3c;
+                color: #fff;
+            }
+
+            .sidebar li:not(.active):hover {
+                cursor: pointer;
+            }
+
+            .sidebar li:not(.active) {
+                color: #666;
+            }
+
+    .content-header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        margin-bottom: 10px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .tab-content {
+        padding: 20px;
+        background-color: #fff;
+    }
+
+    .tab-buttons .btn {
+        margin-right: 10px;
+    }
+
+    .back-link {
+        display: block;
+        margin-top: 20px;
+        color: #e74c3c;
+        font-weight: bold;
+    }
+
+    .ticket {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: wheat;
+        border-radius: 10px;
+    }
+
+    .ticket-title {
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .ticket-details {
+        font-size: 14px;
+        color: #666;
+    }
+
+    .ticket-points {
+        font-weight: bold;
+        color: #f39c12;
+    }
+
+    .ticket-price {
+        font-weight: bold;
+        color: #e74c3c;
+        float: right;
+        margin-top: -20px;
+    }
+
+    .d-none {
+        display: none;
+    }
+</style>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="sidebar">
+                <li class="active">LỊCH SỬ GIAO DỊCH</li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <div class="content-header">
+                LỊCH SỬ GIAO DỊCH
+            </div>
+            <div class="tab-buttons">
+                <button class="btn btn-secondary" id="upcoming-btn">Phim Sắp Xem</button>
+                <button class="btn btn-secondary" id="watched-btn">Phim Đã Xem</button>
+            </div>
+            <div class="tab-content" id="upcoming-content">
+                <div class="ticket">
+                    <div class="ticket-title">RED SHOES AND THE 7 DRAWS</div>
+                    <div class="ticket-details">CGV Su Van Hanh<br>13 Tháng 7, 2020 8:45 pm<br>Ghế: A10</div>
+                    <div class="ticket-price">80.000 đ</div>
+                </div>
+                <div class="ticket">
+                    <div class="ticket-title">RED SHOES AND THE 7 DRAWS</div>
+                    <div class="ticket-details">CGV Su Van Hanh<br>13 Tháng 7, 2020 8:45 pm<br>Ghế: B11</div>
+                    <div class="ticket-price">75.000 đ</div>
+                </div>
+                <div class="ticket">
+                    <div class="ticket-title">RED SHOES AND THE 7 DRAWS</div>
+                    <div class="ticket-details">CGV Su Van Hanh<br>13 Tháng 7, 2020 8:45 pm<br>Ghế: C12</div>
+                    <div class="ticket-price">85.000 đ</div>
+                </div>
+                <a href="#" class="back-link">&laquo; Quay lại</a>
+            </div>
+            <div class="tab-content d-none" id="watched-content">
+                <div class="ticket">
+                    <div class="ticket-title">AVENGERS: ENDGAME</div>
+                    <div class="ticket-details">CGV Su Van Hanh<br>20 Tháng 5, 2020 7:30 pm<br>Ghế: D15</div>
+                    <div class="ticket-price">100.000 đ</div>
+                </div>
+                <div class="ticket">
+                    <div class="ticket-title">JOKER</div>
+                    <div class="ticket-details">CGV Su Van Hanh<br>15 Tháng 4, 2020 8:00 pm<br>Ghế: E20</div>
+                    <div class="ticket-price">90.000 đ</div>
+                </div>
+                <div class="ticket">
+                    <div class="ticket-title">TOY STORY 4</div>
+                    <div class="ticket-details">CGV Su Van Hanh<br>10 Tháng 3, 2020 6:00 pm<br>Ghế: F10</div>
+                    <div class="ticket-price">85.000 đ</div>
+                </div>
+                <a href="#" class="back-link">&laquo; Quay lại</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('upcoming-btn').addEventListener('click', function () {
+        document.getElementById('upcoming-content').classList.remove('d-none');
+        document.getElementById('watched-content').classList.add('d-none');
+    });
+
+    document.getElementById('watched-btn').addEventListener('click', function () {
+        document.getElementById('upcoming-content').classList.add('d-none');
+        document.getElementById('watched-content').classList.remove('d-none');
+    });
+</script>

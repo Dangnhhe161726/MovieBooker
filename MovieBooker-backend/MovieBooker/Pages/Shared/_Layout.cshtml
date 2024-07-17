@@ -43,17 +43,6 @@
                             </ul>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="event.html">Events</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="team.html">team</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contact</a>
-                        </li>
                         @{
                             string? token = Context.Request.Cookies["Token"];
                             using (var redis = ConnectionMultiplexer.Connect("localhost:6379"))
@@ -73,6 +62,10 @@
 
                                 <li class="nav-item">
                                     <a class="nav-link" asp-page="/Users/Profile/ProfileUser" asp-route-email="@userEmail">Profile</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-page="/Users/Profile/MyTicket" asp-route-email="@userEmail">My Ticket</a>
                                 </li>
 
                             }

@@ -2,9 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MimeKit;
+using MimeKit.Utils;
 using MovieBooker.DTO;
 using MovieBooker.Models;
 using Newtonsoft.Json;
+using QRCoder;
+using System.Drawing;
+
 
 namespace MovieBooker.Pages.Users.Cart
 {
@@ -17,8 +21,8 @@ namespace MovieBooker.Pages.Users.Cart
         {
             HttpClient _httpClient = new HttpClient();
             var reservationjson = TempData["resevation"].ToString();
-            string emails =(string) TempData["confirmemail"];
-            int scheduleId =(int) TempData["scheduleId"];
+            string emails = (string)TempData["confirmemail"];
+            int scheduleId = (int)TempData["scheduleId"];
 
             var seatIdJson = TempData["seatId"].ToString();
             List<int> seatId = JsonConvert.DeserializeObject<List<int>>(seatIdJson);
@@ -45,8 +49,8 @@ namespace MovieBooker.Pages.Users.Cart
             {
                 schedules = await response4.Content.ReadFromJsonAsync<List<ScheduleDTO>>();
             }
- 
-            string userName =  Users.FirstOrDefault()?.UserName ?? "";
+
+            string userName = Users.FirstOrDefault()?.UserName ?? "";
             string movieName = schedules.FirstOrDefault()?.MovieTitle ?? "";
             string timeslot = schedules.FirstOrDefault()?.TimeSlot ?? "";
             string ScheduleDate = schedules.FirstOrDefault()?.ScheduleDate.Value.ToString("dd-MM-yyyy") ?? "";
@@ -54,6 +58,21 @@ namespace MovieBooker.Pages.Users.Cart
             int numberticket = reservation.Count();
             double price = (double)reservation.First().TotalAmount;
             string seat = string.Join(", ", seats.Select(s => s.SeatNumber));
+
+
+            string ticketInfo = $"Movie: {movieName} - Time: {ScheduleDate} {timeslot} - Theater: {TheaterName} - Seats: {seat} - Price: {numberticket * price} VND";
+
+            byte[] qrCodeBytes = GenerateQRCode(ticketInfo);
+            var qrCodeImagePart = new MimePart("image", "png")
+            {
+                Content = new MimeContent(new MemoryStream(qrCodeBytes)),
+                ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
+                ContentTransferEncoding = ContentEncoding.Base64,
+                FileName = "qrcode.png",
+                ContentId = MimeUtils.GenerateMessageId()
+            };
+
+
             User User = new User();
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(User.From));
@@ -98,6 +117,15 @@ namespace MovieBooker.Pages.Users.Cart
             margin-top: 20px;
             color: #666666;
         }}
+        .qr-code {{
+            text-align: center;
+        }}
+        .qr-code img {{
+            width: 90px;
+            height: 90px;
+            display: block; 
+            margin: 0 auto;
+        }}
     </style>
 </head>
 <body>
@@ -124,6 +152,13 @@ namespace MovieBooker.Pages.Users.Cart
             <h3>Thông tin người đặt</h3>
             <p><strong>Tên người đặt:</strong> {userName}</p>
         </div>
+
+        <div class='qr-code'>
+            <p>Vui lòng đưa mã này đến quầy để nhận vé của bạn:</p>
+             <img src='cid:{qrCodeImagePart.ContentId}' alt='QR Code'>
+        </div>
+
+
         
         <p>Vé của bạn đã được đặt thành công. Xin vui lòng đến trước giờ chiếu để nhận vé và tham gia buổi chiếu.</p>
         
@@ -131,12 +166,35 @@ namespace MovieBooker.Pages.Users.Cart
     <p class='footer'>CGV Cinema - Địa chỉ: 123 FPT University - Điện thoại: 0123 456 789</p>
 </body>
 </html>";
-            email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = emailBody };
+            // email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = emailBody };
+            var multipart = new Multipart("mixed");
+
+            // Text part of the email
+            var textPart = new TextPart(MimeKit.Text.TextFormat.Html)
+            {
+                Text = emailBody
+            };
+            multipart.Add(textPart);
+            multipart.Add(qrCodeImagePart);
+            email.Body = multipart;
+
+
+
             using var smtp = new SmtpClient();
             smtp.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
             smtp.Authenticate(User.From, User.PasswordSendMail);
             smtp.Send(email);
             smtp.Disconnect(true);
         }
+
+        private byte[] GenerateQRCode(string ticketInfo)
+        {
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(ticketInfo, QRCodeGenerator.ECCLevel.Q);
+            PngByteQRCode qrCode = new PngByteQRCode(qrCodeData);
+
+            return qrCode.GetGraphic(20);
+        }
+
     }
 }

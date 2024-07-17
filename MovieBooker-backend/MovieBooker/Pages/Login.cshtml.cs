@@ -63,7 +63,7 @@ namespace MovieBooker.Pages
                     var roleClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value;
                     if (roleClaim == "Admin")
                     {
-                        return RedirectToPage("/Admin/ManageUsers");
+                        return RedirectToPage("/Manage/Dashboard");
                     }else if(roleClaim == "Customer")
                     {
                         return RedirectToPage("/Index");

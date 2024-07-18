@@ -1,0 +1,82 @@
+﻿.sidebar {
+    background-color: #eaeaea;
+    padding: 0;
+    list-style-type: none;
+}
+
+    .sidebar li {
+        padding: 10px 20px;
+        font-weight: bold;
+    }
+
+        .sidebar li.active, .sidebar li:hover {
+            background-color: #e74c3c;
+            color: #fff;
+        }
+
+        .sidebar li:not(.active):hover {
+            cursor: pointer;
+        }
+
+        .sidebar li:not(.active) {
+            color: #666;
+        }
+
+.content-header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.tab-content {
+    padding: 20px;
+    background-color: #fff;
+}
+
+.tab-buttons .btn {
+    margin-right: 10px;
+}
+
+.back-link {
+    display: block;
+    margin-top: 20px;
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.ticket {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: wheat;
+    border-radius: 10px;
+}
+
+.ticket-title {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.ticket-details {
+    font-size: 14px;
+    color: #666;
+}
+
+.ticket-points {
+    font-weight: bold;
+    color: #f39c12;
+}
+
+.ticket-price {
+    font-weight: bold;
+    color: #e74c3c;
+    float: right;
+    margin-top: -20px;
+}
+
+.d-none {
+    display: none;
+}

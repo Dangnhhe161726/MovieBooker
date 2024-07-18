@@ -18,5 +18,6 @@ namespace MovieBooker.DTO
         public DateTime? ReservationDate { get; set; }
         public double? Price { get; set; }
         public bool? Status { get; set; }
+        public string? SeatType { get; set; }
     }
 }

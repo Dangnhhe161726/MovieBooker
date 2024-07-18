@@ -128,18 +128,52 @@
                     }
                 </tbody>
             </table>
-            <div class="clearfix">
-                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#">Previous</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link">Next</a></li>
+            @if (TempData["User"] == "Customer")
+            {
+                <div class="clearfix">
+                    <div class="hint-text">Showing <b>@Model.Users.Count</b> out of <b>@Model.TotalItemsCustomer</b> entries</div>
+                    <ul class="pagination">
+                        <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                            <a href="@Url.Page("/Admin/ManageUsers", new { pageIndex = 1 })" class="page-link">First</a>
+                        </li>
+                        <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                            <a href="@Url.Page("/Admin/ManageUsers", new { pageIndex = Model.PageIndex - 1 })" class="page-link">Previous</a>
+                        </li>
+                        @for (int i = 1; i <= Math.Ceiling((double)Model.TotalItemsCustomer / Model.PageSize); i++)
+                        {
+                            <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                                <a href="@Url.Page("/Admin/ManageUsers", new { pageIndex = i })" class="page-link">@i</a>
+                            </li>
+                        }
+                        <li class="page-item @(Model.PageIndex == Math.Ceiling((double)Model.TotalItemsCustomer / Model.PageSize) ? "disabled" : "")">
+                            <a href="@Url.Page("/Admin/ManageUsers", new { pageIndex = Model.PageIndex + 1 })" class="page-link">Next</a>
+                    </li>
                 </ul>
-            </div>
+                </div>
+            }
+            else
+            {
+                <div class="clearfix">
+                    <div class="hint-text">Showing <b>@Model.Users.Count</b> out of <b>@Model.TotalItemsStaff</b> entries</div>
+                    <ul class="pagination">
+                        <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                            <a href="@Url.Page("/Admin/ManageUsers", new { handler = "OnGetStaffAsync", pageIndex = 1 })" class="page-link">First</a>
+                        </li>
+                        <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                            <a href="@Url.Page("/Admin/ManageUsers", new {handler = "OnGetStaffAsync",  pageIndex = Model.PageIndex - 1 })" class="page-link">Previous</a>
+                        </li>
+                        @for (int i = 1; i <= Math.Ceiling((double)Model.TotalItemsStaff / Model.PageSize); i++)
+                        {
+                            <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                                <a href="@Url.Page("/Admin/ManageUsers", new {handler = "OnGetStaffAsync",  pageIndex = i })" class="page-link">@i</a>
+                            </li>
+                        }
+                        <li class="page-item @(Model.PageIndex == Math.Ceiling((double)Model.TotalItemsStaff / Model.PageSize) ? "disabled" : "")">
+                            <a href="@Url.Page("/Admin/ManageUsers", new {handler = "OnGetStaffAsync",  pageIndex = Model.PageIndex + 1 })" class="page-link">Next</a>
+                        </li>
+                    </ul>
+                </div>
+            }
         </div>
     </div>
 </div>

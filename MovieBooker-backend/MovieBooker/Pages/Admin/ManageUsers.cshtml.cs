@@ -18,8 +18,13 @@ namespace MovieBooker.Pages.Admin
             _authenticationService = authenticationService;
         }
         public List<UserDTO> Users { get; set; }
+        public int PageSize { get; } = 5;
+        public int PageIndex { get; set; } = 1;
 
-        public async Task<IActionResult> OnGetAsync()
+        public int TotalItemsCustomer { get; set; }
+        public int TotalItemsStaff { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(int pageIndex = 1)
         {
             HttpClient _httpClient = new HttpClient();
             var accessToken = await _authenticationService.GetAccessTokenAsync();
@@ -33,11 +38,19 @@ namespace MovieBooker.Pages.Admin
                 var roleClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value;
                 if (roleClaim == "Admin")
                 {
-                    HttpResponseMessage response = await _httpClient.GetAsync("https://localhost:5000/api/User/GetAllUser?$filter=roleId eq 3");
+                    PageIndex = pageIndex;
+                    HttpResponseMessage response = await _httpClient.GetAsync($"https://localhost:5000/api/User/GetAllUser?$filter=roleId eq 3&$top={PageSize}&$skip={(PageIndex - 1) * PageSize}");
                     if (response.IsSuccessStatusCode)
                     {
                         TempData["User"] = "Customer";
                         Users = await response.Content.ReadFromJsonAsync<List<UserDTO>>();
+
+                        HttpResponseMessage responseTotalNotSeen = await _httpClient.GetAsync($"https://localhost:5000/odata/User/$count?$filter=roleId eq 3");
+                        if (responseTotalNotSeen.IsSuccessStatusCode)
+                        {
+                            TotalItemsCustomer = await responseTotalNotSeen.Content.ReadFromJsonAsync<int>();
+                        }
+
                     }
                     else
                     {
@@ -56,7 +69,7 @@ namespace MovieBooker.Pages.Admin
             return Page();
         }
 
-        public async Task<IActionResult> OnGetStaffAsync()
+        public async Task<IActionResult> OnGetStaffAsync(int pageIndex = 1)
         {
             HttpClient _httpClient = new HttpClient();
             var accessToken = await _authenticationService.GetAccessTokenAsync();
@@ -64,11 +77,19 @@ namespace MovieBooker.Pages.Admin
             if (!string.IsNullOrEmpty(accessToken))
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-                HttpResponseMessage response = await _httpClient.GetAsync("https://localhost:5000/api/User/GetAllUser?$filter=roleId eq 2");
+                HttpResponseMessage response = await _httpClient.GetAsync($"https://localhost:5000/api/User/GetAllUser?$filter=roleId eq 2&$top={PageSize}&$skip={(PageIndex - 1) * PageSize}");
                 if (response.IsSuccessStatusCode)
                 {
+                    PageIndex = pageIndex;
                     Users = await response.Content.ReadFromJsonAsync<List<UserDTO>>();
                     TempData["User"] = "Staff";
+
+                    HttpResponseMessage responseTotalNotSeen = await _httpClient.GetAsync($"https://localhost:5000/odata/User/$count?$filter=roleId eq 2");
+                    if (responseTotalNotSeen.IsSuccessStatusCode)
+                    {
+                        TotalItemsStaff = await responseTotalNotSeen.Content.ReadFromJsonAsync<int>();
+                    }
+
                 }
                 else
                 {

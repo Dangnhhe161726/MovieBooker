@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace MovieBooker.Pages
 {
@@ -28,6 +29,10 @@ namespace MovieBooker.Pages
         public User User { get; set; } = default!;
         public void OnGet()
         {
+            if (TempData.ContainsKey("ErrorMessage"))
+            {
+                ModelState.AddModelError(string.Empty, TempData["ErrorMessage"].ToString());
+            }
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -53,7 +58,19 @@ namespace MovieBooker.Pages
                     Response.Cookies.Append("Token", "savetoken");
                     Response.Cookies.Append("RefreshToken", tokens.RefreshToken);
 
-                    return RedirectToPage("/Index");
+                    var handler = new JwtSecurityTokenHandler();
+                    var jwtToken = handler.ReadToken(accessToken) as JwtSecurityToken;
+                    var roleClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value;
+                    if (roleClaim == "Admin")
+                    {
+                        return RedirectToPage("/Manage/Dashboard");
+                    }else if(roleClaim == "Customer")
+                    {
+                        return RedirectToPage("/Index");
+                    }else if(roleClaim == "Staff")
+                    {
+                        return RedirectToPage("");
+                    }              
                 }
                 else
                 {
@@ -63,6 +80,9 @@ namespace MovieBooker.Pages
             }
 
             if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                ModelState.AddModelError(string.Empty, "Your email has been locked.");
+            }else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
                 ModelState.AddModelError(string.Empty, "Email or password invalid.");
             }
@@ -89,7 +109,7 @@ namespace MovieBooker.Pages
             Response.Cookies.Delete("Token");
             Response.Cookies.Delete("RefreshToken");
 
-            return RedirectToPage("/Login");
+            return RedirectToPage("/Index");
         }
 
         public IActionResult OnGetLoginGoogle()

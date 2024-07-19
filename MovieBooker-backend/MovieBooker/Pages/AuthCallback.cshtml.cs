@@ -6,6 +6,7 @@ using MovieBooker.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using StackExchange.Redis;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Security.Claims;
@@ -36,6 +37,11 @@ namespace MovieBooker.Pages
             var client = _httpClientFactory.CreateClient();
 
             var response = await client.GetAsync($"https://localhost:5000/api/User/CheckSignUpEmail/{email}");
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                TempData["ErrorMessage"] = "Your email has been locked.";
+                return RedirectToPage("/Login");
+            }
             if (response.IsSuccessStatusCode)
             {
                 var getUser = await response.Content.ReadAsStringAsync();
@@ -52,7 +58,22 @@ namespace MovieBooker.Pages
                     {
                         Response.Cookies.Append("Token", "savetoken");
                         Response.Cookies.Append("RefreshToken", token.RefreshToken);
-                        return RedirectToPage("/Index");
+
+                        var handler = new JwtSecurityTokenHandler();
+                        var jwtToken = handler.ReadToken(accessToken) as JwtSecurityToken;
+                        var roleClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value;
+                        if (roleClaim == "Admin")
+                        {
+                            return RedirectToPage("/Admin/ManageUsers");
+                        }
+                        else if (roleClaim == "Customer")
+                        {
+                            return RedirectToPage("/Index");
+                        }
+                        else if (roleClaim == "Staff")
+                        {
+                            return RedirectToPage("");
+                        }
                     }
                 }
                 else
@@ -62,7 +83,7 @@ namespace MovieBooker.Pages
             }
             else
             {
-                var user = new User { Email = email, UserName = name, RoleId = 3, PhoneNumber = phone };
+                var user = new User { Email = email, UserName = name, RoleId = 3, PhoneNumber = phone, Status = true};
                 var client2 = _httpClientFactory.CreateClient();
                 var response2 = await client2.PostAsJsonAsync("https://localhost:5000/api/User/LoginGoogle", user);
                 if (response2.IsSuccessStatusCode)

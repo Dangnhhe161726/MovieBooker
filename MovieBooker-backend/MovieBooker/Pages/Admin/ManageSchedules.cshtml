@@ -1,0 +1,102 @@
+﻿@page
+@model MovieBooker.Pages.Admin.ManageSchedulesModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<link rel="stylesheet" href="~/css/ManageSchedules.css" asp-append-version="true" />
+
+
+<form method="post" onsubmit="return validateForm()">
+    <div class="date-picker">
+        <label for="start-date">Start Date:</label>
+        <input type="date" id="start-date" name="StartDate" >
+        <label for="end-date">End Date:</label>
+        <input type="date" id="end-date" name="EndDate">
+        <button style="background-color: #FFD800; border-radius:10px" type="submit" id="apply-date">Apply Date</button>
+    </div>
+</form>
+
+<script>
+    function validateForm() {
+        var startDate = new Date(document.getElementById("start-date").value);
+        var endDate = new Date(document.getElementById("end-date").value);
+
+        // Calculate allowed date range
+        var maxDate = new Date(startDate);
+        maxDate.setDate(startDate.getDate() + 6);
+
+        // Check conditions
+        if (endDate < startDate) {
+            alert("End Date must be after Start Date.");
+            return false;
+        }
+
+        if (endDate > maxDate) {
+            alert("End Date cannot be more than 6 days after Start Date.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+<div class="wrapper">
+    <div class="sticky-header">
+        <span>Calendar</span>
+    </div>
+    <div class="table">
+        <div class="headers">
+            <div class="scroller syncscroll" id="calendar-headers">
+                <div class="track time">
+                    <div class="heading">Time</div>
+                </div>
+                @foreach (var date in Model.SelectedDates)
+                {
+                    <div class="track">
+                        <div class="heading">@date.ToString("dddd, MMM dd")</div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="tracks syncscroll" name="myElements">
+            <div class="track time">
+                @foreach (var slot in Model.TimeSlots)
+                {
+                    <div class="entry">
+                        <time>@slot.StartTime</time>
+                    </div>
+                }
+            </div>
+            @foreach (var date in Model.SelectedDates)
+            {
+                <div class="track yellow">
+                    @foreach (var slot in Model.TimeSlots)
+                    {
+                        var schedule = Model.Schedules.FirstOrDefault(s => s.ScheduleDate == date && s.TimeSlotId == slot.TimeSlotId);
+                        if (schedule != null)
+                        {
+                            <div class="entry">
+                                <div class="details">
+                                    <p>Movie Name:</p>
+                                    <h3 style="background: #473BBE; color:white">@schedule.MovieTitle</h3>
+                                    <p>Durations: @schedule.Durations</p>
+                                    <p>Date: @schedule.ScheduleDate.Value.ToString("dd/MM/yyyy")</p>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="entry">
+                                <div class="details">
+                                    <p>No Data</p>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div id="top-of-site-pixel-anchor"></div>

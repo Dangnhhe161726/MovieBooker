@@ -1,0 +1,108 @@
+﻿@page
+@model MovieBooker.Pages.Users.Cart.PayTicketModel
+@{
+}
+<link rel="stylesheet" href="~/css/Payticket.css" asp-append-version="true" />
+<div class="container">
+    <h1>THANH TOÁN</h1>
+    <form method="post">
+    @foreach (var sch in Model.schedules)
+    {
+        <div class="main-content">
+            <div class="left-column">
+@*                <div class="section discount-section">
+                    <div class="section-header">
+                        <span>Bước 1: GIẢM GIÁ</span>
+                        <button class="reset-button">Đặt lại</button>
+                    </div>
+                    <div class="discount-options">
+                        <label><input type="radio" name="discount"> CGV Voucher</label>
+                        <label><input type="radio" name="discount"> Mã giảm giá</label>
+                        <label><input type="radio" name="discount"> Điểm CGV</label>
+                        <label><input type="radio" name="discount"> Đối tác</label>
+                        <label><input type="radio" name="discount"> Mã Khuyến Mãi</label>
+                    </div>
+                </div>*@
+
+                <div class="section gift-section">
+                    <div class="section-header">
+                        <span>Bước 1: Email xác nhận</span>
+                    </div>
+                        <label><input type="text" name="confirmemail" placeholder="Email" style=" width: 50%;" required></label>
+                </div>
+
+                <div class="section payment-method-section">
+                    <div class="section-header">
+                        <span>Bước 2: HÌNH THỨC THANH TOÁN</span>
+                    </div>
+    @*                <label><input type="radio" name="payment"> ATM card (Thẻ nội địa)</label>
+                    <label><input type="radio" name="payment"> Thẻ quốc tế (Visa, Master, Amex, JCB)</label>
+                    <label><input type="radio" name="payment"> MoMo: Nhập MM24 - 5K, nhận thẻ 10k 4G/5G</label>*@
+                        <div class="payment-options">
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="paypal" required>
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Paypal_2014_logo.png" alt="PayPal Logo" class="payment-logo">
+                                PayPal
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="vnpay" required>
+                                <img src="https://vinadesign.vn/uploads/images/2023/05/vnpay-logo-vinadesign-25-12-57-55.jpg" alt="VNPAY Logo" class="payment-logo">
+                                VNPAY
+                            </label>
+                        </div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="total-section">
+                    <div class="total-label">Tổng cộng</div>
+                    @if (TempData["totalprice"] != null)
+                    {
+                        double totalprice = (double)TempData["totalprice"];
+                        <div class="total-value">@totalprice VND</div>
+
+                        <div class="total-label">Khuyến mãi</div>
+                        <div class="total-value">0,00 đ</div>
+                        <div class="total-label red">Tổng số tiền thanh toán</div>
+                        <div class="total-value red">@totalprice VND</div>
+                    }
+                </div>
+
+                <div class="footer">
+                    <label><input required type="checkbox" name="terms"> Tôi đồng ý với điều khoản sử dụng và mua vé cho người có độ tuổi phù hợp</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="movie-info">
+            <img src="@sch.movieImage" alt="Movie Poster">
+            <div class="movie-details">
+                <div class="movie-title">@sch.MovieTitle</div>
+                <div class="movie-time">@sch.TheaterName @sch.TimeSlot, @sch.ScheduleDate.Value.ToString("dd/MM/yyyy")</div>
+                @{
+                    var groupedSeats = Model.seats
+                    .GroupBy(seat => seat.SeatTypeName)
+                    .ToDictionary(g => g.Key, g => g.Select(seat => seat.SeatNumber).ToList());
+                }
+                @foreach (var seatGroup in groupedSeats)
+                {
+                    <div class="movie-seat">
+                       Ghế @seatGroup.Key: @string.Join(", ", seatGroup.Value)
+                    </div>
+                }
+                @if (TempData["totalprice"] != null)
+                {
+                    double totalprice = (double)TempData["totalprice"];
+                    <div class="movie-price">Tổng: @totalprice VND</div>
+                    <input type="hidden" value="@totalprice" name="totalprice" />
+                }
+            </div>
+            <input type="hidden" value="@sch.TimeSlotId" name="timeslotid">
+            <input type="hidden" value="@sch.MovieId" name="movieid">
+            <input type="hidden" value="@sch.ScheduleDate" name="resdate">
+            <input type="hidden" value="@sch.SchedulesId" name="schedulesId"/>
+            <button type="submit" asp-page-handler="Payment" class="payment-button">PAYMENT</button>
+        </div>
+    }
+    </form>
+</div>

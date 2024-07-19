@@ -1,0 +1,124 @@
+﻿@page
+@model MovieManagerModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using MovieBooker.Dtos
+@{
+	ViewData["Title"] = "Manager movie";
+	Layout = "_AdminLayout";
+}
+
+<style>
+	.table th img, .table td img {
+		width: 100px;
+		height: 100px;
+		border-radius: 10%;
+	}
+
+	.table {
+		text-align: center;
+	}
+</style>
+
+<div class="content-wrapper">
+	<div class="row">
+		<div class="col-12 grid-margin">
+			<div class="card">
+				<div class="card-body">
+					<div class="form-group">
+						<a asp-page="/admin/movie/insert"
+						   class="btn btn-gradient-primary btn-icon-text"
+						   style="font-size: 25px; padding: 5px 25px 5px 25px; font-family: monospace;">+</a>
+					</div>
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th> ID </th>
+									<th> Image </th>
+									<th> Title </th>
+									<th> Price </th>
+									<th> Release Date </th>
+									<th> Status </th>
+									<th> Action </th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var item in Model.moives)
+								{
+									<tr>
+										<td>
+											@item.MovieId
+										</td>
+										<td>
+											<a asp-page="/admin/movie/detail" asp-page-handler="DetailHandler" asp-route-id="@item.MovieId">
+												@if (item.MovieImages.Any())
+												{
+													<img src="@item.MovieImages.First().LinkImage" alt="image">
+												}
+												else
+												{
+													<p>No image available</p>
+												}
+											</a>
+										</td>
+										<td>
+											@item.MovieTitle
+										</td>
+										<td>
+											@item.Price VND
+										</td>
+										<td>
+											@item.ReleaseDate?.ToString("dd/MM/yyyy")
+										</td>
+										<td>
+											@switch (item.StatusId)
+											{
+												case 1:
+													<label class="badge badge-gradient-info">@item.Status.StatusName</label>
+													break;
+												case 2:
+													<label class="badge badge-gradient-success">@item.Status.StatusName</label>
+													break;
+												case 3:
+													<label class="badge badge-gradient-danger">@item.Status.StatusName</label>
+													break;
+											}
+										</td>
+										<td>
+											<form asp-page="/admin/movie/delete" asp-page-handler="DeleteHandler" asp-route-id="@item.MovieId" method="post" onsubmit="return confirmDelete()">
+												<input type="hidden" asp-for="@item.MovieId" />
+												@if (item.Enable == true)
+												{
+													<button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
+														<i class="fa fa-eye" style="font-size: 20px; color: #b66dff"></i>
+													</button>
+												}
+												else
+												{
+													<button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
+														<i class="fa fa-eye-slash" style="font-size: 20px;  color: #b66dff"></i>
+													</button>
+												}
+											</form>
+											<br />
+
+											<a asp-page="/admin/movie/edit" asp-route-id="@item.MovieId">
+												<i class="fa fa-pencil" style="margin-top: 10px; font-size: 20px; color: #b66dff"></i>
+											</a>
+										</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	function confirmDelete() {
+		return confirm("Are you sure you want to hidden this movie?");
+	}
+</script>

@@ -1,0 +1,174 @@
+﻿@page
+@model MovieBooker.Pages.Admin.Movie.EditModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using MovieBooker.Dtos
+@{
+    ViewData["Title"] = "Movie Edit";
+    Layout = "_AdminLayout";
+}
+<style>
+    .image-gallery {
+        display: flex;
+        overflow-x: auto;
+        gap: 10px;
+        white-space: nowrap;
+    }
+
+    .image-item {
+        position: relative;
+        flex: 0 0 auto;
+        margin-right: 10px;
+    }
+
+        .image-item img {
+            width: 150px;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+    .delete-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background-color: rgba(255, 0, 0, 0.5);
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 18px;
+        text-decoration: none;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .scroll-view {
+        overflow-x: auto;
+    }
+
+</style>
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <a asp-page="/admin/movie/index">
+                            <i class="fa fa-mail-reply" style="font-size: 20px; color: #b66dff" ;"></i>
+                        </a>
+                    </div>
+                    <div class="form-group">
+                        <label>Image</label>
+                        <br />
+                        <div class="image-gallery scroll-view">
+                            @foreach (var item in Model.movie.MovieImages)
+                            {
+                                <div class="image-item">
+                                    <img src="@item.LinkImage" alt="Image Movie" width="150" height="200">
+                                    <form method="post" asp-page="/admin/movie/delete" asp-route-id="@item.Id" asp-route-publicId="@item.PublicId" asp-route-movieId="@Model.movie.MovieId">
+                                        <button type="submit" class="delete-btn">&times;</button>
+                                    </form>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <form method="post" class="forms-sample" enctype="multipart/form-data" onsubmit="return validateForm()">
+                        <input type="hidden" asp-for="@Model.movie.MovieId" />
+                        <div class="form-group">
+                            <input type="file" id="uploadInput" name="NewImages" class="file-upload-default" style="display: none;" multiple onchange="displayFileNames(this)">
+                            <div class="input-group col-xs-12">
+                                <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Images" id="fileNamesDisplay">
+                                <span class="input-group-append">
+                                    <button class="file-upload-browse btn btn-gradient-primary py-3" type="button" onclick="openFilePicker()">Upload</button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="MovieTitle">Title</label>
+                            <input type="text" class="form-control" id="MovieTitle" placeholder="Title book" asp-for="@Model.movie.MovieTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Description">Description</label>
+                            <input type="text" class="form-control" id="Description" placeholder="Description" asp-for="@Model.movie.Description" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Price">Price</label>
+                            <input type="number" class="form-control" id="Price" placeholder="Price" asp-for="@Model.movie.Price" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Director">Director</label>
+                            <input type="text" class="form-control" id="Director" placeholder="Director" asp-for="@Model.movie.Director" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Durations">Durations</label>
+                            <input type="text" class="form-control" id="Durations" placeholder="Durations" asp-for="@Model.movie.Durations" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ReleaseDate">Release Date</label>
+                            <input type="date" class="form-control" id="ReleaseDate" placeholder="ReleaseDate" asp-for="@Model.movie.ReleaseDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="CategoryId">Category</label>
+                            <select class="form-select" id="exampleSelectCategory" asp-for="movie.CategoryId" asp-items="@(Model.MovieCategories != null ? new SelectList(Model.MovieCategories, "CategoryId", "CategoryName") : null)" required>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="StatusId">Status</label>
+                            <select class="form-select" id="StatusId" asp-for="movie.StatusId" asp-items="@(Model.MovieStatuses != null ? new SelectList(Model.MovieStatuses, "StatusId", "StatusName") : null)" required>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="Trailer">Trailer</label>
+                            <div class="input-group">
+                                <iframe width="560" height="315" src="@Model.movie.Trailer" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <select class="form-select" id="Trailer" asp-for="movie.Trailer" asp-items="@(Model.VideoDetails != null ? new SelectList(Model.VideoDetails, "LinkIframe", "Title") : null)">
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-gradient-primary me-2">Save</button>
+                        <a asp-page="/admin/movie/index" class="btn btn-light">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function displayFileNames(input) {
+        var fileNames = Array.from(input.files).map(file => file.name).join(', ');
+        document.getElementById('fileNamesDisplay').value = fileNames;
+    }
+
+    function openFilePicker() {
+        document.getElementById('uploadInput').click();
+    }
+
+    function validateForm() {
+        var requiredFields = ['MovieTitle', 'Description', 'Price', 'Director', 'Durations', 'ReleaseDate', 'exampleSelectCategory', 'StatusId'];
+        var isValid = true;
+
+        requiredFields.forEach(function (id) {
+            var field = document.getElementById(id);
+            if (!field || !field.value) {
+                field.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                field.classList.remove('is-invalid');
+            }
+        });
+
+        if (!isValid) {
+            alert("Please fill out all required fields.");
+            return false;
+        }
+
+        return confirm("Are you sure you want to update this movie?");
+    }
+</script>

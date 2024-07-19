@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using Microsoft.EntityFrameworkCore;
 using MovieBooker_backend.DTO;
 using MovieBooker_backend.Models;
@@ -43,6 +44,10 @@ namespace MovieBooker_backend.Controllers
         {
             var tokens = await _userRepository.SignInInternalAsync(model);
             if (tokens == null)
+            {
+                return NotFound();
+            }
+            if(tokens.AccessToken == "1" && tokens.RefreshToken == "1")
             {
                 return Unauthorized();
             }
@@ -97,7 +102,14 @@ namespace MovieBooker_backend.Controllers
             var user = _userRepository.GetUserByEmail(email);
             if (user != null)
             {
-                return Ok(user);
+                if (user.Status == false)
+                {
+                    return Unauthorized();
+                }
+                else
+                {
+                    return Ok(user);
+                }
             }
             else
             {
@@ -116,14 +128,34 @@ namespace MovieBooker_backend.Controllers
             return Ok(tokens);
         }
 
-
-
+        [EnableQuery]
         [HttpGet("GetAllUser")]
-        [Authorize(Roles = "Customer")]
-        public IActionResult getAll()
+        //[Authorize(Roles = "Admin")]
+        public IActionResult Get()
         {
             var user = _userRepository.GetAllUser();
             return Ok(user);
+        }
+
+        [HttpPut("UpdateUser/{email}")]
+        public IActionResult UpdateUser(string email, UpdateUserDTO updatedUser)
+        {
+            _userRepository.UpdateUser(email, updatedUser);
+            return Ok();
+        }
+
+        [HttpPut("ChangeStatusUser/{id}")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult ChangeStatusUser(int id)
+        {
+            _userRepository.ChangeStatusUser(id);
+            return Ok();
+        }
+
+        [HttpPut("ResetPassword/{email}/{password}")]
+        public IActionResult ResetPassword(string email, string password) { 
+            _userRepository.ResetPasswordUser(email, password);
+            return Ok();       
         }
     }
 }

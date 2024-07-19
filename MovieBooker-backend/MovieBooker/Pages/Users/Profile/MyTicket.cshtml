@@ -1,0 +1,116 @@
+﻿@page "{pageIndex:int?}"
+@model MovieBooker.Pages.Users.Profile.MyTicketModel
+@{
+}
+
+<link rel="stylesheet" href="~/css/MyTicket.css" asp-append-version="true" />
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="sidebar">
+                <li class="active">LỊCH SỬ GIAO DỊCH</li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <div class="content-header">
+                LỊCH SỬ GIAO DỊCH
+            </div>
+            <div class="tab-buttons">
+                <button class="btn btn-secondary" id="upcoming-btn">Phim Sắp Xem</button>
+                <button class="btn btn-secondary" id="watched-btn">Phim Đã Xem</button>
+            </div>
+            <div class="tab-content" id="upcoming-content">
+                @foreach (var seen in Model.ReserNotSeen)
+                {
+                    <div class="ticket">
+                        <div class="ticket-title">@seen.MovieTitle</div>
+                        <div class="ticket-details">CGV Center<br>@seen.ReservationDate @seen.StartTime<br>Ghế: @seen.SeatNumber</div>
+                        <div class="ticket-price">@seen.Price VND</div>
+                    </div>
+                }
+                <div class="clearfix">
+                    <div class="hint-text">Showing <b>@Model.ReserNotSeen.Count</b> out of <b>@Model.TotalItemsNotSeen</b> entries</div>
+                    <ul class="pagination">
+                        <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                            <a href="@Url.Page("/Users/Profile/MyTicket", new { pageIndex = 1 })" class="page-link">First</a>
+                        </li>
+                        <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                            <a href="@Url.Page("/Users/Profile/MyTicket", new { pageIndex = Model.PageIndex - 1 })" class="page-link">Previous</a>
+                        </li>
+                        @for (int i = 1; i <= Math.Ceiling((double)Model.TotalItemsNotSeen / Model.PageSize); i++)
+                        {
+                            <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                                <a href="@Url.Page("/Users/Profile/MyTicket", new { pageIndex = i })" class="page-link">@i</a>
+                            </li>
+                        }
+                        <li class="page-item @(Model.PageIndex == Math.Ceiling((double)Model.TotalItemsNotSeen / Model.PageSize) ? "disabled" : "")">
+                            <a href="@Url.Page("/Users/Profile/MyTicket", new { pageIndex = Model.PageIndex + 1 })" class="page-link">Next</a>
+                        </li>
+                    </ul>
+                </div>
+                <a href="#" class="back-link">&laquo; Quay lại</a>
+            </div>
+            <div class="tab-content d-none" id="watched-content">
+                @foreach (var seen in Model.ReserSeen)
+                {
+                    <div class="ticket">
+                        <div class="ticket-title">@seen.MovieTitle</div>
+                        <div class="ticket-details">CGV Center<br>@seen.ReservationDate @seen.StartTime<br>Ghế: @seen.SeatType @seen.SeatNumber</div>
+                        <div class="ticket-price">@seen.Price VND</div>
+                    </div>
+                }
+                <div class="clearfix">
+                    <div class="hint-text">Showing <b>@Model.ReserSeen.Count</b> out of <b>@Model.TotalItemsSeen</b> entries</div>
+                    <ul class="pagination">
+                        <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                            <a href="@Url.Page("/Users/Profile/MyTicket", new { pageIndex = 1 })" class="page-link">First</a>
+                        </li>
+                        <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                            <a href="@Url.Page("/Users/Profile/MyTicket", new { pageIndex = Model.PageIndex - 1 })" class="page-link">Previous</a>
+                        </li>
+                        @for (int i = 1; i <= Math.Ceiling((double)Model.TotalItemsSeen / Model.PageSize); i++)
+                        {
+                            <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                                <a href="@Url.Page("/Users/Profile/MyTicket", new { pageIndex = i })" class="page-link">@i</a>
+                            </li>
+                        }
+                        <li class="page-item @(Model.PageIndex == Math.Ceiling((double)Model.TotalItemsSeen / Model.PageSize) ? "disabled" : "")">
+                            <a href="@Url.Page("/Users/Profile/MyTicket", new { pageIndex = Model.PageIndex + 1 })" class="page-link">Next</a>
+                        </li>
+                    </ul>
+                </div>
+                <a href="#" class="back-link">&laquo; Quay lại</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var currentTab = sessionStorage.getItem('currentTab');
+        if (!currentTab) {
+            currentTab = 'upcoming';
+        }
+
+        if (currentTab === 'watched') {
+            document.getElementById('watched-content').classList.remove('d-none');
+            document.getElementById('upcoming-content').classList.add('d-none');
+        } else {
+            document.getElementById('upcoming-content').classList.remove('d-none');
+            document.getElementById('watched-content').classList.add('d-none');
+        }
+
+        document.getElementById('watched-btn').addEventListener('click', function () {
+            sessionStorage.setItem('currentTab', 'watched');
+            document.getElementById('upcoming-content').classList.add('d-none');
+            document.getElementById('watched-content').classList.remove('d-none');
+        });
+
+        document.getElementById('upcoming-btn').addEventListener('click', function () {
+            sessionStorage.setItem('currentTab', 'upcoming');
+            document.getElementById('watched-content').classList.add('d-none');
+            document.getElementById('upcoming-content').classList.remove('d-none');
+        });
+    </script>
+}

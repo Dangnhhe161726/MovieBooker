@@ -9,7 +9,6 @@ namespace MovieBooker_backend.Models
         public int? MovieId { get; set; }
         public string? LinkImage { get; set; }
         public string? PublicId { get; set; }
-
         public virtual Movie? Movie { get; set; }
     }
 }

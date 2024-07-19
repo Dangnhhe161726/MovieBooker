@@ -1,0 +1,50 @@
+﻿@page
+@model MovieBooker.Pages.Admin.CreateScheduleModel
+@{
+    Layout = "_AdminLayout";
+}
+<div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Create Schedules Movie</h4>
+            <form method="post">
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Select Theater</label>
+                    <select asp-for="Creates.TheaterId" class="form-select form-select-lg" id="exampleFormControlSelect1" style="color:black">
+                        @foreach(var item in Model.theaters)
+                        {
+                            <option value="@item.TheaterId">@item.TheaterName</option>
+                        }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect2">Select Movie</label>
+                    <select asp-for="Creates.MovieId" class="form-select" id="exampleFormControlSelect2" style="color:black">
+                        @foreach (var item in Model.moives)
+                        {
+                            <option value="@item.MovieId">@item.MovieTitle</option>
+                        }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect3">Select Time Slot</label>
+                    <select asp-for="Creates.TimeSlotId" class="form-select form-select-sm" id="exampleFormControlSelect3" style="color:black">
+                        @foreach (var item in Model.TimeSlots)
+                        {
+                            <option value="@item.TimeSlotId">@item.StartTime</option>
+                        }
+                </select>
+            </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect3">Select Date</label>
+                    <input asp-for="Creates.ScheduleDate" type="date" class="form-control form-control-sm" aria-label="Username">
+                </div>
+                @if (TempData["mess"] != null)
+                {
+                    <p>@TempData["mess"]</p>
+                }
+                <button type="submit" class="btn btn-gradient-primary me-2">Create Schedule</button>
+            </form>
+        </div>
+    </div>
+</div>

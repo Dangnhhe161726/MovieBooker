@@ -18,19 +18,23 @@ namespace MovieBooker_backend.Repositories.ReservationRepository
 
         public IEnumerable<ReservationDTO> GetAllReservation()
         {
-            var listReservation = _context.Revervations
+            var listReservation = _context.Revervations.Include(r => r.Seat).ThenInclude(r => r.SeatType)
                                     .Select(r => new ReservationDTO()
                                     {
                                         ReservationId = r.ReservationId,
                                         UserId = r.UserId,
+                                        SeatId = r.SeatId,
+                                        TimeSlotId = r.TimeSlotId,
+                                        MovieId = r.MovieId,
                                         SeatNumber = r.Seat.SeatNumber,
                                         RoomNumber = r.Seat.Room.RoomNumber,
                                         MovieTitle = r.Movie.MovieTitle,
                                         StartTime = r.TimeSlot.StartTime,
                                         EndTime = r.TimeSlot.EndTime,
                                         ReservationDate = r.ReservationDate,
-                                        Price = r.Movie.Price,
-                                        Status = r.Status
+                                        Price = r.TotalAmount,
+                                        Status = r.Status,
+                                        SeatType = r.Seat.SeatType.TypeName
                                     })
                                     .ToList();
             return listReservation;
@@ -49,7 +53,7 @@ namespace MovieBooker_backend.Repositories.ReservationRepository
                                         StartTime = r.TimeSlot.StartTime,
                                         EndTime = r.TimeSlot.EndTime,
                                         ReservationDate = r.ReservationDate,
-                                        Price = r.Movie.Price,
+                                        Price = r.TotalAmount,
                                         Status = r.Status
                                     })
                                     .FirstOrDefault();
@@ -102,6 +106,22 @@ namespace MovieBooker_backend.Repositories.ReservationRepository
             }
 
             return dataTable;
+        }
+
+        public void CreateReservation(CreateReservationDTO reservation)
+        {
+            var res = new Revervation
+            {
+                UserId = reservation.UserId,
+                MovieId = reservation.MovieId,
+                TimeSlotId = reservation.TimeSlotId,
+                SeatId = reservation.SeatId,
+                Status = reservation.Status,
+                ReservationDate = reservation.ReservationDate,
+                TotalAmount = reservation.TotalAmount,
+            };
+            _context.Revervations.Add(res);
+            _context.SaveChanges();
         }
     }
 }

@@ -8,7 +8,6 @@ services:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "Abc1234567890@"
     ports:
-      - 1434:1433
     networks:
       - moviebooker-network
   redis-container:

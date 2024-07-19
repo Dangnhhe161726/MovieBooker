@@ -93,7 +93,7 @@ namespace MovieBooker.Pages
     <body>
         <div class='container'>
             <div class='header-image'>
-                <img src='https://inkythuatso.com/uploads/thumbnails/800/2021/09/cgv-logo-inkythuatso-1-14-16-41-01.jpg' alt='Email Header Image' style='max-width: 100%; height: auto;'>
+                <img src='https://res.cloudinary.com/dwfo16yhs/image/upload/v1720365551/img_prn231/zmnnjnulyrtvn6icfyf1.jpg' alt='Email Header Image' style='max-width: 100%; height: auto;'>
             </div>
             <h2>Xác thực email của bạn</h2>
             <p>Cảm ơn bạn đã đăng ký. Dưới đây là mã xác thực duy nhất của bạn:</p>

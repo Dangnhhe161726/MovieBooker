@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.AspNetCore.OData.Formatter;
 using MovieBooker_backend.Models;
+using MovieBooker_backend.DTO;
 
 namespace MovieBooker_backend.Controllers
 {
@@ -49,6 +50,19 @@ namespace MovieBooker_backend.Controllers
                 return Ok();
             }
             return BadRequest("Failed to add reservation");
+        }
+
+        [HttpPost("CreateReservation")]
+        public IActionResult CreateReservation(CreateReservationDTO createReservation)
+        {
+            try
+            {
+                _reservationRepository.CreateReservation(createReservation);
+                return Ok();
+            }catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

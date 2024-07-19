@@ -14,12 +14,25 @@ using StackExchange.Redis;
 using System.Text;
 using CloudinaryDotNet;
 using Microsoft.Extensions.Options;
-using MovieBooker_backend.Repositories.ReservationRepository;
 using Microsoft.AspNetCore.OData;
-using System.Reflection.Emit;
 using Microsoft.OData.ModelBuilder;
 using MovieBooker_backend.DTO;
+using MovieBooker_backend.Repositories.ScheduleRepository;
+using MovieBooker_backend.Repositories.TimeSlotRepository;
+using MovieBooker_backend.Repositories.RoleRepository;
+using MovieBooker_backend.Repositories.MovieRepository;
+using MovieBooker_backend.Responses;
+using MovieBooker_backend.Repositories.YoutubeRepository;
+using MovieBooker_backend.Repositories.MovieCategoryRepository;
+using MovieBooker_backend.Repositories.MovieStatusRepository;
+using MovieBooker_backend.Repositories.MovieImageRepository;
+using MovieBooker_backend.Repositories.TheaterRepository;
+using MovieBooker_backend.Repositories.SeatRepository;
+using MovieBooker_backend.Repositories.ReservationRepository;
+using System.Reflection.Emit;
 using MovieBooker_backend.Repositories.DashboardRepository;
+using MovieBooker_backend.Repositories.VnPayRepository;
+using MovieBooker_backend.Repositories.PayPalRepository;
 
 namespace MovieBooker_backend
 {
@@ -32,7 +45,27 @@ namespace MovieBooker_backend
             // Add services to the container.
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+
+
+            //Config OData
+            var modelBuilder = new ODataConventionModelBuilder();
+            modelBuilder.EntitySet<UserDTO>("User");
+            modelBuilder.EntitySet<ScheduleDTO>("Schedule");
+            modelBuilder.EntitySet<MovieResponse>("Movie");
+            modelBuilder.EntitySet<ReservationDTO>("Reservation");
+            builder.Services.AddControllers().AddOData(opt => opt
+                .Select()
+                .Expand()
+                .Filter()
+                .OrderBy()
+                .Count()
+                .SetMaxTop(100)
+            .AddRouteComponents("odata", modelBuilder.GetEdmModel())
+            );
+            //Config auto mapper
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+			//Config cloudinary
+			builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
             builder.Services.AddSingleton(sp =>
              {
                  var cloudinarySettings = sp.GetRequiredService<IOptions<CloudinarySettings>>().Value;
@@ -41,7 +74,20 @@ namespace MovieBooker_backend
                      cloudinarySettings.ApiKey,
                      cloudinarySettings.ApiSecret));
              });
-            builder.Services.AddTransient<ICloudinaryRepository, CloudinaryRepository>();
+			builder.Services.AddTransient<ICloudinaryRepository, CloudinaryRepository>();
+		
+	
+			//builder.Services.AddControllers().AddOData(opt => opt
+			//	.Select()
+			//	.Expand()
+			//	.Filter()
+			//	.OrderBy()
+			//	.Count()
+			//	.SetMaxTop(100)
+			//.AddRouteComponents("odata", modelBuilder.GetEdmModel()));
+			//Config Youtube
+			builder.Services.AddTransient<IYoutubeRepository, YoutubeRepository>();
+			//Config Swagger
             builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
             builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
             builder.Services.AddSwaggerGen(option =>
@@ -71,7 +117,7 @@ namespace MovieBooker_backend
                     }
                 });
             });
-
+            //Config Identity libraries sercurity
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<bookMovieContext>()
                 .AddDefaultTokenProviders();
@@ -84,7 +130,17 @@ namespace MovieBooker_backend
 
             builder.Services.AddDbContext<bookMovieContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
+            builder.Services.AddScoped<ITimeSlotRepository, TimeSlotRepository>();
+            builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+			builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+            builder.Services.AddScoped<ITheaterRepository, TheaterRepository>();
+            builder.Services.AddScoped<ISeatRepository, SeatRepository>();
+            builder.Services.AddScoped<IVnPayRepository, VnPayRepository>();
+            builder.Services.AddScoped<IPayPalRepository, PayPalRepository>();
+
 
             builder.Services.AddAuthentication(options =>
             {
@@ -105,25 +161,19 @@ namespace MovieBooker_backend
                     ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
                 };
-
-
             });
 
 
 
-            builder.Services.AddAuthorization();
 
-            //Add OData Service
-            var modelBuilder = new ODataConventionModelBuilder();
-            builder.Services.AddControllers().AddOData(options =>
-                options.Select()
-                .Filter()
-                .OrderBy()
-                .Expand()
-                .Count()
-                .SetMaxTop(null)
-                .AddRouteComponents("odata",modelBuilder.GetEdmModel())
-                );
+            builder.Services.AddAuthorization();
+			//Config interface vs class
+			builder.Services.AddScoped<IMovieCategoryRepsitory, MovieCategoryRepository>();
+			builder.Services.AddScoped<IMovieStatusRepository, MovieStatusRepository>();
+			builder.Services.AddScoped<IMovieImageRepository, MovieImageRepository>();
+			builder.Services.AddAuthorization();
+
+            
 
             var app = builder.Build();
 
@@ -140,7 +190,6 @@ namespace MovieBooker_backend
                 .AllowAnyMethod()
                 .AllowAnyHeader();
             });
-
 
             app.UseStaticFiles();
 

@@ -39,7 +39,7 @@
       data: {
         labels: labels,
         datasets: [{
-          label: "Sales",
+          label: "Doanh thu",
           borderColor: gradientStrokeViolet,
           backgroundColor: gradientStrokeViolet,
           fillColor: bgColor1,
@@ -53,7 +53,7 @@
           categoryPercentage: 1,
         },
         {
-          label: "Orders",
+          label: "Vé bán",
           borderColor: gradientStrokeRed,
           backgroundColor: gradientStrokeRed,
           hoverBackgroundColor: gradientStrokeRed,

@@ -20,12 +20,12 @@
             <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white me-2">
                     <i class="mdi mdi-home"></i>
-                </span> Dashboard
+                </span> Báo cáo thống kê
             </h3>
             <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item active" aria-current="page">
-                        <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                        <span></span>Tổng quan <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
                     </li>
                 </ul>
             </nav>
@@ -36,10 +36,10 @@
                     <div class="card-body">
                         <img src="~/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                         <h4 class="font-weight-normal mb-3">
-                            Weekly Sales <i class="mdi mdi-chart-line mdi-24px float-end"></i>
+                            Doanh thu trong tuần <i class="mdi mdi-chart-line mdi-24px float-end"></i>
                         </h4>
                         <h2 class="mb-5">$ @Model.weekInfo.TotalSales.ToString("N2")</h2>
-                        <h6 class="card-text">@(Model.weekInfo.SalesChangePercentage > 0 ? "Increased" : "Decreased") by @Math.Abs(Model.weekInfo.SalesChangePercentage).ToString("N2")%</h6>
+                        <h6 class="card-text">@(Model.weekInfo.SalesChangePercentage > 0 ? "Tăng" : "Giảm") @Math.Abs(Model.weekInfo.SalesChangePercentage).ToString("N2")%</h6>
                     </div>
                 </div>
             </div>
@@ -48,10 +48,10 @@
                     <div class="card-body">
                         <img src="~/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                         <h4 class="font-weight-normal mb-3">
-                            Weekly Orders <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
+                            Vé bán trong tuần <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
                         </h4>
                         <h2 class="mb-5">@Model.weekInfo.NumberOfOrders.ToString("N0")</h2>
-                        <h6 class="card-text">@(Model.weekInfo.OrdersChangePercentage > 0 ? "Increased" : "Decreased") by @Math.Abs(Model.weekInfo.OrdersChangePercentage).ToString("N2")%</h6>
+                        <h6 class="card-text">@(Model.weekInfo.OrdersChangePercentage > 0 ? "Tăng" : "Giảm") @Math.Abs(Model.weekInfo.OrdersChangePercentage).ToString("N2")%</h6>
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                     <div class="card-body">
                         <img src="~/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                         <h4 class="font-weight-normal mb-3">
-                            Number Of Users <i class="mdi mdi-diamond mdi-24px float-end"></i>
+                            Số lượng người dùng <i class="mdi mdi-diamond mdi-24px float-end"></i>
                         </h4>
                         <h2 class="mb-5">@Model.weekInfo.NumberOfUsers.ToString("N0")</h2>
                     </div>
@@ -72,7 +72,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="clearfix">
-                            <h4 class="card-title float-start">Visit And Sales Statistics</h4>
+                            <h4 class="card-title float-start">Thông số doanh thu và vé bán</h4>
                             <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-end"></div>
                         </div>
                         <canvas id="visit-sale-chart" class="mt-4" width="669" height="334"
@@ -83,11 +83,17 @@
             <div class="col-md-5 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body text-center">
-                        <h4 class="card-title">Export Reports</h4>
+                        <h4 class="card-title">Xuất báo cáo</h4>
                         <div class="d-flex flex-column align-items-center w-100">
-                            <button type="button" class="btn btn-primary w-100 mb-2" onclick="submitForm('Daily')">Daily Report</button>
-                            <button type="button" class="btn btn-secondary w-100 mb-2" onclick="submitForm('Weekly')">Weekly Report</button>
-                            <button type="button" class="btn btn-success w-100" onclick="submitForm('Monthly')">Monthly Report</button>
+<<<<<<< Updated upstream
+                            <button type="button" class="btn btn-primary w-100 mb-2" onclick="submitForm('weekly')">Báo cáo tuần</button>
+                            <button type="button" class="btn btn-secondary w-100 mb-2" onclick="submitForm('monthly')">Báo cáo tháng</button>
+                            <button type="button" class="btn btn-success w-100" onclick="submitForm('yearly')">Báo cáo năm</button>
+=======
+                            <button type="button" class="btn btn-primary w-100 mb-2" onclick="submitForm('Weekly')">Báo cáo tuần</button>
+                            <button type="button" class="btn btn-secondary w-100 mb-2" onclick="submitForm('Monthly')">Báo cáo tháng</button>
+                            <button type="button" class="btn btn-success w-100" onclick="submitForm('Yearly')">Báo cáo năm</button>
+>>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
@@ -101,25 +107,25 @@
             <div class="col-12 grid-margin">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Monthly Movies</h4>
+                        <h4 class="card-title">Phim của tháng</h4>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th> Top </th>
-                                        <th> Movie Name </th>
-                                        <th> Orders In Month </th>
-                                        <th> Sales In Month </th>
+                                        <th> Thứ hạng </th>
+                                        <th> Tên phim </th>
+                                        <th> Lượng vé bán trong tháng </th>
+                                        <th> Doanh thu bán vé trong tháng </th>
                                     </tr>
                                 </thead>
                                 <tbody @foreach (var m in Model.movieList)
                                 {
-                                    <tr>
-                                         <td> @topPosition </td>
-                                         <td> @m.MovieTitle </td>
-                                         <td> @m.TotalOrders </td>
-                                         <td> @m.TotalSales </td>
-                                    </tr>
+                                        <tr>
+                                             <td> @topPosition </td>
+                                             <td> @m.MovieTitle </td>
+                                             <td> @m.TotalOrders </td>
+                                             <td> @m.TotalSales.ToString("N2") </td>
+                                        </tr>
                                     topPosition++;
                                 }
                                 </tbody>
@@ -136,7 +142,6 @@
 @section Scripts {
 
     <script src="~/assets/vendors/js/vendor.bundle.base.js"></script>
-
     <script src="~/assets/vendors/chart.js/chart.umd.js"></script>
 
     <script src="~/assets/js/off-canvas.js"></script>

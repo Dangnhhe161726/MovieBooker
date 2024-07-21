@@ -13,7 +13,7 @@
             <div class="img-showcase">
                 @foreach (var img in Model.movieImages)
                 {
-                    <img src="@img.LinkImage" alt="shoe image">
+                    <img src="@img.LinkImage" alt="movie image">
                 }
             </div>
         </div>
@@ -47,19 +47,19 @@
             </div>
 
             <div class="product-price">            
-                <p class="new-price">Price Movie Ticket: <span>@dt.Price vnd</span></p>
+                <p class="new-price">Giá vé: <span>@dt.Price vnd</span></p>
             </div>
 
             <div class="product-detail">
-                <h2>about this movie: </h2>
+                <h2>Giới thiệu phim: </h2>
                 <p>@dt.Description</p>
                 <ul>
-                    <li>Director: <span>@dt.Director</span></li>
-                    <li>Durations: <span>@dt.Durations</span></li>
-                    <li>Category: <span>@dt.Category.CategoryName</span></li>
-                    <li>Release Date: <span>@dt.ReleaseDate.Value.ToString("dd/MM/yyyy")</span></li>
+                    <li>Đạo diễn: <span>@dt.Director</span></li>
+                    <li>Độ dài: <span>@dt.Durations</span></li>
+                    <li>Thể loại: <span>@dt.Category.CategoryName</span></li>
+                    <li>Ngày phát hành: <span>@dt.ReleaseDate.Value.ToString("dd/MM/yyyy")</span></li>
                     <li><span>
-                                <button class="btn" onclick="showTrailer('@dt.Trailer')"><i class="fas fa-hand-point-right"></i> View Trailer</button>
+                                <button class="btn" onclick="showTrailer('@dt.Trailer')"><i class="fas fa-hand-point-right"></i> Xem Trailer</button>
                         </span>
                     </li>
                 </ul>

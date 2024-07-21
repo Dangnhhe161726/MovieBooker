@@ -59,7 +59,7 @@
                                 <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" asp-page="/Login" asp-page-handler="Logout">
-                                        <i class="mdi mdi-logout me-2 text-primary"></i> Signout
+                                        <i class="mdi mdi-logout me-2 text-primary"></i> Đăng xuất
                                     </a>
                                 </div>
                             </li>
@@ -104,47 +104,47 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                            <span class="menu-title">Manage Users</span>
+                            <span class="menu-title">Quản lý người dùng</span>
                             <i class="menu-arrow"></i>
                             <i style="color: #a59f9fcf;" class="fa fa-user-circle-o"></i>
                         </a>
                         <div class="collapse" id="ui-basic">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-page="/Admin/ManageUsers">Manage Customer</a>
+                                    <a class="nav-link" asp-page="/Admin/ManageUsers">Quản lý khách hàng</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-page="/Admin/ManageUsers" asp-page-handler="Staff">Manager Staff</a>
+                                    <a class="nav-link" asp-page="/Admin/ManageUsers" asp-page-handler="Staff">Quản lý nhân viên</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
                     <li class="nav-item">
 						<a class="nav-link" asp-page="/admin/movie/index">
-							<span class="menu-title">Manage Movie</span>
+							<span class="menu-title">Quản lý phim</span>
 							<i style="color: #a59f9fb3; margin-left: auto" class="fa fa-video-camera"></i>
 						</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" data-bs-toggle="collapse" href="#ui-basic-schedule" aria-expanded="false" aria-controls="ui-basic">
-							<span class="menu-title">Manage Schedule</span>
+							<span class="menu-title">Quản lý lịch chiếu</span>
 							<i class="menu-arrow"></i>
 							<i style="color: #a59f9fcf;" class="mdi mdi-table-large menu-icon"></i>
 						</a>
 						<div class="collapse" id="ui-basic-schedule">
 							<ul class="nav flex-column sub-menu">
 								<li class="nav-item">
-									<a class="nav-link" asp-page="/Admin/ManageSchedules">View Schedule</a>
+									<a class="nav-link" asp-page="/Admin/ManageSchedules">Xem lịch chiếu</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" asp-page="/Admin/CreateSchedule">Create Schedule</a>
+									<a class="nav-link" asp-page="/Admin/CreateSchedule">Tạo lịch chiếu</a>
 								</li>
 							</ul>
 						</div>
 					</li>
                     <li class="nav-item">
                         <a class="nav-link" asp-page="/Manage/ReservationHistory">
-                            <span class="menu-title">Manage Reservation</span>
+                            <span class="menu-title">Quản lý lượt đặt vé</span>
                             <i class="mdi mdi-home menu-icon"></i>
                         </a>
                     </li>

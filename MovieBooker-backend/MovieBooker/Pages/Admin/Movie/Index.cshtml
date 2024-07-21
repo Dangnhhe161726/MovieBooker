@@ -73,7 +73,7 @@
 						   class="btn btn-gradient-primary btn-icon-text"
 						   style="font-size: 25px; padding: 5px 25px 5px 25px; font-family: monospace;">+</a>
 						<div class="search-box">
-							<input type="search" id="searchInput" value="@Model.KeySearch" placeholder="Enter movie name" />
+							<input type="search" id="searchInput" value="@Model.KeySearch" placeholder="Nhập tên phim" />
 							<button id="searchButton" class="btn btn-primary">
 								<i class="fa fa-search"></i>
 							</button>
@@ -83,13 +83,13 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th><a asp-page="Index" asp-route-keySearch="@Model.KeySearch" asp-route-sortBy="MovieId" asp-route-sortOrder="@(Model.SortOrder == "asc" ? "desc" : "asc")">ID</a></th>
-									<th>Image</th>
-									<th><a asp-page="Index" asp-route-keySearch="@Model.KeySearch" asp-route-sortBy="MovieTitle" asp-route-sortOrder="@(Model.SortOrder == "asc" ? "desc" : "asc")">Title</a></th>
-									<th><a asp-page="Index" asp-route-keySearch="@Model.KeySearch" asp-route-sortBy="Price" asp-route-sortOrder="@(Model.SortOrder == "asc" ? "desc" : "asc")">Price</a></th>
-									<th><a asp-page="Index" asp-route-keySearch="@Model.KeySearch" asp-route-sortBy="ReleaseDate" asp-route-sortOrder="@(Model.SortOrder == "asc" ? "desc" : "asc")">Release Date</a></th>
-									<th><a asp-page="Index" asp-route-keySearch="@Model.KeySearch" asp-route-sortBy="StatusId" asp-route-sortOrder="@(Model.SortOrder == "asc" ? "desc" : "asc")">Status</a></th>
-									<th>Action</th>
+									<th><a asp-page="Index" asp-route-keySearch="@Model.KeySearch" asp-route-sortBy="MovieId" asp-route-sortOrder="@(Model.SortOrder == "asc" ? "desc" : "asc")">Mã phim</a></th>
+									<th>Hình ảnh</th>
+									<th><a asp-page="Index" asp-route-keySearch="@Model.KeySearch" asp-route-sortBy="MovieTitle" asp-route-sortOrder="@(Model.SortOrder == "asc" ? "desc" : "asc")">Tên phim</a></th>
+									<th><a asp-page="Index" asp-route-keySearch="@Model.KeySearch" asp-route-sortBy="Price" asp-route-sortOrder="@(Model.SortOrder == "asc" ? "desc" : "asc")">Giá</a></th>
+									<th><a asp-page="Index" asp-route-keySearch="@Model.KeySearch" asp-route-sortBy="ReleaseDate" asp-route-sortOrder="@(Model.SortOrder == "asc" ? "desc" : "asc")">Ngày phát hành</a></th>
+									<th><a asp-page="Index" asp-route-keySearch="@Model.KeySearch" asp-route-sortBy="StatusId" asp-route-sortOrder="@(Model.SortOrder == "asc" ? "desc" : "asc")">Trạng thái</a></th>
+									<th>Hành động</th>
 								</tr>
 							</thead>
 							<tbody>

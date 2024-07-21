@@ -23,7 +23,7 @@
             </div>
 
             <div class="signin-form">
-                <h2 class="form-title">Welcome CGV Cinema</h2>
+                <h2 class="form-title">LDH Cinema Xin Chào</h2>
                 <form method="POST" class="register-form" id="login-form">
                     <div class="form-group">
                         <label for="email"><i class="zmdi zmdi-email"></i></label>
@@ -31,21 +31,21 @@
                     </div>
                     <div class="form-group">
                         <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                        <input type="password" asp-for="User.Password" id="your_pass" placeholder="Password" />
+                        <input type="password" asp-for="User.Password" id="your_pass" placeholder="Mật khẩu" />
                     </div>
                     <div class="form-group">
-                        <a asp-page="/ForgotPassword/ForgotPassword">Forgot Password?</a>  
+                        <a asp-page="/ForgotPassword/ForgotPassword">Quên mật khẩu?</a>  
                         <a asp-page="/Register/Register">Sign Up?</a>
                     </div>
                     <div class="form-group">
                         <div asp-validation-summary="All" class="text-danger"></div>
                     </div>
                     <div class="form-group form-button">
-                        <input type="submit" name="signin" id="signin" class="form-submit" value="Log in" />
+                        <input type="submit" name="signin" id="signin" class="form-submit" value="Đăng nhập" />
                     </div>
                 </form>
                 <div class="social-login">
-                    <span class="social-label">Or login with</span>
+                    <span class="social-label">Hoặc đăng nhập với</span>
                     <ul class="socials">
                         <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
                         <li><a asp-page-handler="LoginGoogle"><i class="display-flex-center zmdi zmdi-google"></i></a></li>

@@ -30,12 +30,12 @@
                     <ul class="navbar-nav mb-0">
 
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" asp-page="/Index">Home</a>
+                            <a class="nav-link active" aria-current="page" asp-page="/Index">Trang chủ</a>
                         </li>
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Movie
+                                Phim
                             </a>
                             <ul class="dropdown-menu drop_1" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" asp-page="/Users/Movies/ListMovie" asp-route-id="2">Phim Đang Chiếu</a></li>
@@ -61,11 +61,11 @@
                                 string userEmail = jsonToken.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value;
 
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-page="/Users/Profile/ProfileUser" asp-route-email="@userEmail">Profile</a>
+                                    <a class="nav-link" asp-page="/Users/Profile/ProfileUser" asp-route-email="@userEmail">Hồ sơ</a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-page="/Users/Profile/MyTicket" asp-route-email="@userEmail">My Ticket</a>
+                                    <a class="nav-link" asp-page="/Users/Profile/MyTicket" asp-route-email="@userEmail">Vé của tôi</a>
                                 </li>
 
                             }
@@ -90,7 +90,7 @@
 
                                     <div class="input-group">
                                         <input type="hidden" value="@status" name="statusId" />
-                                        <input name="moviename" type="text" class="form-control border-start-0" placeholder="Search Movie">
+                                        <input name="moviename" type="text" class="form-control border-start-0" placeholder="Tìm kiếm phim">
                                         <span class="input-group-btn">
                                             <button class="btn btn-primary bg_yell" type="submit"
                                                 asp-page="/Users/Movies/ListMovie"
@@ -108,13 +108,13 @@
                             if (token == null)
                             {
                                 <li class="nav-item ms-3">
-                                    <a style="color:#ff4444" class="nav-link button" asp-page="/Login">LOGIN</a>
+                                    <a style="color:#ff4444" class="nav-link button" asp-page="/Login">ĐĂNG NHẬP</a>
                                 </li>
                             }
                             else
                             {
                                 <li class="nav-item ms-3">
-                                    <a style="color:#ff4444" class="nav-link button" asp-page="/Login" asp-page-handler="Logout">LOUOUT</a>
+                                    <a style="color:#ff4444" class="nav-link button" asp-page="/Login" asp-page-handler="Logout">ĐĂNG XUẤT</a>
                                 </li>
                             }
                         }
@@ -132,7 +132,7 @@
             <div class="row footer_1">
                 <div class="col-md-2">
                     <div class="footer_1i">
-                        <h6 style="color:#ff4444" class="text-white fw-bold">CGV CENTER</h6>
+                        <h6 style="color:#ff4444" class="text-white fw-bold">LDH CENTER</h6>
                         <hr class="line mb-4">
                         <div class="row footer_1i_small">
                             <h6 class="col-md-12 col-6"><i class="fa fa-circle me-1 col_red font_10"></i> <a class="text-muted" href="#">Giới Thiệu</a></h6>
@@ -146,21 +146,21 @@
                 </div>
                 <div class="col-md-4">
                     <div class="footer_1i">
-                        <h6 style="color:#ff4444" class="text-white fw-bold">TAG CLOUD</h6>
+                        <h6 style="color:#ff4444" class="text-white fw-bold">Khám phá</h6>
                         <hr class="line mb-4">
                         <ul class="mb-0">
-                            <li class="d-inline-block"><a class="d-block" href="#">Analyze</a></li>
+                            <li class="d-inline-block"><a class="d-block" href="#">Phân tích</a></li>
                             <li class="d-inline-block"><a class="d-block" href="#">Audio</a></li>
                             <li class="d-inline-block"><a class="d-block" href="#">Blog</a></li>
-                            <li class="d-inline-block"><a class="d-block" href="#">Business</a></li>
-                            <li class="d-inline-block"><a class="d-block" href="#">Creative</a></li>
-                            <li class="d-inline-block"><a class="d-block" href="#">Design</a></li>
-                            <li class="d-inline-block"><a class="d-block" href="#">Experiment</a></li>
-                            <li class="d-inline-block"><a class="d-block" href="#">News</a></li>
-                            <li class="d-inline-block"><a class="d-block" href="#">Expertize</a></li>
-                            <li class="d-inline-block"><a class="d-block" href="#">Express</a></li>
-                            <li class="d-inline-block"><a class="d-block" href="#">Share</a></li>
-                            <li class="d-inline-block"><a class="d-block" href="#">Sustain</a></li>
+                            <li class="d-inline-block"><a class="d-block" href="#">Kinh doanh</a></li>
+                            <li class="d-inline-block"><a class="d-block" href="#">Sáng tạo</a></li>
+                            <li class="d-inline-block"><a class="d-block" href="#">Thiết kế</a></li>
+                            <li class="d-inline-block"><a class="d-block" href="#">Thí nghiệm</a></li>
+                            <li class="d-inline-block"><a class="d-block" href="#">Tin mới</a></li>
+                            <li class="d-inline-block"><a class="d-block" href="#">Nghiên cứu</a></li>
+                            <li class="d-inline-block"><a class="d-block" href="#">Báo cáo</a></li>
+                            <li class="d-inline-block"><a class="d-block" href="#">Chia sẻ</a></li>
+                            <li class="d-inline-block"><a class="d-block" href="#">Duy trì</a></li>
                             <li class="d-inline-block"><a class="d-block" href="#">Video</a></li>
                             <li class="d-inline-block"><a class="d-block" href="#">Youtube</a></li>
                         </ul>
@@ -168,25 +168,25 @@
                 </div>
                 <div class="col-md-2">
                     <div class="footer_1i">
-                        <h6 style="color:#ff4444" class="text-white fw-bold">BY PRESENTER</h6>
+                        <h6 style="color:#ff4444" class="text-white fw-bold">Thể loại</h6>
                         <hr class="line mb-4">
                         <div class="row footer_1i_small">
-                            <h6 class="col-md-12 col-6"><i class="fa fa-circle me-1 col_red font_10"></i> <a class="text-muted" href="#">Action Movie</a></h6>
-                            <h6 class="mt-2 col-md-12 col-6"><i class="fa fa-circle me-1 col_red font_10"></i> <a class="text-muted" href="#">Romantic Movie</a></h6>
-                            <h6 class="mt-2 col-md-12 col-6"><i class="fa fa-circle me-1 col_red font_10"></i> <a class="text-muted" href="#">Other Movie</a></h6>
-                            <h6 class="mt-2 col-md-12 col-6"><i class="fa fa-circle me-1 col_red font_10"></i> <a class="text-muted" href="#">Comedy Movie</a></h6>
-                            <h6 class="mt-2 col-md-12 col-6"><i class="fa fa-circle me-1 col_red font_10"></i> <a class="text-muted" href="#">Drama Movie</a></h6>
-                            <h6 class="mb-0 mt-2 col-md-12 col-6"><i class="fa fa-circle me-1 col_red font_10"></i> <a class="text-muted" href="#">Classical Movie</a></h6>
+                            <h6 class="col-md-12 col-6"><i class="fa fa-circle me-1 col_red font_10"></i> <a class="text-muted" href="#">Phim Hành động</a></h6>
+                            <h6 class="mt-2 col-md-12 col-6"><i class="fa fa-circle me-1 col_red font_10"></i> <a class="text-muted" href="#">Phim Tình cảm</a></h6>
+                            <h6 class="mt-2 col-md-12 col-6"><i class="fa fa-circle me-1 col_red font_10"></i> <a class="text-muted" href="#">Phim khác</a></h6>
+                            <h6 class="mt-2 col-md-12 col-6"><i class="fa fa-circle me-1 col_red font_10"></i> <a class="text-muted" href="#">Phim Hài kịch</a></h6>
+                            <h6 class="mt-2 col-md-12 col-6"><i class="fa fa-circle me-1 col_red font_10"></i> <a class="text-muted" href="#">Phim Tâm lý</a></h6>
+                            <h6 class="mb-0 mt-2 col-md-12 col-6"><i class="fa fa-circle me-1 col_red font_10"></i> <a class="text-muted" href="#">Phim Cổ điển</a></h6>
                         </div>
 
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="footer_1i">
-                        <h6 style="color:#ff4444" class="text-white fw-bold">SUBSCRIPTION</h6>
+                        <h6 style="color:#ff4444" class="text-white fw-bold">Đăng ký</h6>
                         <hr class="line mb-4">
-                        <p class="text-muted">Subscribe your Email address for latest news & updates.</p>
-                        <input class="form-control bg-transparent" placeholder="Enter Email Address" type="text">
+                        <p class="text-muted">Đăng ký Email của bạn dưới đây để nhận được các thông tin mới nhất sớm nhất!</p>
+                        <input class="form-control bg-transparent" placeholder="Nhập địa chỉ Email" type="text">
                         <h6 class="mb-0 mt-4"><a class="button_1 pt-3 pb-3" href="#">Submit <i class="fa fa-check-circle ms-1"></i> </a></h6>
                     </div>
                 </div>

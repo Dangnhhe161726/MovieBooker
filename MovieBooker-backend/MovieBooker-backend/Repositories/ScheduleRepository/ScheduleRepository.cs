@@ -21,19 +21,22 @@ namespace MovieBooker_backend.Repositories.ScheduleRepository
                 TheaterId = sc.TheaterId,
                 TimeSlotId = sc.TimeSlotId,
                 ScheduleDate = sc.ScheduleDate,
+                RoomId = sc.RoomId, 
+
             };
             _context.Schedules.Add(schedule);
             _context.SaveChanges();
         }
 
-        public bool CheckExistSchedule(int movieId, int theaterId, int timeSlotId, string date)
+        public bool CheckExistSchedule(int theaterId, int timeSlotId, string date, int roomId)
         {
             DateTime targetDate = DateTime.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
             var schedule = _context.Schedules
-                .Where(s => s.MovieId == movieId
-                            && s.TheaterId == theaterId
+                .Where(s =>
+                             s.TheaterId == theaterId
                             && s.TimeSlotId == timeSlotId
+                            && s.RoomId == roomId
                             && s.ScheduleDate.HasValue
                             && s.ScheduleDate.Value.Date == targetDate.Date)
                 .FirstOrDefault();
@@ -54,6 +57,7 @@ namespace MovieBooker_backend.Repositories.ScheduleRepository
                     MovieId = s.MovieId,
                     TheaterId = s.TheaterId,
                     TimeSlotId = s.TimeSlotId,
+                    RoomId = s.RoomId,
                     ScheduleDate = s.ScheduleDate,
                     MovieTitle = s.Movie.MovieTitle,
                     Durations = s.Movie.Durations,

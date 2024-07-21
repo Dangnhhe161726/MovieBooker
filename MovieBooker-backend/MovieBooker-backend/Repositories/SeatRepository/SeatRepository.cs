@@ -18,6 +18,7 @@ namespace MovieBooker_backend.Repositories.SeatRepository
           {
               SeatId = s.SeatId,
               RoomId= s.RoomId,
+              TheatersId= s.TheatersId,
               RoomName = s.Room.RoomNumber,
               SeatNumber = s.SeatNumber,
               Row = s.Row,

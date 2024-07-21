@@ -7,6 +7,7 @@ namespace MovieBooker_backend.Models
     {
         public Room()
         {
+            Schedules = new HashSet<Schedule>();
             Seats = new HashSet<Seat>();
         }
 
@@ -16,6 +17,7 @@ namespace MovieBooker_backend.Models
         public bool? Status { get; set; }
 
         public virtual Theater? Theater { get; set; }
+        public virtual ICollection<Schedule> Schedules { get; set; }
         public virtual ICollection<Seat> Seats { get; set; }
     }
 }

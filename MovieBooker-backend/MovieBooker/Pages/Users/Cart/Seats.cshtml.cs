@@ -25,7 +25,8 @@ namespace MovieBooker.Pages.Users.Cart
             {
                 schedules = await response2.Content.ReadFromJsonAsync<List<ScheduleDTO>>();
             }
-            HttpResponseMessage response3 = await _httpClient.GetAsync("https://localhost:5000/api/Seat/GetSeat");
+            int roomId = (int)schedules.First().RoomId;
+            HttpResponseMessage response3 = await _httpClient.GetAsync($"https://localhost:5000/api/Seat/GetSeat?$filter=theatersId eq {theartr} and roomId eq {roomId}");
             if (response3.IsSuccessStatusCode)
             {
                 seats = await response3.Content.ReadFromJsonAsync<List<SeatDTO>>();

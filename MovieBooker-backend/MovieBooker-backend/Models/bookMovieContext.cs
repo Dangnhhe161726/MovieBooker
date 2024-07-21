@@ -37,7 +37,6 @@ namespace MovieBooker_backend.Models
                 var ConnectionString = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetConnectionString("DefaultConnection");
                 optionsBuilder.UseSqlServer(ConnectionString);
             }
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -205,6 +204,8 @@ namespace MovieBooker_backend.Models
 
                 entity.Property(e => e.MovieId).HasColumnName("movieId");
 
+                entity.Property(e => e.RoomId).HasColumnName("roomId");
+
                 entity.Property(e => e.ScheduleDate)
                     .HasColumnType("datetime")
                     .HasColumnName("scheduleDate");
@@ -217,6 +218,11 @@ namespace MovieBooker_backend.Models
                     .WithMany(p => p.Schedules)
                     .HasForeignKey(d => d.MovieId)
                     .HasConstraintName("FK_Schedules_Movies");
+
+                entity.HasOne(d => d.Room)
+                    .WithMany(p => p.Schedules)
+                    .HasForeignKey(d => d.RoomId)
+                    .HasConstraintName("FK_Schedules_Rooms");
 
                 entity.HasOne(d => d.Theater)
                     .WithMany(p => p.Schedules)
@@ -246,6 +252,8 @@ namespace MovieBooker_backend.Models
                     .IsFixedLength();
 
                 entity.Property(e => e.SeatTypeId).HasColumnName("seatTypeId");
+
+                entity.Property(e => e.TheatersId).HasColumnName("theatersId");
 
                 entity.HasOne(d => d.Room)
                     .WithMany(p => p.Seats)

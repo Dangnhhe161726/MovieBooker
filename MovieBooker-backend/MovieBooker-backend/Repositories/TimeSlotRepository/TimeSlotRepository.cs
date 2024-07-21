@@ -19,5 +19,15 @@ namespace MovieBooker_backend.Repositories.TimeSlotRepository
             }).ToList();
             return timeSlots;
         }
+
+        public TimeSlotDTO GetTimeSlotById(int id)
+        {
+            var timeSlots = _context.TimeSlots.Select(t => new TimeSlotDTO
+            {
+                TimeSlotId = t.TimeSlotId,
+                StartTime = t.StartTime,
+            }).FirstOrDefault(t => t.TimeSlotId == id);
+            return timeSlots;
+        }
     }
 }

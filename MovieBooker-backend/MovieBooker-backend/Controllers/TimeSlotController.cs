@@ -22,5 +22,11 @@ namespace MovieBooker_backend.Controllers
             var timeslot = _timeSlotRepository.GetAllTimeSlot();
             return Ok(timeslot);
         }
+        [HttpGet("GetTimeSlotById/{id}")]
+        public IActionResult GetTimeSlotById(int id)
+        {
+            var timeslot = _timeSlotRepository.GetTimeSlotById(id);
+            return Ok(timeslot);
+        }
     }
 }

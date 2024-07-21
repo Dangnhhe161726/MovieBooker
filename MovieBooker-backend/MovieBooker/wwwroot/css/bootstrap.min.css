@@ -5027,7 +5027,7 @@ textarea.form-control-lg {
 }
 
 .page-item.active .page-link {
-    z-index: 3;
+    z-index: 2;
     color: #fff;
     background-color: #0d6efd;
     border-color: #0d6efd

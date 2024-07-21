@@ -45,6 +45,7 @@ namespace MovieBooker_backend.Repositories.UserRepository
             {
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role.RoleName),
+                new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
@@ -81,6 +82,7 @@ namespace MovieBooker_backend.Repositories.UserRepository
             {
                 new Claim(ClaimTypes.Email, users.Email),
                 new Claim(ClaimTypes.Role, users.Role.RoleName),
+                new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
@@ -198,6 +200,7 @@ namespace MovieBooker_backend.Repositories.UserRepository
             {
                 new Claim(ClaimTypes.Email, model.Email),
                 new Claim(ClaimTypes.Role, user.Role.RoleName),
+                new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 

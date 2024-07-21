@@ -24,11 +24,11 @@ namespace MovieBooker_backend.Controllers
             return Ok(weekDashboard);
         }
 
-        [HttpGet("GetMonthlyDashboard")]
-        public IActionResult GetMonthDashboard()
+        [HttpGet("GetChartDashboard/{chartType}")]
+        public IActionResult GetChartDashboard(string chartType)
         {
-            var monthDashboard = _dashboardRepository.GetDashboardMonthlyInfo();
-            return Ok(monthDashboard);
+            var chartDashboard = _dashboardRepository.GetDashboardChartInfo(chartType);
+            return Ok(chartDashboard);
         }
 
         [HttpGet("GetMovieDashboard")]

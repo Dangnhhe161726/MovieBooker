@@ -39,32 +39,66 @@ namespace MovieBooker_backend.Repositories.DashboardRepository
 
             return dashboardInfo;
         }
-        public List<MonthDashboardDTO> GetDashboardMonthlyInfo()
+        public List<ChartDashboardDTO> GetDashboardChartInfo(string chartType)
         {
-            List<MonthDashboardDTO> dashboardInfo = new List<MonthDashboardDTO>();
+            List<ChartDashboardDTO> dashboardInfo = new List<ChartDashboardDTO>();
 
-            //Sales and Orders info of 8 months consecutively
-            DateTime currentMonth = DateTime.Now;
-            for (int i = 7; i >= 0; i--)
+            if (chartType == "monthly")
             {
-                MonthDashboardDTO monthInfo = new MonthDashboardDTO
+                //Sales and Orders info of 8 months consecutively
+                DateTime currentMonth = DateTime.Now;
+                for (int i = 7; i >= 0; i--)
                 {
-                    Month = currentMonth.AddMonths(-i).Month.ToString(),
-                    Orders = CountOrders(currentMonth.AddMonths(-i - 1), currentMonth.AddMonths(-i)),
-                    Sales = CalculateTotalSales(currentMonth.AddMonths(-i - 1), currentMonth.AddMonths(-i))
-                };
-                dashboardInfo.Add(monthInfo);
+                    DateTime monthDate = currentMonth.AddMonths(-i);
+                    ChartDashboardDTO monthInfo = new ChartDashboardDTO
+                    {
+                        Time = monthDate.ToString("MMM"),
+                        Orders = CountOrders(currentMonth.AddMonths(-i - 1), currentMonth.AddMonths(-i)),
+                        Sales = CalculateTotalSales(currentMonth.AddMonths(-i - 1), currentMonth.AddMonths(-i))
+                    };
+                    dashboardInfo.Add(monthInfo);
+                }
+            }
+            else if (chartType == "yearly")
+            {
+                DateTime currentYear = DateTime.Now;
+                for (int i = 7; i >= 0; i--)
+                {
+                    DateTime year = currentYear.AddYears(-i);
+                    ChartDashboardDTO yearInfo = new ChartDashboardDTO
+                    {
+                        Time = year.ToString("yyyy"),
+                        Orders = CountOrders(currentYear.AddYears(-i - 1), currentYear.AddYears(-i)),
+                        Sales = CalculateTotalSales(currentYear.AddYears(-i - 1), currentYear.AddYears(-i))
+                    };
+                    dashboardInfo.Add(yearInfo);
+                }
+            }
+            else
+            {
+                DateTime currentWeek = DateTime.Now;
+                for (int i = 7; i >= 0; i--)
+                {
+                    DateTime week = currentWeek.AddDays(-i*7);
+                    ChartDashboardDTO weekInfo = new ChartDashboardDTO
+                    {
+                        Time = week.ToString("dd/MM"),
+                        Orders = CountOrders(currentWeek.AddDays(-i * 7 - 7), currentWeek.AddDays(-i * 7)),
+                        Sales = CalculateTotalSales(currentWeek.AddDays(-i * 7 - 7), currentWeek.AddDays(-i * 7))
+                    };
+                    dashboardInfo.Add(weekInfo);
+                }
             }
 
             return dashboardInfo;
         }
         public List<MovieDashboardDTO> GetDashboardMovieInfo()
         {
-            DateTime currentMonth = DateTime.Today;
-            DateTime lastMonth = DateTime.Today.AddMonths(-1);
-;
+            DateTime currentMonthStart = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+            DateTime currentDate = DateTime.Today;
+
             var movieList = _context.Revervations
-                .Where(r => r.ReservationDate >= lastMonth && r.ReservationDate <= currentMonth)
+                .Where(r => r.ReservationDate >= currentMonthStart && r.ReservationDate <= currentDate)
                 .Select(r => r.Movie)
                 .Distinct()
                 .ToList();
@@ -77,13 +111,15 @@ namespace MovieBooker_backend.Repositories.DashboardRepository
                     MovieDashboardDTO movieInfo = new MovieDashboardDTO()
                     {
                         MovieTitle = movie.MovieTitle,
-                        TotalOrders = CountOrders(lastMonth, currentMonth, movie.MovieId),
-                        TotalSales = CalculateTotalSales(lastMonth, currentMonth, movie.MovieId),
+                        TotalOrders = CountOrders(currentMonthStart, currentDate, movie.MovieId),
+                        TotalSales = CalculateTotalSales(currentMonthStart, currentDate, movie.MovieId),
                     };
                     dashboardInfo.Add(movieInfo);
                 }
             }
-            dashboardInfo.OrderBy(d => d.TotalSales);
+
+            // Sort the dashboard information by TotalSales
+            dashboardInfo = dashboardInfo.OrderByDescending(d => d.TotalSales).ToList();
             return dashboardInfo;
         }
 

@@ -7,32 +7,35 @@ namespace MovieBooker.Pages.Manage
 {
     public class DashboardModel : PageModel
     {
-        public WeekDashboardDTO weekInfo = new WeekDashboardDTO();
-        public List<MovieDashboardDTO> movieList = new List<MovieDashboardDTO>();
-        public List<MonthDashboardDTO> monthInfo = new List<MonthDashboardDTO>();
-        public async Task OnGetAsync()
+        public string ViewType = "default";
+        public WeekDashboardDTO WeekInfo = new WeekDashboardDTO();
+        public List<MovieDashboardDTO> MovieList = new List<MovieDashboardDTO>();
+        public List<ChartDashboardDTO> ChartInfo = new List<ChartDashboardDTO>();
+        public async Task OnGetAsync(string timeFilter)
         {
-            HttpClient _httpClient = new HttpClient();
-            var apiUrlWeek = "https://localhost:5000/api/Dashboard/GetWeeklyDashboard";
-            var apiUrlMovie = "https://localhost:5000/api/Dashboard/GetMovieDashboard";
-            var apiUrlMonth = "https://localhost:5000/api/Dashboard/GetMonthlyDashboard";
 
+            HttpClient _httpClient = new HttpClient();
+
+            ViewType = timeFilter ?? "default";
+            var apiUrlChart = $"https://localhost:5000/api/Dashboard/GetChartDashboard/{ViewType}";
+            HttpResponseMessage chartResponse = await _httpClient.GetAsync(apiUrlChart);
+            if (chartResponse.IsSuccessStatusCode)
+            {
+                ChartInfo = await chartResponse.Content.ReadFromJsonAsync<List<ChartDashboardDTO>>();
+            }
+
+            var apiUrlWeek = "https://localhost:5000/api/Dashboard/GetWeeklyDashboard";
             HttpResponseMessage weekResponse = await _httpClient.GetAsync(apiUrlWeek);
             if (weekResponse.IsSuccessStatusCode)
             {
-                weekInfo = await weekResponse.Content.ReadFromJsonAsync<WeekDashboardDTO>();
+                WeekInfo = await weekResponse.Content.ReadFromJsonAsync<WeekDashboardDTO>();
             }
 
+            var apiUrlMovie = "https://localhost:5000/api/Dashboard/GetMovieDashboard";
             HttpResponseMessage movieResponse = await _httpClient.GetAsync(apiUrlMovie);
             if (movieResponse.IsSuccessStatusCode)
             {
-                movieList = await movieResponse.Content.ReadFromJsonAsync<List<MovieDashboardDTO>>();
-            }
-
-            HttpResponseMessage monthResponse = await _httpClient.GetAsync(apiUrlMonth);
-            if (monthResponse.IsSuccessStatusCode)
-            {
-                monthInfo = await monthResponse.Content.ReadFromJsonAsync<List<MonthDashboardDTO>>();
+                MovieList = await movieResponse.Content.ReadFromJsonAsync<List<MovieDashboardDTO>>();
             }
         }
 

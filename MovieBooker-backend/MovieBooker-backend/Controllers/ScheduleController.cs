@@ -27,11 +27,11 @@ namespace MovieBooker_backend.Controllers
            return Ok(schedules);
         }
 
-        [HttpGet("CheckExistSchedule/{movieId}/{theaterId}/{timeSlotId}/{date}")]
-        public IActionResult CheckExistSchedule(int movieId, int theaterId, int timeSlotId, DateTime date) {
+        [HttpGet("CheckExistSchedule/{theaterId}/{timeSlotId}/{date}/{roomid}")]
+        public IActionResult CheckExistSchedule(int theaterId, int timeSlotId, DateTime date, int roomid) {
             string d = date.ToString("yyyy-MM-dd");
 
-            var schedule = _scheduleRepository.CheckExistSchedule(movieId, theaterId, timeSlotId, d);
+            var schedule = _scheduleRepository.CheckExistSchedule(theaterId, timeSlotId, d, roomid);
             if(schedule == true)
             {
                 return NotFound(); 

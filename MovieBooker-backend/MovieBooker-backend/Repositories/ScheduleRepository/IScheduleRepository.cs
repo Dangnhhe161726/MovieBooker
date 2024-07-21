@@ -7,7 +7,7 @@ namespace MovieBooker_backend.Repositories.ScheduleRepository
     {
         public IEnumerable<ScheduleDTO> GetSchedules();
 
-        public bool CheckExistSchedule(int movieId, int theaterId, int timeSlotId, string date);
+        public bool CheckExistSchedule(int theaterId, int timeSlotId, string date, int roomId);
 
         public void AddSchedule(CreateScheduleDTO schedule);
 

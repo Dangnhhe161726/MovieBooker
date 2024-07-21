@@ -8,10 +8,12 @@ namespace MovieBooker_backend.Models
         public int SchedulesId { get; set; }
         public int? MovieId { get; set; }
         public int? TheaterId { get; set; }
+        public int? RoomId { get; set; }
         public int? TimeSlotId { get; set; }
         public DateTime? ScheduleDate { get; set; }
 
         public virtual Movie? Movie { get; set; }
+        public virtual Room? Room { get; set; }
         public virtual Theater? Theater { get; set; }
         public virtual TimeSlot? TimeSlot { get; set; }
     }

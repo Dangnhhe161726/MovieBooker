@@ -6,5 +6,6 @@ namespace MovieBooker_backend.Repositories.TimeSlotRepository
     public interface ITimeSlotRepository
     {
         public IEnumerable<TimeSlotDTO> GetAllTimeSlot();
+        public TimeSlotDTO GetTimeSlotById(int id);
     }
 }

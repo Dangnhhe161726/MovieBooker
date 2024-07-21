@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using MovieBooker_backend.Repositories.ScheduleRepository;
 using MovieBooker_backend.Repositories.SeatRepository;
 
@@ -16,6 +17,7 @@ namespace MovieBooker_backend.Controllers
             _seatRepository = seatRepository;
         }
         [HttpGet("GetSeat")]
+        [EnableQuery]
         public IActionResult Get()
         {
             var seat = _seatRepository.GetSeat();

@@ -33,6 +33,7 @@ using System.Reflection.Emit;
 using MovieBooker_backend.Repositories.DashboardRepository;
 using MovieBooker_backend.Repositories.VnPayRepository;
 using MovieBooker_backend.Repositories.PayPalRepository;
+using MovieBooker_backend.Repositories.RoomRepository;
 
 namespace MovieBooker_backend
 {
@@ -53,6 +54,7 @@ namespace MovieBooker_backend
             modelBuilder.EntitySet<ScheduleDTO>("Schedule");
             modelBuilder.EntitySet<MovieResponse>("Movie");
             modelBuilder.EntitySet<ReservationDTO>("Reservation");
+            modelBuilder.EntitySet<SeatDTO>("Seat");
             builder.Services.AddControllers().AddOData(opt => opt
                 .Select()
                 .Expand()
@@ -140,6 +142,7 @@ namespace MovieBooker_backend
             builder.Services.AddScoped<ISeatRepository, SeatRepository>();
             builder.Services.AddScoped<IVnPayRepository, VnPayRepository>();
             builder.Services.AddScoped<IPayPalRepository, PayPalRepository>();
+            builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 
 
             builder.Services.AddAuthentication(options =>

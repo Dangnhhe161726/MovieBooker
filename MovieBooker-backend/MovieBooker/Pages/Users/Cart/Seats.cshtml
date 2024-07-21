@@ -9,7 +9,7 @@
         <div class="details">
             @foreach (var m in Model.schedules)
             {
-                <p>@m.TheaterName | Cinema 7 | Số ghế (106/106)</p>
+                <p>@m.TheaterName | Cinema 7</p>
                 <p>@m.ScheduleDate.Value.ToString("dd/MM/yyyy") @m.TimeSlot</p>
                 <input type="hidden" value="@m.TimeSlotId" name="timeSlotId">
             }

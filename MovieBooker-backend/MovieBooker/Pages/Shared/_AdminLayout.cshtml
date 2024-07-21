@@ -29,6 +29,7 @@
                 @{
                     string? token = Context.Request.Cookies["Token"];
                     string userName = "";
+                    string userRole = "";
                     using (var redis = ConnectionMultiplexer.Connect("localhost:6379"))
                     {
                         var db = redis.GetDatabase();
@@ -43,7 +44,7 @@
                         var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
 
                         userName = jsonToken.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value;
-
+                        userRole = jsonToken.Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value;
 
                         <ul class="navbar-nav navbar-nav-right">
                             <li class="nav-item nav-profile dropdown">
@@ -91,34 +92,40 @@
                             </div>
                             <div class="nav-profile-text d-flex flex-column">
                                 <span class="font-weight-bold mb-2">@userName</span>
-                                <span class="text-secondary text-small">Admin</span>
+                                <span class="text-secondary text-small"></span>
                             </div>
                             <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-page="/Manage/Dashboard">
-                            <span class="menu-title">Dashboard</span>
-                            <i class="mdi mdi-home menu-icon"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                            <span class="menu-title">Quản lý người dùng</span>
-                            <i class="menu-arrow"></i>
-                            <i style="color: #a59f9fcf;" class="fa fa-user-circle-o"></i>
-                        </a>
-                        <div class="collapse" id="ui-basic">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-page="/Admin/ManageUsers">Quản lý khách hàng</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-page="/Admin/ManageUsers" asp-page-handler="Staff">Quản lý nhân viên</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                    @if (userRole != "Staff")
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Manage/Dashboard">
+                                <span class="menu-title">Dashboard</span>
+                                <i class="mdi mdi-home menu-icon"></i>
+                            </a>
+                        </li>
+                    }
+                        @if (userRole != "Staff")
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                                <span class="menu-title">Quản lý người dùng</span>
+                                <i class="menu-arrow"></i>
+                                <i style="color: #a59f9fcf;" class="fa fa-user-circle-o"></i>
+                            </a>
+                            <div class="collapse" id="ui-basic">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-page="/Admin/ManageUsers">Quản lý khách hàng</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-page="/Admin/ManageUsers" asp-page-handler="Staff">Quản lý nhân viên</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    }
                     <li class="nav-item">
 						<a class="nav-link" asp-page="/admin/movie/index">
 							<span class="menu-title">Quản lý phim</span>

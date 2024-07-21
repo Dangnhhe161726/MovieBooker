@@ -41,7 +41,6 @@
                                 <th> Mã ghế - Mã phòng </th>
                                 <th> Tên phim </th>
                                 <th> Thời gian bắt đầu </th>
-                                <th> Thời gian kết thúc </th>
                                 <th> Thời gian đặt vé </th>
                                 <th> Giá vé </th>
                                 <th> Trạng thái </th>
@@ -59,17 +58,16 @@
                                         <td> @res.SeatNumber - @res.RoomNumber </td>
                                         <td> @res.MovieTitle </td>
                                         <td> @res.StartTime </td>
-                                        <td> @res.EndTime </td>
-                                        <td> @res.ReservationDate </td>
+                                        <td> @res.ReservationDate.Value.ToString("dd/MM/yyyy") </td>
                                         <td> @res.Price </td>
                                         <td>
                                             @if (@res.Status.Value)
                                             {
-                                                <label class="badge badge-success">Chưa thanh toán</label>
+                                                <label class="badge badge-success">Đã thanh toán</label>
                                             }
                                             else
                                             {
-                                                <label class="badge badge-danger">Đã thanh toán</label>
+                                                <label class="badge badge-danger">Chưa thanh toán</label>
                                             }
                                         </td>
                                     </tr>

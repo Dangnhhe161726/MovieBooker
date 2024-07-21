@@ -25,7 +25,7 @@
                 {
                     <div class="ticket">
                         <div class="ticket-title">@seen.MovieTitle</div>
-                        <div class="ticket-details">CGV Center<br>@seen.ReservationDate @seen.StartTime<br>Ghế: @seen.SeatNumber</div>
+                        <div class="ticket-details">CGV Center<br>@seen.ReservationDate.Value.ToString("dd/MM/yyyy") @seen.StartTime<br>Ghế: @seen.SeatNumber</div>
                         <div class="ticket-price">@seen.Price VND</div>
                     </div>
                 }
@@ -49,7 +49,7 @@
                         </li>
                     </ul>
                 </div>
-                <a href="#" class="back-link">&laquo; Quay lại</a>
+                <a href="/Index" class="back-link">&laquo; Quay lại</a>
             </div>
             <div class="tab-content d-none" id="watched-content">
                 @foreach (var seen in Model.ReserSeen)
@@ -80,7 +80,7 @@
                         </li>
                     </ul>
                 </div>
-                <a href="#" class="back-link">&laquo; Quay lại</a>
+                <a href="/Index" class="back-link">&laquo; Quay lại</a>
             </div>
         </div>
     </div>

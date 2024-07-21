@@ -131,12 +131,12 @@
                                 </thead>
                                 <tbody @foreach (var m in Model.MovieList)
                                 {
-                                                        <tr>
-                                                             <td> @topPosition </td>
-                                                             <td> @m.MovieTitle </td>
-                                                             <td> @m.TotalOrders </td>
-                                                             <td> @m.TotalSales.ToString("N2") </td>
-                                                        </tr>
+                                                            <tr>
+                                                                 <td> @topPosition </td>
+                                                                 <td> @m.MovieTitle </td>
+                                                                 <td> @m.TotalOrders </td>
+                                                                 <td> @m.TotalSales.ToString("N2") </td>
+                                                            </tr>
                                     topPosition++;
                                 }
                                 </tbody>
@@ -148,9 +148,6 @@
         </div>
     </div>
 </div>
-
-    <script src="~/assets/vendors/js/vendor.bundle.base.js"></script>
-
 <script>
     // Pass the data from the C# model to the JavaScript
     var ChartInfo = @Html.Raw(Json.Serialize(Model.ChartInfo));

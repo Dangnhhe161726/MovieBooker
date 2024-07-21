@@ -69,7 +69,7 @@ namespace MovieBooker.Pages
                         return RedirectToPage("/Index");
                     }else if(roleClaim == "Staff")
                     {
-                        return RedirectToPage("");
+                        return RedirectToPage("/Admin/Movie/Index");
                     }              
                 }
                 else

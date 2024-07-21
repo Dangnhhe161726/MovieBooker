@@ -26,16 +26,6 @@
                 <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                     <span class="mdi mdi-menu"></span>
                 </button>
-                @*		<div class="search-field d-none d-md-block">
-                <form class="d-flex align-items-center h-100" action="#">
-                <div class="input-group">
-                <div class="input-group-prepend bg-transparent">
-                <i class="input-group-text border-0 mdi mdi-magnify"></i>
-                </div>
-                <input type="text" class="form-control bg-transparent border-0" placeholder="Search">
-                </div>
-                </form>
-                </div>*@
                 @{
                     string? token = Context.Request.Cookies["Token"];
                     string userName = "";
@@ -130,28 +120,28 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" asp-page="/Admin/Movie/Index" aria-expanded="false" aria-controls="icons">
-                            <span class="menu-title">Manage Movie</span>
-
-                            <i style="color: #a59f9fb3; margin-left: auto" class="fa fa-video-camera"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
-                            <span class="menu-title">Manage Schedule</span>
-                            <i class="mdi mdi-table-large menu-icon"></i>
-                        </a>
-                        <div class="collapse" id="tables">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-page="/Admin/ManageSchedules">View Schedule</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-page="/Admin/CreateSchedule">Create Schedule</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+						<a class="nav-link" asp-page="/admin/movie/index">
+							<span class="menu-title">Manage Movie</span>
+							<i style="color: #a59f9fb3; margin-left: auto" class="fa fa-video-camera"></i>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-bs-toggle="collapse" href="#ui-basic-schedule" aria-expanded="false" aria-controls="ui-basic">
+							<span class="menu-title">Manage Schedule</span>
+							<i class="menu-arrow"></i>
+							<i style="color: #a59f9fcf;" class="mdi mdi-table-large menu-icon"></i>
+						</a>
+						<div class="collapse" id="ui-basic-schedule">
+							<ul class="nav flex-column sub-menu">
+								<li class="nav-item">
+									<a class="nav-link" asp-page="/Admin/ManageSchedules">View Schedule</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" asp-page="/Admin/CreateSchedule">Create Schedule</a>
+								</li>
+							</ul>
+						</div>
+					</li>
                 </ul>
             </nav>
             <!-- partial -->

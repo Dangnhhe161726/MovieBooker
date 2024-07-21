@@ -92,7 +92,8 @@ namespace MovieBooker_backend.Repositories.ReservationRepository
             switch (type)
             {
                 case "weekly":
-                    startTime = currentTime.AddDays(DayOfWeek.Monday - currentTime.DayOfWeek);
+                    int daysToSubtract = (currentTime.DayOfWeek - DayOfWeek.Monday + 7) % 7;
+                    startTime = currentTime.AddDays(-daysToSubtract).Date;
                     resList = GetReservationByTimePeriod(startTime, currentTime);
                     break;
                 case "monthly":

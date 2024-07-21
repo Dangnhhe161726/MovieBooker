@@ -1,41 +1,55 @@
+using MailKit.Search;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MovieBooker.DTO;
+using System.Drawing.Printing;
+using System.Globalization;
+using System.Net.Http;
 
 namespace MovieBooker.Pages.Manage
 {
     public class ReservationHistoryModel : PageModel
     {
-        public List<ReservationDTO> reservations = new List<ReservationDTO>();
-        [BindProperty(SupportsGet = true)]
-        public string SearchTerm { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public bool? StatusFilter { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public DateTime? StartTime { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public DateTime? EndTime { get; set; }
+        private readonly HttpClient _httpClient;
 
-        public async Task OnGetAsync()
+        public ReservationHistoryModel(HttpClient httpClient)
         {
+            _httpClient = httpClient;
+        }
+        public List<ReservationDTO> Reservations = new List<ReservationDTO>();
+        public int NumReservations { get; set; }
+        public int CurrentPage { get; set; }
+        public int PageSize { get; set; } = 15;
+        public string KeySearch { get; set; } = "";
+        public string SortBy { get; set; }
+        public string SortOrder { get; set; } = "asc";
 
-            HttpClient _httpClient = new HttpClient();
-            var apiUrlRes = "https://localhost:5000/api/Reservation";
-            /*var apiUrlRes = $"https://localhost:5000/odata/Reservation?$filter=contains(MovieTitle, '{SearchTerm}')";
+        public async Task OnGet(int currentPage = 1, string sortBy = "MovieId", string sortOrder = "asc")
+        {
+            CurrentPage = currentPage;
+            SortBy = sortBy;
+            SortOrder = sortOrder;
 
-            if (StatusFilter.HasValue)
+            // Get count of filtered movies
+            var countResponse = await _httpClient.GetAsync($"https://localhost:5000/odata/Reservation/$count");
+            if (countResponse.IsSuccessStatusCode)
             {
-                apiUrlRes += $" and Status eq {StatusFilter.Value}";
+                var numReservationString = await countResponse.Content.ReadAsStringAsync();
+                NumReservations = int.TryParse(numReservationString, out int count) ? count : 0;
             }
-            if (StartTime.HasValue && EndTime.HasValue)
+
+            int skip = (currentPage - 1) * PageSize;
+            int top = PageSize;
+
+            // Get sorted and paginated movies
+            var sortParameter = $"{SortBy} {(SortOrder == "asc" ? "asc" : "desc")}";
+            var dataResponse = await _httpClient.GetAsync($"https://localhost:5000/api/Reservation?$top={top}&$skip={skip}&$orderby={sortParameter}");
+            if (dataResponse.IsSuccessStatusCode)
             {
-                apiUrlRes += $" and StartTime ge {StartTime.Value:o} and EndTime le {EndTime.Value:o}";
-            }*/
-            HttpResponseMessage response = await _httpClient.GetAsync(apiUrlRes);
-            if (response.IsSuccessStatusCode)
-            {
-                reservations = await response.Content.ReadFromJsonAsync<List<ReservationDTO>>();
+                Reservations = await dataResponse.Content.ReadFromJsonAsync<List<ReservationDTO>>();
             }
+
+
         }
     }
 }

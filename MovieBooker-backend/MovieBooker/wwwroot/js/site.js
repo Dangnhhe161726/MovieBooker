@@ -71,7 +71,7 @@ async function ensureToken() {
 }
 
 // Call ensureToken every 5 minutes to check and refresh token if necessary
-setInterval(ensureToken, 120000); // 120000 ms = 2 minute
+setInterval(ensureToken, 1800000); // 120000 ms = 2 minute
 
 //FLUSHALL
 

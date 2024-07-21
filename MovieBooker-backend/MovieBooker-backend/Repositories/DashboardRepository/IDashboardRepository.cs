@@ -11,7 +11,7 @@ namespace MovieBooker_backend.Repositories.DashboardRepository
         public int CountOrders(DateTime startTime, DateTime endTime);
         public int CountUsers();
         public WeekDashboardDTO GetDashboardWeeklyInfo();
-        public List<MonthDashboardDTO> GetDashboardMonthlyInfo();
+        public List<ChartDashboardDTO> GetDashboardChartInfo(string chartType);
         public List<MovieDashboardDTO> GetDashboardMovieInfo();
     }
 }

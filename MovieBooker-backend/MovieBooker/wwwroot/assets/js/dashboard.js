@@ -26,9 +26,9 @@
     const bgColor3 = ["rgba(255, 191, 150, 1)"];
 
     // Process monthInfo to extract the data you need
-    var salesData = monthInfo.map(item => item.sales); // Adjust as necessary
-    var ordersData = monthInfo.map(item => item.orders); // Adjust as necessary
-    var labels = monthInfo.map(item => item.month); // If you have labels
+    var salesData = ChartInfo.map(item => item.sales); // Adjust as necessary
+    var ordersData = ChartInfo.map(item => item.orders); // Adjust as necessary
+    var labels = ChartInfo.map(item => item.time); // If you have labels
 
     console.log('Sales Data:', salesData);
     console.log('Orders Data:', ordersData);
@@ -39,7 +39,8 @@
       data: {
         labels: labels,
         datasets: [{
-          label: "Sales",
+          label: "Doanh thu",
+          yAxisID: 'y-axis-1',
           borderColor: gradientStrokeViolet,
           backgroundColor: gradientStrokeViolet,
           fillColor: bgColor1,
@@ -49,11 +50,12 @@
           borderWidth: 1,
           fill: 'origin',
           data: salesData,
-          barPercentage: 0.5,
-          categoryPercentage: 1,
+          barPercentage: 0.8,
+          categoryPercentage: 0.8,
         },
         {
-          label: "Orders",
+          label: "Vé bán",
+          yAxisID: 'y-axis-2',
           borderColor: gradientStrokeRed,
           backgroundColor: gradientStrokeRed,
           hoverBackgroundColor: gradientStrokeRed,
@@ -63,8 +65,8 @@
           borderWidth: 1,
           fill: 'origin',
           data: ordersData,
-          barPercentage: 0.5, // 0.5
-          categoryPercentage: 1,
+          barPercentage: 0.8, // 0.5
+          categoryPercentage: 0.8,
         }
         ]
       },

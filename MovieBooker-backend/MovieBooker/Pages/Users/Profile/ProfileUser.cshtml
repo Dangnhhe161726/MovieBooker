@@ -63,7 +63,7 @@
             <div class="col-md-5 border-right">
                 <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Profile Information User</h4>
+                        <h4 class="text-right">Hồ sơ người dùng</h4>
                     </div>
                     <form method="post">
                         <div class="row mt-2">
@@ -76,32 +76,32 @@
                             <div class="col-md-6">
                                 <div class="col-md-12"><input asp-for="UserDTO.RoleId" type="hidden" class="form-control" value="@item.RoleId"></div>
                             </div>
-                            <div class="col-md-6" style="margin-top: 24px;"><button class="btn btn-primary profile-button" type="submit">Update Information</button></div>
+                            <div class="col-md-6" style="margin-top: 24px;"><button class="btn btn-primary profile-button" type="submit">Cập nhật thông tin</button></div>
                         </div>
                         <div class="col-md-12">
 
                             <div class="row mt-2">
-                                <div class="col-md-12"><label class="labels">User Name</label><input asp-for="UserDTO.UserName" type="text" class="form-control" value="@item.UserName" ></div>
+                                <div class="col-md-12"><label class="labels">Tên người dùng</label><input asp-for="UserDTO.UserName" type="text" class="form-control" value="@item.UserName" ></div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-12"><label class="labels">Email</label><input asp-for="UserDTO.Email" type="text" class="form-control" value="@item.Email" readonly ></div>
-                                <div class="col-md-12"><label class="labels">Phone Number</label><input asp-for="UserDTO.PhoneNumber" type="text" class="form-control" value="@(item.PhoneNumber ?? "No Data")" ></div>
-                                <div class="col-md-12"><label class="labels">Address</label><input type="text" asp-for="UserDTO.Address" class="form-control" value="@(item.Address ?? "No Data")" ></div>
+                                <div class="col-md-12"><label class="labels">Số điện thoại</label><input asp-for="UserDTO.PhoneNumber" type="text" class="form-control" value="@(item.PhoneNumber ?? "No Data")" ></div>
+                                <div class="col-md-12"><label class="labels">Địa chỉ</label><input type="text" asp-for="UserDTO.Address" class="form-control" value="@(item.Address ?? "No Data")" ></div>
                                 <div class="col-md-12">
-                                    <label class="labels">Gender</label><br>
+                                    <label class="labels">Giới tính</label><br>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" id="genderMale" value="True" asp-for="UserDTO.Gender" checked="@((item.Gender.HasValue && item.Gender.Value) ? "checked" : null)">
-                                        <label class="form-check-label" for="genderMale">Male</label>
+                                        <label class="form-check-label" for="genderMale">Nam</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" id="genderFemale" value="False" asp-for="UserDTO.Gender" checked="@((item.Gender.HasValue && !item.Gender.Value) ? "checked" : null)">
-                                        <label class="form-check-label" for="genderFemale">Female</label>
+                                        <label class="form-check-label" for="genderFemale">Nữ</label>
                                     </div>
                                 </div>
 
                             </div>
                             <div class="col-md-12">
-                                <label class="labels">Date Of Birth</label>
+                                <label class="labels">Ngày sinh</label>
                                 <input asp-for="UserDTO.Dob" type="date" class="form-control" value="@((item.Dob.HasValue ? item.Dob.Value.ToString("yyyy-MM-dd") : ""))">
                             </div>
                     </form>
@@ -111,6 +111,4 @@
             </div>
         }
     </div>
-</div>
-</div>
 </div>

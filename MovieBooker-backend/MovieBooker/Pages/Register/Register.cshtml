@@ -18,22 +18,22 @@
 
                     <div class="form-group">
                         <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                        <input type="text" asp-for="User.UserName" id="name" placeholder="Your Name" required />
+                        <input type="text" asp-for="User.UserName" id="name" placeholder="Tên của bạn" required />
                     </div>
                     <div class="form-group">
                         <label for="email"><i class="zmdi zmdi-email"></i></label>
-                        <input type="email" asp-for="User.Email" id="email" placeholder="Your Email" required />
+                        <input type="email" asp-for="User.Email" id="email" placeholder="Email của bạn" required />
                     </div>
                     <div class="form-group">
                         <label for="Dob"><i class="zmdi zmdi-calendar-note"></i></label>
-                        <input type="date" asp-for="User.Dob" id="dob" placeholder="Date Of Birth" required max="@today" />
+                        <input type="date" asp-for="User.Dob" id="dob" placeholder="Ngày sinh" required max="@today" />
                     </div>
                     <div class="form-group">
-                        <label style="color: #999" for="email"><i style="margin-right: 16px; color:black" class="zmdi zmdi-male"></i>Male</label>
+                        <label style="color: #999" for="email"><i style="margin-right: 16px; color:black" class="zmdi zmdi-male"></i>Nam</label>
                         <input asp-for="User.Gender" style="margin: 0px -7rem;" type="radio" value="true" id="gender" required />
                     </div>
                     <div class="form-group">
-                        <label style="color: #999" for="email"><i style="margin-right: 17px; color:black" class="zmdi zmdi-female"></i>Female</label>
+                        <label style="color: #999" for="email"><i style="margin-right: 17px; color:black" class="zmdi zmdi-female"></i>Nữ</label>
                         <input asp-for="User.Gender" style="margin: 0px -7rem;" type="radio" value="false" id="gender" required />
                     </div>
                     <div class="form-group">
@@ -42,11 +42,11 @@
                     </div>
                     <div class="form-group">
                         <label for="address"><i class="zmdi zmdi-my-location"></i></label>
-                        <input asp-for="User.Address" type="text" id="address" placeholder="Address" required />
+                        <input asp-for="User.Address" type="text" id="address" placeholder="Địa chỉ" required />
                     </div>
                     <div class="form-group">
                         <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                        <input asp-for="User.Password" type="password" id="pass" placeholder="Password"
+                        <input asp-for="User.Password" type="password" id="pass" placeholder="Mật khẩu"
                                minlength="6"
                                pattern="^(?=.*[a-zA-Z])(?=.*\d).+$"
                                title="Password must be at least 6 characters long and contain both letters and numbers."
@@ -54,10 +54,10 @@
                     </div>
                     <div class="form-group">
                         <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                        <input asp-for="User.ConfirmPassword" type="password" id="re_pass" placeholder="Repeat your password" required />
+                        <input asp-for="User.ConfirmPassword" type="password" id="re_pass" placeholder="Xác nhận mật khẩu" required />
                     </div>
                     <div class="form-group form-button">
-                        <input type="submit" name="signup" id="signup" class="form-submit" value="Register" />
+                        <input type="submit" name="signup" id="signup" class="form-submit" value="Đăng ký" />
                     </div>
                 </form>
             </div>

@@ -9,11 +9,11 @@
 
 <form method="post" onsubmit="return validateForm()">
     <div class="date-picker">
-        <label for="start-date">Start Date:</label>
+        <label for="start-date">Ngày bắt đầu:</label>
         <input type="date" id="start-date" name="StartDate" >
-        <label for="end-date">End Date:</label>
+        <label for="end-date">Ngày kết thúc:</label>
         <input type="date" id="end-date" name="EndDate">
-        <button style="background-color: #FFD800; border-radius:10px" type="submit" id="apply-date">Apply Date</button>
+        <button style="background-color: #FFD800; border-radius:10px" type="submit" id="apply-date">Áp dụng</button>
     </div>
 </form>
 
@@ -43,13 +43,13 @@
 
 <div class="wrapper">
     <div class="sticky-header">
-        <span>Calendar</span>
+        <span>Lịch</span>
     </div>
     <div class="table">
         <div class="headers">
             <div class="scroller syncscroll" id="calendar-headers">
                 <div class="track time">
-                    <div class="heading">Time</div>
+                    <div class="heading">Thời gian</div>
                 </div>
                 @foreach (var date in Model.SelectedDates)
                 {
